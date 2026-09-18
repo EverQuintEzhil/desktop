@@ -1,0 +1,77 @@
+.page-header {
+    h2 {
+        font-weight: 600;
+    }
+}
+
+.breadcrumbs-list {
+    ul {
+        list-style: none;
+        min-width: 0;
+    }
+}
+
+.breadcrumbs-list-item {
+    a,
+    span {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        line-height: 1.4;
+        transition: color 0.2s ease;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--text-secondary);
+
+        &:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    }
+
+    span {
+        color: var(--text-primary);
+        font-weight: 600;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &:last-child {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    &:not(:last-child)::after {
+        content: "/";
+        color: var(--text-secondary);
+        margin: 0 8px;
+        font-size: var(--text-xs);
+    }
+}
+
+// A control sizes itself; the `flex: 1` that lets a text crumb truncate would stretch it
+// across the whole header instead.
+.breadcrumbs-list-item-control:last-child {
+    flex: 0 0 auto;
+    overflow: visible;
+}
+
+// The slot holds a control, not a text crumb — the crumb typography above must not
+// restyle the trigger label into a heading.
+.breadcrumbs-list-item-control span {
+    font-weight: 500;
+    color: inherit;
+}
+
+// A trailing control makes the preceding text crumb non-last, so that crumb gains the `/`
+// pseudo for the first time. Its `display: block` span would push the `/` onto the next
+// line, so the row is laid out as flex. Scoped to lists that use the slot: every other
+// admin header keeps its existing inline flow.
+.breadcrumbs-list:has(.breadcrumbs-list-item-control) .breadcrumbs-list-item {
+    display: flex;
+    align-items: center;
+}

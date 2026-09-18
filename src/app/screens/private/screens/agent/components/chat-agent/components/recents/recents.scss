@@ -1,0 +1,51 @@
+@use "../../../recents-shared" as *;
+
+.recents-container {
+    .recents-header {
+        &.sticky {
+            box-shadow: var(--shadow-xs);
+        }
+    }
+
+    .recents-list {
+        .recents-list-item {
+            background-color: var(--card);
+
+            .delete-button {
+                opacity: 0;
+                transition: opacity 0.2s ease;
+                background-color: transparent;
+                border-color: transparent;
+
+                @include below("lg") {
+                    opacity: 1;
+                }
+
+                &:focus-visible {
+                    opacity: 1;
+                    outline: 1px solid var(--white);
+                    outline-offset: 1px;
+                }
+            }
+
+            &:hover {
+                box-shadow: var(--shadow-surface);
+                background-color: var(--surface-hover);
+
+                .delete-button {
+                    opacity: 1;
+
+                    &:focus-visible {
+                        opacity: 1;
+                        outline: 1px solid var(--white);
+                        outline-offset: 1px;
+
+                        .delete-button {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

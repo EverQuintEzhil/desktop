@@ -1,0 +1,26 @@
+.tool-call-accordion {
+    border-bottom: 1px solid var(--border-secondary);
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.tool-call-header {
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: var(--background);
+    }
+}
+
+.tool-call-chevron {
+    color: #656d76;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.tool-call-chevron.is-expanded {
+    transform: rotate(90deg);
+}

@@ -1,0 +1,47 @@
+.agents-block {
+    a {
+        color: var(--text-primary);
+    }
+}
+
+.agents-section-heading {
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    // The primary section's heading; --text-primary rather than --primary so the emphasis does not
+    // depend on a tenant accent clearing AA against the page background.
+    &.is-emphasized {
+        color: var(--text-primary);
+    }
+}
+
+.create-agent-btn {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: 9999px;
+    box-shadow: var(--shadow-surface);
+    height: 45px;
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+        opacity: 0.9;
+        color: var(--primary-foreground);
+    }
+
+    @media (max-width: 720px) {
+        // width: 100%;
+        // justify-content: center;
+    }
+}

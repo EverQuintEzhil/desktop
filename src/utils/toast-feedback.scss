@@ -1,0 +1,18 @@
+/* Sonner toast shells — colours from design tokens (index.css / injected branding) */
+.toast-feedback {
+    border-radius: var(--radius);
+    padding: var(--spacing-md);
+    background: var(--card);
+    color: var(--popover-foreground);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-xs);
+    pointer-events: auto;
+}
+
+.toast-feedback--success {
+    border-left: 4px solid var(--success);
+}
+
+.toast-feedback--error {
+    border-left: 4px solid var(--destructive);
+}

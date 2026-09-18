@@ -1,0 +1,10 @@
+// Doubled class outranks the base `.chat-editor` rules without relying on import order.
+.routine-prompt-editor.chat-editor {
+    .chat-editor__content {
+        min-height: 120px;
+        max-height: 240px;
+        padding: 10px 12px;
+        font-size: var(--text-sm);
+        font-weight: 400;
+    }
+}

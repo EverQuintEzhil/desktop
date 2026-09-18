@@ -1,0 +1,60 @@
+// .file-upload-section and .file-uploaded are declared in src/components/file-upload,
+// which is in this bundle too; these are the admin playground's additions on top.
+.file-upload-section .dropzone-style {
+    border-radius: var(--radius-xl);
+}
+
+.file-upload-section .section-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.file-upload-section .file-item {
+    transition: all 0.2s ease;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--border-secondary);
+    }
+
+    &:hover {
+        background: #f8fafc;
+    }
+
+    .file-info {
+        .file-details {
+            .file-name {
+                font-size: var(--text-sm);
+                font-weight: 500;
+                color: var(--color-text-primary);
+                margin-bottom: 2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .file-size {
+                font-size: var(--text-xs);
+                color: #6b7280;
+            }
+        }
+    }
+}
+
+.file-uploaded .file-details {
+    max-width: calc(100% - 28px - 8px);
+    width: 100%;
+
+    span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.file-uploaded .file-list .file-item {
+    &:not(:last-child) {
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-secondary);
+    }
+}

@@ -1,0 +1,49 @@
+.message-image-item {
+    flex-shrink: 0;
+    cursor: pointer;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+
+    img {
+        height: 150px;
+        width: 150px;
+        flex-shrink: 0;
+        object-fit: cover;
+        overflow: hidden;
+    }
+
+    &:hover {
+        background-color: var(--surface-hover);
+
+        img {
+            transition: all 0.2s ease;
+            transform: scale(1.05);
+        }
+    }
+}
+
+.message-image-download-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    opacity: 0;
+    transition:
+        opacity 0.15s ease,
+        background-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &:focus-visible {
+        opacity: 1;
+    }
+}
+
+.message-image-item:hover .message-image-download-btn,
+.message-image-item:focus-within .message-image-download-btn {
+    opacity: 1;
+}

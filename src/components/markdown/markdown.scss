@@ -1,0 +1,401 @@
+.markdown {
+    &.prose {
+        max-width: 100%;
+        color: var(--text-primary);
+
+        // The CDN @tailwindcss/typography sheet sets `.prose a` to a fixed near-black slate,
+        // which outranks the bare `a` rule and is unreadable on a dark surface.
+        a {
+            color: var(--primary);
+
+            &:hover {
+                color: color-mix(in srgb, var(--primary) 85%, transparent);
+            }
+        }
+
+        strong,
+        em,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        blockquote,
+        li::marker {
+            color: var(--text-primary);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-sm);
+            margin: 1rem 0;
+            display: block;
+        }
+
+        .lightbox-image-trigger {
+            display: block;
+            margin: 1rem 0;
+
+            img {
+                margin: 0;
+            }
+        }
+
+        ol ul {
+            display: flex;
+            flex-direction: column;
+        }
+
+        ol {
+            padding-left: 16px;
+        }
+
+        ol,
+        ul,
+        p {
+            margin-bottom: 12px;
+        }
+
+        a,
+        span,
+        p {
+            font-size: var(--text-h5);
+            line-height: 1.625;
+        }
+
+        ol,
+        ul {
+            li {
+                margin-top: 6px;
+                margin-bottom: 6px;
+                font-size: var(--text-h5);
+                line-height: 1.625;
+            }
+        }
+
+        ol li::before {
+            color: var(--text-primary);
+        }
+
+        // Tailwind Typography hardcodes --tw-prose-bold to a near-black, which is unreadable on a
+        // dark surface. Bold text takes the colour of the prose around it instead.
+        strong,
+        b {
+            color: inherit;
+        }
+
+        ul {
+            list-style: disc;
+            padding-left: 16px;
+
+            li::before {
+                background-color: var(--text-primary);
+            }
+
+            ol {
+                li {
+                    &:before {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+
+        .table-container-wrapper {
+            // 3 icon-sm buttons (32px) + 2 gaps (6px) + 8px right offset, plus breathing room.
+            --table-actions-width: 124px;
+
+            position: relative;
+
+            // Reserve the toolbar's footprint in the last column so the overlay never
+            // covers header text or cell content.
+            @include above("md") {
+                .table-container table {
+                    thead th:last-child,
+                    tbody td:last-child {
+                        padding-right: var(--table-actions-width);
+                    }
+
+                    // Cells are border-box, so grow the last column's bounds by the extra
+                    // padding (124px - the 12px it already had) to keep its content width.
+                    tbody td:last-child {
+                        min-width: calc(160px + var(--table-actions-width) - 12px);
+                        max-width: calc(320px + var(--table-actions-width) - 12px);
+                    }
+                }
+            }
+
+            .table-actions {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                z-index: 2;
+                display: flex;
+                gap: 6px;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+
+                // On narrow screens the overlay covers the last header cells, so the
+                // toolbar becomes its own row above the table instead.
+                @include below("md") {
+                    position: static;
+                    justify-content: flex-end;
+                    margin-top: 16px;
+                    opacity: 1;
+                }
+            }
+
+            @include below("md") {
+                .table-container {
+                    margin-top: 8px;
+                }
+            }
+
+            // Match `first:mt-0 last:mb-0` on the other markdown blocks so a leading table
+            // sits level with the avatar instead of carrying its own top margin.
+            &:first-child {
+                .table-actions {
+                    margin-top: 0;
+                }
+
+                .table-container {
+                    margin-top: 0;
+
+                    @include below("md") {
+                        margin-top: 8px;
+                    }
+                }
+            }
+
+            &:last-child .table-container {
+                margin-bottom: 0;
+            }
+
+            .table-action-button {
+                background: var(--card);
+                color: var(--text-primary);
+                box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+            }
+
+            &:hover .table-actions,
+            &:focus-within .table-actions {
+                opacity: 1;
+            }
+        }
+
+        .table-container {
+            position: relative;
+            max-height: 60vh;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin: 16px 0;
+            overflow: auto;
+
+            @include scrollbar(6px, 6px);
+
+            table {
+                width: 100%;
+                table-layout: auto;
+                border-collapse: collapse;
+                margin: 0;
+                font-size: var(--text-sm);
+                line-height: 1.5;
+                background-color: var(--card);
+                border-radius: var(--radius-lg);
+                box-shadow: none;
+
+                // Absolute px, not a percentage: a percentage max-width on a replaced element
+                // zeroes its min-content contribution, so only an absolute cap bounds the column.
+                th img,
+                td img {
+                    display: inline-block;
+                    width: auto;
+                    height: auto;
+                    max-width: 120px;
+                    max-height: 90px;
+                    margin: 0;
+                }
+
+                th .lightbox-image-trigger,
+                td .lightbox-image-trigger {
+                    display: inline-block;
+                    margin: 0;
+                }
+
+                thead {
+                    background-color: var(--muted);
+                    position: sticky;
+                    top: 0;
+
+                    th {
+                        padding: 12px;
+                        text-align: left;
+                        font-weight: 600;
+                        font-size: var(--text-sm);
+                        line-height: 1.4;
+                        color: var(--text-primary);
+                        border-bottom: 2px solid var(--border);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        vertical-align: top;
+
+                        &:first-child {
+                            padding-left: 12px;
+                        }
+
+                        &:last-child {
+                            padding-right: 12px;
+                        }
+
+                        @include below("md") {
+                            padding: 8px 12px;
+                        }
+                    }
+                }
+
+                tbody {
+                    td {
+                        padding: 12px;
+                        border-bottom: 1px solid var(--border);
+                        vertical-align: top;
+                        word-wrap: break-word;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: auto;
+                        min-width: 160px;
+                        max-width: 320px;
+
+                        &:first-child {
+                            padding-left: 12px;
+                        }
+
+                        &:last-child {
+                            padding-right: 12px;
+                        }
+
+                        @include below("md") {
+                            padding: 8px 12px;
+                        }
+                    }
+
+                    tr:hover {
+                        background-color: var(--surface-hover);
+                    }
+                }
+            }
+
+            @include below("md") {
+                font-size: var(--text-sm);
+            }
+        }
+
+        .table-fullscreen-body {
+            min-height: 0;
+            box-sizing: border-box;
+            padding: 12px;
+            overflow: hidden;
+
+            @include below("md") {
+                padding: 8px;
+            }
+        }
+
+        .table-fullscreen-header {
+            min-height: 40px;
+            padding: 4px 8px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-fullscreen-title {
+            padding-left: 8px;
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .table-fullscreen-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .table-fullscreen-action-button {
+            color: var(--text-primary);
+        }
+
+        .table-container-fullscreen {
+            height: 100%;
+            max-height: none;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+
+            table {
+                min-width: max-content;
+            }
+        }
+
+        code:not(pre code)::before,
+        code:not(pre code)::after {
+            content: none;
+        }
+
+        .markdown-inline-code {
+            font-weight: 500;
+            color: color-mix(in srgb, var(--primary) 72%, var(--foreground));
+            background-color: color-mix(in srgb, var(--primary) 12%, var(--muted));
+        }
+
+        pre code,
+        pre .markdown-inline-code {
+            font-size: inherit;
+            font-weight: inherit;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            color: inherit;
+            background-color: transparent;
+        }
+
+        .code-block-container {
+            position: relative;
+
+            .code-copy-button {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            &:hover .code-copy-button {
+                opacity: 1;
+            }
+        }
+
+        // A streaming `$$` block holds partial LaTeX, so rehype-katex swaps `.katex-display` for
+        // `code.math-error` on almost every commit; a shared box keeps the text below from jumping.
+        .katex-display,
+        .math-error {
+            min-height: 1.75em;
+            margin-block: 1em;
+            padding-block: 2px;
+        }
+
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .math-error {
+            font-weight: 400;
+            white-space: pre-wrap;
+            color: var(--muted-foreground);
+            background-color: transparent;
+        }
+    }
+}

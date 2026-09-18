@@ -1,0 +1,8 @@
+.stepper-input {
+    border-radius: var(--radius-pill);
+    &.black {
+        background-color: var(--white-alpha-06);
+        border-color: var(--white-alpha-06);
+        color: var(--white);
+    }
+}

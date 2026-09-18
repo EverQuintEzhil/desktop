@@ -1,0 +1,253 @@
+@use "breakpoints" as *;
+@use "../../../app/screens/private/screens/agent/components/arrow-button-shared" as *;
+
+/**
+ * The recommended-capabilities banner is a sibling of `.chat-block`, so when it is
+ * present the surface (white fill, radius, shadow) moves up to the stack and the
+ * two read as one card.
+ */
+.composer-stack:has(> .recommended-capabilities-banner) {
+    border-radius: var(--radius-3xl);
+    background-color: var(--card);
+    box-shadow: var(--shadow-surface);
+
+    > .chat-block {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+.recommended-capabilities-banner-row,
+.recommended-capabilities-no-access-row {
+    border-bottom: 1px solid var(--border);
+    background-color: color-mix(in srgb, var(--primary) 5%, var(--card));
+}
+
+/**
+ * Rounding is carried by a modifier the component sets, not by `:first-child`: each row
+ * has a hidden measurement copy as a sibling in the same container, so DOM order does
+ * not say which row is visually on top.
+ */
+.recommended-capabilities-row-first {
+    border-top-left-radius: var(--radius-3xl);
+    border-top-right-radius: var(--radius-3xl);
+}
+
+.chat-block {
+    width: 100%;
+    border-radius: var(--radius-3xl);
+    background-color: var(--card);
+    box-shadow: var(--shadow-surface);
+
+    .image-list {
+        order: 1;
+    }
+
+    .content-editable {
+        flex: 1;
+        order: 3;
+
+        .textarea {
+            min-height: 50px;
+        }
+    }
+
+    .chat-composer-input-wrap {
+        flex: 1;
+        order: 3;
+        position: relative;
+        min-width: 180px;
+
+        .content-editable {
+            flex: initial;
+            order: initial;
+            width: 100%;
+        }
+    }
+
+    .chat-options {
+        order: 2;
+    }
+
+    .selected-parameters {
+        order: 5;
+
+        .select-button {
+            .xmark-icon {
+                display: none;
+            }
+
+            &:focus-visible,
+            &:hover {
+                span {
+                    color: var(--primary);
+                }
+
+                .icon-wrapper {
+                    background-color: var(--primary);
+
+                    i,
+                    svg {
+                        color: var(--primary-foreground);
+                    }
+
+                    .xmark-icon {
+                        display: flex;
+                    }
+
+                    .globe-icon {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .select {
+            &:focus-visible {
+                outline: none;
+            }
+
+            .selected-wrapper {
+                .selected-value-block {
+                    border: 0;
+                    outline: none;
+                }
+
+                &.focused .selected-value-block {
+                    border: 0;
+                    outline: none;
+                }
+            }
+        }
+
+        @include below("lg") {
+            order: 1;
+        }
+    }
+
+    .button-send {
+        order: 6;
+        margin-left: auto;
+    }
+
+    .textarea {
+        padding: 12px 0;
+        border: none;
+
+        &:focus {
+            border: none;
+            box-shadow: none;
+        }
+
+        &[contenteditable="false"] {
+            background-color: var(--card);
+            opacity: 0.75;
+        }
+
+        @include below("sm") {
+            font-size: var(--text-base);
+            min-height: 48px;
+        }
+
+        &::selection {
+            background-color: #0000000f;
+        }
+    }
+
+    &.next-line {
+        padding-bottom: 12px;
+
+        .content-editable,
+        .chat-composer-input-wrap {
+            flex: initial;
+            width: 100%;
+            order: 2;
+        }
+    }
+
+    @include below("lg") {
+        order: 3;
+    }
+}
+
+.file-upload-styled {
+    position: relative;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-pill);
+
+    * {
+        cursor: pointer;
+    }
+
+    .file-upload {
+        cursor: pointer;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        opacity: 0;
+    }
+
+    input[type="file" i]::-webkit-file-upload-button {
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: #f5f5f5;
+    }
+
+    &:disabled {
+        border: 0;
+        background-color: transparent;
+
+        i,
+        svg {
+            opacity: 0.65;
+        }
+    }
+}
+
+.header-title {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    .brand-name {
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* Limits text to exactly 1 line */
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    @include below("lg") {
+        left: 58px;
+        right: 62px;
+        min-height: 24px;
+        z-index: 1;
+    }
+}
+
+.question-card {
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary);
+    user-select: none;
+
+    &:focus-visible {
+        outline: 1.5px solid var(--color-focus-ring, var(--primary));
+        outline-offset: 2px;
+    }
+
+    span {
+        font-size: 13px;
+        color: var(--primary);
+    }
+
+    * {
+        user-select: none;
+    }
+
+    &:hover {
+        box-shadow: var(--shadow-lg);
+    }
+}

@@ -1,0 +1,287 @@
+.ca-entry {
+    min-height: 100vh;
+    background: var(--background);
+    display: flex;
+    flex-direction: column;
+}
+
+.ca-entry-dropzone {
+    .dropzone-dragging-overlay {
+        position: fixed;
+        inset: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        max-height: 100vh;
+        background-color: color-mix(in srgb, var(--background) 88%, transparent);
+        z-index: 30;
+    }
+}
+
+.ca-entry__topnav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    z-index: 20;
+}
+
+.ca-entry__center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 24px 48px;
+    gap: 20px;
+}
+
+.ca-entry__mark {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    // box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 7%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.ca-entry__logo {
+    max-width: 38px;
+    max-height: 38px;
+    object-fit: contain;
+}
+
+.ca-entry__heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    text-align: center;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.ca-entry__beta-badge {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+    color: color-mix(in srgb, var(--primary) 85%, var(--text-primary));
+}
+
+.ca-entry__composer-wrap {
+    width: 100%;
+    max-width: 560px;
+}
+
+.ca-entry__composer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 8px;
+    border-radius: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 8px 8px 14px;
+    box-shadow: 0 1px 4px color-mix(in srgb, var(--foreground) 6%, transparent);
+    transition:
+        border-color 140ms,
+        box-shadow 140ms;
+
+    &:focus-within {
+        border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+    }
+
+    .text-area-wrapper {
+        order: 2;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .image-list {
+        order: 0;
+        width: 100%;
+    }
+}
+
+.ca-entry__composer-action {
+    order: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+        background 140ms,
+        color 140ms;
+
+    &:hover {
+        background: var(--accent);
+        color: var(--text-primary);
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.4;
+    }
+}
+
+.ca-entry__composer .text-area-wrapper .ca-entry__composer-input {
+    min-height: 0;
+    max-height: 160px;
+    border: none;
+    border-radius: 0;
+    background: none;
+    padding: 5px 0;
+    font-size: 14.5px;
+    line-height: 22px;
+    font-weight: 400;
+    color: var(--text-primary);
+
+    &:focus {
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    &:empty::before {
+        font-size: 14.5px;
+        font-weight: 400;
+        color: var(--text-secondary);
+    }
+}
+
+.ca-entry__composer-send {
+    order: 3;
+    flex-shrink: 0;
+    margin-left: auto;
+    align-self: flex-end;
+}
+
+.ca-entry__composer--next-line {
+    .text-area-wrapper {
+        order: 1;
+        flex: initial;
+        width: 100%;
+    }
+
+    .ca-entry__composer-action {
+        order: 2;
+    }
+
+    .ca-entry__composer-send {
+        order: 3;
+    }
+}
+
+/* Suggestions — single grouped card */
+.ca-entry__suggestions {
+    width: 100%;
+    max-width: 560px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+
+.ca-entry__sugg {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: background 140ms;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:first-child {
+        border-radius: 16px 16px 0 0;
+    }
+
+    &:last-child {
+        border-radius: 0 0 16px 16px;
+    }
+
+    &:only-child {
+        border-radius: 16px;
+    }
+
+    &:hover {
+        background: color-mix(in srgb, var(--primary) 4%, var(--surface));
+    }
+
+    &:hover .ca-entry__sugg-icon {
+        background: color-mix(in srgb, var(--primary) 18%, transparent);
+        color: var(--primary);
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.5;
+    }
+}
+
+.ca-entry__sugg-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: color-mix(in srgb, var(--primary) 80%, var(--text-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition:
+        color 140ms,
+        background 140ms;
+}
+
+.ca-entry__sugg-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    text-align: left;
+}
+
+.ca-entry__sugg-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.ca-entry__sugg-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.message:focus-within .copy-button-container,
+.message:hover .copy-button-container {
+    opacity: 1;
+}

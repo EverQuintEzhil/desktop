@@ -1,0 +1,13 @@
+.specification-tab {
+    transition: none;
+    * {
+        transition: none;
+    }
+    .cm-editor {
+        .cm-scroller {
+            max-height: calc(100svh - 41px - 180px - 61px);
+
+            @include scrollbar;
+        }
+    }
+}

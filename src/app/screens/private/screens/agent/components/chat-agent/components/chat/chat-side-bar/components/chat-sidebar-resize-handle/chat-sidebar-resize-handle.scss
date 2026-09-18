@@ -1,0 +1,29 @@
+.chat-sidebar-resize-handle {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    z-index: 3;
+    cursor: col-resize;
+    background-color: transparent;
+    transition: background-color 0.15s ease-in-out;
+
+    &:hover,
+    &:focus-visible,
+    &.resizing {
+        background-color: var(--sidebar-primary);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--sidebar-primary);
+        outline-offset: 1px;
+    }
+
+    @include below("lg") {
+        display: none;
+    }
+}
+
+// The sidebar animates its width when collapsing; that easing would lag a drag.
+.chat-sidebar.resizing {
+    transition: none;
+}

@@ -1,0 +1,28 @@
+@keyframes arrow-button-move-top {
+    from {
+        translate: -50% 12px;
+        opacity: 0;
+    }
+    to {
+        translate: -50% -12px;
+        opacity: 1;
+    }
+}
+
+.arrow-button {
+    position: absolute;
+    left: 50%;
+    bottom: 120px;
+    translate: -50% -12px;
+    z-index: 2;
+    animation: arrow-button-move-top 0.25s alternate;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    i,
+    svg {
+        font-size: var(--text-base);
+        width: 1em;
+        height: 1em;
+    }
+}

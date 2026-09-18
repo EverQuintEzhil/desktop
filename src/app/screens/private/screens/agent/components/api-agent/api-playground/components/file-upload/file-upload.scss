@@ -1,0 +1,24 @@
+// .file-upload-section and .file-uploaded are declared in src/components/file-upload,
+// which is in this bundle too; these are the app playground's overrides on top.
+.file-upload-section .dropzone-style {
+    border-radius: var(--radius-xl);
+}
+
+.file-upload-section .section-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.file-uploaded .file-details span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.file-uploaded .file-list .file-item {
+    &:not(:last-child) {
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-secondary);
+    }
+}

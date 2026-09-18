@@ -1,0 +1,76 @@
+// Import once from admin app entry — shared selectors used across detail routes.
+@use "breakpoints" as *;
+@use "admin-detail-shared" as *;
+
+// ─── Sticky secondary header ──────────────────────────────────────────────────
+
+.secondary-header {
+    position: sticky;
+    top: 48px;
+    z-index: 2;
+    background: var(--card);
+
+    // Single emission for all detail routes (per-route SCSS must not redefine .metabar).
+    .metabar {
+        padding: var(--space-2) var(--space-4);
+        @include metabar-common;
+    }
+
+    &.data-stores-detail {
+        z-index: 2;
+    }
+}
+
+// ─── Detail tab content area ──────────────────────────────────────────────────
+// Single emission for every detail route (per-route SCSS must not redefine
+// .tab-content-area). Route-specific chrome hangs off a route-owned class.
+
+.tab-content-area {
+    background-color: var(--background);
+
+    .gallery-title {
+        z-index: initial;
+    }
+}
+
+// ─── Detail tab content ───────────────────────────────────────────────────────
+// Single emission for every detail route (per-route SCSS must not redefine
+// .tab-content). Per-feature deltas hang off the route-owned `*-tab` modifier
+// the route already puts on the element.
+
+.tab-content {
+    padding: 16px;
+
+    @include tab-content-common;
+}
+
+.tab-content.agent-api-playground,
+.tab-content.conversations-tab,
+.tab-content.histories-tab {
+    padding: 0;
+}
+
+.tab-content.data-stores-tab,
+.tab-content.launcher-tab,
+.tab-content.mcp-tab,
+.tab-content.memory-tab,
+.tab-content.model-tab,
+.tab-content.prompt-tab,
+.tab-content.tool-tab {
+    gap: 16px;
+    padding-bottom: 1.5rem;
+
+    @include detail-tab-items;
+}
+
+.tab-content.blog-post-tab {
+    @include detail-tab-items;
+}
+
+// ─── Error / retry state ──────────────────────────────────────────────────────
+
+.error-icon-wrap {
+    width: 32px;
+    height: 32px;
+    background-color: #fef2f2;
+}

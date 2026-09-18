@@ -1,0 +1,8 @@
+.data-stores-id-cell .copy-button {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.data-stores-id-cell:hover .copy-button {
+    opacity: 1;
+}

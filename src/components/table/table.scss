@@ -1,0 +1,218 @@
+.table-box {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-secondary);
+    background-color: var(--card);
+}
+
+.table-controller {
+    overflow: auto;
+    position: relative;
+
+    @include scrollbar-overlay;
+}
+
+.table-styled {
+    border-collapse: collapse;
+
+    /*
+   * Auto layout lets the browser widen a column past its width attribute to fit content,
+   * which silently discards a user's resize. Tables with a stored layout opt into fixed
+   * layout so the persisted widths are the ones that render.
+   */
+    &.table-fixed-layout {
+        table-layout: fixed;
+    }
+    transition: none;
+
+    * {
+        transition: none;
+    }
+
+    [data-slot="table-cell"] {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+
+        a {
+            color: var(--text-primary);
+        }
+    }
+
+    .table-cell-content {
+        user-select: text;
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    [data-slot="table-head"] {
+        position: relative;
+        text-align: left;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .th-child {
+            min-height: 30px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        &:hover .resizer {
+            opacity: 1;
+        }
+
+        &:hover .table-drag-handle,
+        .table-drag-handle:focus-visible {
+            opacity: 1;
+        }
+
+        &.is-dragging {
+            background-color: var(--background);
+            opacity: 0.8;
+            z-index: 1;
+        }
+    }
+
+    .table-drag-handle {
+        @media (hover: hover) {
+            opacity: 0.25;
+        }
+    }
+
+    .resizer {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 60%;
+        width: 3px;
+        background-color: var(--border-secondary);
+        cursor: col-resize;
+        user-select: none;
+        touch-action: none;
+
+        &.ltr {
+            right: 0;
+        }
+
+        &.rtl {
+            left: 0;
+        }
+
+        &.is-resizing {
+            background: var(--text-secondary);
+            opacity: 1;
+        }
+
+        @media (hover: hover) {
+            opacity: 0.2;
+        }
+    }
+}
+
+.row-per-pagination {
+    > span {
+        color: var(--text-secondary);
+    }
+
+    .selected-value-block {
+        min-width: 64px;
+        border-radius: var(--radius-pill);
+    }
+}
+
+.table-sort-trigger,
+.table-head-label {
+    width: calc(100% - 8px);
+    padding-right: 8px;
+}
+
+.table-loading {
+    width: 100%;
+    overflow: hidden;
+}
+
+.table-loading-inner {
+    width: 100%;
+    height: 20px;
+    position: relative;
+    border-radius: var(--radius-xs);
+    background-color: var(--background);
+
+    @keyframes shimmer {
+        0%,
+        60% {
+            transform: translate3d(-100%, 0, 0);
+        }
+
+        100% {
+            transform: translate3d(100%, 0, 0);
+        }
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        transform: translateX(-100%);
+        animation: shimmer 1s ease-in-out infinite;
+        background-image: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0,
+            rgba(255, 255, 255, 0.3) 20%,
+            rgba(255, 255, 255, 0.6) 60%,
+            rgba(255, 255, 255, 0)
+        );
+    }
+}
+
+.loading-styled {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(250, 250, 250, 0.45);
+    transition: all 0.3s ease;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+
+    &.active {
+        opacity: 1;
+        z-index: 2;
+        pointer-events: all;
+    }
+}
+
+.loading-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-h5);
+    color: rgba(0, 0, 0, 0.6);
+}

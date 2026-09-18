@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            id="tenant-favicon-light"
+            rel="icon"
+            type="image/svg+xml"
+            href="https://assets.amplify.perkinswill.com/amplify-icon-brand.svg"
+            media="(prefers-color-scheme: light)"
+        />
+        <link
+            id="tenant-favicon-dark"
+            rel="icon"
+            type="image/svg+xml"
+            href="https://assets.amplify.perkinswill.com/amplify-icon-white.svg"
+            media="(prefers-color-scheme: dark)"
+        />
+        <link
+            id="tenant-favicon"
+            rel="icon"
+            type="image/svg+xml"
+            href="https://assets.amplify.perkinswill.com/amplify-icon-brand.svg"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FluentMind</title>
+        <!-- Applies the stored theme before first paint so a dark-mode user never sees a light flash.
+             Must mirror use-appearance.ts: key fm-appearance, values light|dark|system, default light. -->
+        <script>
+            try {
+                var fmAppearance = localStorage.getItem('fm-appearance');
+                if (
+                    fmAppearance === 'dark' ||
+                    (fmAppearance === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+                ) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {
+                /* storage blocked — first paint stays light */
+            }
+        </script>
+        <!-- for markdown typography -->
+        <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.4.x/dist/typography.min.css" />
+    </head>
+    <body>
+        <div id="app" class="app"></div>
+        <div id="popper" class="popper"></div>
+        <div id="modal" class="modal"></div>
+        <script type="module" src="/src/app/main.tsx"></script>
+    </body>
+</html>

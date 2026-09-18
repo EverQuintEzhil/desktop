@@ -1,0 +1,56 @@
+.agent-card {
+    i,
+    svg {
+        color: var(--primary);
+    }
+
+    h4 {
+        line-height: 1.2;
+        color: var(--primary);
+    }
+
+    &:hover {
+        box-shadow: var(--shadow-surface);
+        background-color: var(--surface-hover);
+
+        .popup,
+        .link-icon {
+            opacity: 1;
+        }
+    }
+
+    .link-icon,
+    .popup {
+        color: var(--primary);
+    }
+
+    .popup,
+    .link-icon {
+        opacity: 0;
+
+        &:focus-visible {
+            opacity: 1;
+        }
+
+        @include below("lg") {
+            opacity: 1;
+        }
+    }
+
+    // A pinned card advertises its state even when the card is not hovered.
+    .is-pinned {
+        opacity: 1;
+    }
+}
+
+/* Tenant branding injects a light --surface-hover into html.dark, so the dark hover
+ lift is pinned to app-owned neutral primitives the injected block cannot override. */
+.dark .agent-card:hover {
+    background-color: var(--neutral-border-2);
+
+    h4,
+    i,
+    svg {
+        color: var(--card-hover-foreground);
+    }
+}

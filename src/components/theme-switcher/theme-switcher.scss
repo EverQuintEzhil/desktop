@@ -1,0 +1,15 @@
+.theme-switcher {
+    --switch-width-default: 96px;
+    --switch-width-xs: 44px;
+
+    // Tenants may set --secondary equal to --card, which hides the shared switch track on a card.
+    &.switch--color-primary {
+        background-color: var(--background);
+    }
+
+    @for $index from 0 through 2 {
+        &[data-active-index="#{$index}"] {
+            --switch-active-index: #{$index};
+        }
+    }
+}

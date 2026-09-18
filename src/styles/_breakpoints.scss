@@ -1,0 +1,37 @@
+@use "sass:map";
+
+$breakpoints: (
+    "sm": 640px,
+    "md": 768px,
+    "lg": 1024px,
+    "xl": 1280px,
+    "2xl": 1536px,
+);
+
+/// Below (max-width) — desktop-first
+/// @include below('md') { ... }
+@mixin below($bp) {
+    $value: map.get($breakpoints, $bp);
+    @media (max-width: calc($value - 1px)) {
+        @content;
+    }
+}
+
+/// Above (min-width) — mobile-first
+/// @include above('lg') { ... }
+@mixin above($bp) {
+    $value: map.get($breakpoints, $bp);
+    @media (min-width: $value) {
+        @content;
+    }
+}
+
+/// Between two breakpoints (inclusive lower, exclusive upper)
+/// @include between('md', 'xl') { ... }
+@mixin between($lower, $upper) {
+    $min: map.get($breakpoints, $lower);
+    $max: map.get($breakpoints, $upper);
+    @media (min-width: $min) and (max-width: calc($max - 1px)) {
+        @content;
+    }
+}

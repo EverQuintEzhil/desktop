@@ -1,0 +1,24 @@
+.command-item {
+    &:hover,
+    &.selected,
+    &[data-selected="true"] {
+        background-color: var(--background);
+        color: var(--primary);
+
+        svg {
+            color: var(--primary);
+        }
+    }
+}
+.command-list,
+.command-block {
+    &:focus-visible {
+        outline: none;
+    }
+}
+.command-enter-hint {
+    opacity: 0;
+}
+.command-item[data-selected="true"] .command-enter-hint {
+    opacity: 1;
+}

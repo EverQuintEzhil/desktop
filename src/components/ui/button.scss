@@ -1,0 +1,25 @@
+[data-slot="button"] {
+    i,
+    svg {
+        color: inherit;
+    }
+}
+
+[data-slot="button"][data-variant="destructive"] {
+    i,
+    svg {
+        color: var(--destructive);
+    }
+}
+
+[data-slot="button"][data-size="icon-xs"] {
+    i,
+    svg {
+        font-size: var(--text-xs);
+    }
+
+    svg {
+        width: 1em;
+        height: 1em;
+    }
+}

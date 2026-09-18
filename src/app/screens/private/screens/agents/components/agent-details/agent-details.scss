@@ -1,0 +1,12 @@
+.open-agent-button {
+    color: var(--primary-foreground);
+    a {
+        color: var(--primary-foreground);
+    }
+    &:hover {
+        color: var(--primary-foreground);
+        a {
+            color: var(--primary-foreground);
+        }
+    }
+}

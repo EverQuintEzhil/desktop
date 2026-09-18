@@ -1,0 +1,124 @@
+.comparison-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: ew-resize;
+    user-select: none;
+    overflow: hidden;
+    transition: none;
+    touch-action: none;
+}
+
+.comparison-container * {
+    transition: none !important;
+}
+
+.comparison-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.original-image,
+.edited-image {
+    position: absolute;
+    inset: 0;
+}
+
+.original-image img,
+.edited-image img {
+    width: 100%;
+    height: 100%;
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+    object-fit: contain;
+}
+
+.original-image {
+    border-radius: var(--radius-lg);
+}
+
+.edited-image {
+    transition: clip-path 0.1s ease-out;
+}
+
+.slider-line {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: white;
+    z-index: 3;
+    box-shadow: var(--shadow-xs);
+    transform: translateX(-1px);
+}
+
+.slider-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    cursor: ew-resize;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-pill);
+    z-index: 4;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    touch-action: none;
+}
+
+.slider-handle i,
+.slider-handle svg {
+    color: white;
+}
+
+.slider-handle:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.slider-handle:active,
+.slider-line-active .slider-handle {
+    transform: translate(-50%, -50%) scale(0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.label-badge {
+    position: absolute;
+    top: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+}
+
+.label-badge-left {
+    left: 12px;
+}
+
+.label-badge-right {
+    right: 12px;
+}
+
+@include below("sm") {
+    .slider-handle {
+        width: 36px;
+        height: 36px;
+    }
+
+    .label-badge {
+        padding: 4px 8px;
+    }
+}

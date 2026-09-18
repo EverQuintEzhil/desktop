@@ -1,0 +1,287 @@
+@use "../lightbox-title-shared" as *;
+
+.lightbox-carousel-video {
+    max-width: 74vw;
+    max-height: calc(100svh - 40px - 37px - 88px - 48px);
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.lightbox-image-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+
+    * {
+        user-select: none;
+    }
+
+    [data-slot="carousel-content"] {
+        height: 100%;
+        overflow: visible;
+
+        @include below("lg") {
+            overflow: hidden;
+        }
+    }
+
+    .lightbox-carousel-content {
+        height: 100%;
+        align-items: center;
+        margin-left: 0 !important;
+    }
+
+    .lightbox-carousel-slide {
+        flex-basis: 92vw;
+        height: 100%;
+        max-height: calc(100svh - 40px - 37px - 88px - 48px);
+        padding-left: 0;
+
+        @include below("lg") {
+            flex-basis: 100vw;
+        }
+
+        @include below("md") {
+            max-height: calc(100svh - 40px - 37px - 88px - 48px - 60px);
+        }
+    }
+
+    .lightbox-carousel-slide-panel {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lightbox-carousel-slide .video-block-image,
+    .lightbox-carousel-slide .video-block,
+    .lightbox-carousel-slide .image-container {
+        max-width: 74vw;
+        transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+        @include below("lg") {
+            max-width: 100vw;
+        }
+    }
+
+    .lightbox-carousel-slide.is-left-adj,
+    .lightbox-carousel-slide.is-right-adj {
+        filter: blur(4px);
+        opacity: 0.35;
+        z-index: 1;
+
+        @include below("lg") {
+            opacity: 1;
+            filter: none;
+            pointer-events: none;
+        }
+
+        .video-block,
+        .video-block-image,
+        .image-container {
+            height: 100%;
+            transform: none;
+        }
+    }
+
+    .lightbox-carousel-slide.is-left-adj {
+        .video-block,
+        .video-block-image,
+        .image-container {
+            margin-left: auto;
+            background-color: #e3e3e3;
+
+            @include below("lg") {
+                margin-left: 0;
+                background-color: transparent;
+            }
+        }
+    }
+
+    .lightbox-carousel-slide.is-right-adj {
+        .video-block,
+        .video-block-image,
+        .image-container {
+            margin-right: auto;
+            background-color: #e3e3e3;
+
+            @include below("lg") {
+                margin-right: 0;
+                background-color: transparent;
+            }
+        }
+    }
+
+    .lightbox-carousel-slide.current-image {
+        z-index: 2;
+
+        .video-block-image,
+        .video-block,
+        .image-container {
+            transform: none;
+        }
+    }
+
+    .lightbox-carousel-slide.is-offscreen {
+        .lightbox-carousel-slide-panel {
+            display: none;
+        }
+    }
+
+    .comparison-slider-wrapper {
+        @include below("lg") {
+            max-width: 100vw;
+            // override the inline width: min(74vw, ...) set by the component
+            width: 100% !important;
+        }
+    }
+
+    .lightbox-image-container {
+        justify-content: center;
+    }
+
+    &.remix-open {
+        .lightbox-carousel-slide.is-left-adj,
+        .lightbox-carousel-slide.is-right-adj {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .current-image {
+            img {
+                scale: 0.9;
+                transition: scale 0.2s ease-out;
+            }
+        }
+    }
+}
+
+.previous-navigation,
+.next-navigation {
+    position: fixed;
+    width: 4vw;
+    top: calc(12px + 37px);
+    bottom: 0;
+    z-index: 5;
+
+    @include below("lg") {
+        display: none;
+    }
+}
+
+.previous-navigation {
+    left: 0;
+}
+
+.next-navigation {
+    right: 0;
+}
+
+.mobile-nav-arrow {
+    display: none;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.45);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:active:not(:disabled) {
+        background: rgba(0, 0, 0, 0.65);
+    }
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: default;
+    }
+
+    @include below("lg") {
+        display: flex;
+    }
+
+    &--prev {
+        left: 12px;
+    }
+
+    &--next {
+        right: 12px;
+    }
+}
+
+// LightImageTitleSection styles
+.lightbox-message {
+    color: white;
+    text-align: center;
+    font-size: 1.125rem; // theme.fontSizes.lg
+    line-height: 1.5;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+    max-width: 50vw;
+    border-bottom: 2px solid #ffffff26;
+
+    & + .edit-prompt-section {
+        padding-top: 8px;
+    }
+
+    @include below("lg") {
+        max-width: 810px;
+    }
+
+    @include below("sm") {
+        font-size: var(--text-sm); // theme.fontSizes.sm
+    }
+}
+
+.title-text {
+    cursor: pointer;
+    color: white;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    height: 24px;
+}
+
+.custom-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2a2e2f;
+    color: white;
+    // padding and border-radius moved to Tailwind
+    font-size: var(--text-sm); // theme.fontSizes.sm
+    width: clamp(200px, 100%, 400px);
+    z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+
+    &.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    @include below("sm") {
+        font-size: 0.75rem; // theme.fontSizes.xs
+        max-width: 280px;
+    }
+}

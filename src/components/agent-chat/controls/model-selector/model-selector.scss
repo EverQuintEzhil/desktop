@@ -1,0 +1,10 @@
+@use "../../../../app/screens/private/screens/agent/shared/dark-mode-shared" as *;
+
+.model-selector-popover {
+    @include dark-mode-popover;
+
+    // Command item label is 12px, overriding the Select default.
+    .command-list .command-item > span {
+        font-size: var(--text-xs);
+    }
+}

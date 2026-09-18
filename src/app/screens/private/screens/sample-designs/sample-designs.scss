@@ -1,0 +1,5 @@
+.sample-designs {
+    &:has(.skeleton-container) {
+        background-color: var(--card);
+    }
+}

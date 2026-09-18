@@ -1,0 +1,213 @@
+.article-list {
+    &.article-list-skeleton .article-list-item {
+        border-radius: var(--radius-3xl);
+        overflow: hidden;
+        background-color: var(--card);
+
+        .skeleton:after {
+            background-image: linear-gradient(
+                90deg,
+                transparent 0,
+                color-mix(in srgb, var(--muted-foreground) 30%, transparent) 20%,
+                color-mix(in srgb, var(--card) 60%, transparent) 60%,
+                transparent
+            );
+        }
+    }
+
+    &.article-list-items .article-list-item {
+        user-select: none;
+
+        * {
+            user-select: none;
+        }
+    }
+}
+
+.blog-post-card-skeleton {
+    background-color: var(--card);
+}
+
+// The agent-card hover: the signature violet aura plus the warm surface tint.
+.blog-card-hover {
+    transition: all 0.2s ease;
+
+    &:hover {
+        box-shadow: var(--shadow-surface);
+        background-color: var(--surface-hover);
+    }
+}
+
+.blog-post-card-link a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.blog-page {
+    --blogs-header-height: 3.75rem;
+    --blogs-rail-width: 280px;
+}
+
+.blogs-content {
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--radius-sm);
+        margin: 1rem 0;
+        display: block;
+    }
+    h1 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 2rem;
+    }
+    h3 {
+        font-size: 1.75rem;
+    }
+    @for $i from 1 through 8 {
+        .ql-indent-#{$i} {
+            padding-left: calc(#{$i} * 3rem);
+        }
+    }
+    a {
+        color: var(--primary);
+    }
+    ol,
+    ul,
+    p,
+    h1,
+    h2,
+    h3,
+    img {
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+    p:has(> br:only-child) {
+        margin: 0;
+    }
+    a,
+    span,
+    p {
+        font-size: var(--text-h5);
+        line-height: 1.625;
+    }
+    ol,
+    ul {
+        display: flex;
+        flex-direction: column;
+        padding-left: 32px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+    li {
+        margin-top: 6px;
+        margin-bottom: 6px;
+        font-size: var(--text-h5);
+        line-height: 1.625;
+    }
+    li[data-list="ordered"] {
+        list-style-type: decimal;
+    }
+    li[data-list="bullet"] {
+        list-style-type: disc;
+    }
+    .table-container {
+        max-height: 60vh;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin: 16px 0;
+        overflow: auto;
+        @include scrollbar(6px, 6px);
+        table {
+            width: 100%;
+            table-layout: auto;
+            border-collapse: collapse;
+            margin: 0;
+            font-size: var(--text-sm);
+            line-height: 1.5;
+            background-color: var(--card);
+            border-radius: var(--radius-lg);
+            box-shadow: none;
+            thead {
+                background-color: var(--muted);
+                position: sticky;
+                top: 0;
+                z-index: 1;
+                th {
+                    padding: 12px;
+                    text-align: left;
+                    font-weight: 600;
+                    font-size: var(--text-sm);
+                    line-height: 1.4;
+                    color: var(--text-primary);
+                    border-bottom: 2px solid var(--border);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    vertical-align: top;
+                    &:first-child {
+                        padding-left: 12px;
+                    }
+                    &:last-child {
+                        padding-right: 12px;
+                    }
+                    @include below("md") {
+                        padding: 8px 12px;
+                    }
+                }
+            }
+            tbody {
+                td {
+                    padding: 12px;
+                    border-bottom: 1px solid var(--border);
+                    vertical-align: top;
+                    word-wrap: break-word;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: auto;
+                    min-width: 160px;
+                    max-width: 320px;
+                    &:first-child {
+                        padding-left: 12px;
+                    }
+                    &:last-child {
+                        padding-right: 12px;
+                    }
+                    @include below("md") {
+                        padding: 8px 12px;
+                    }
+                }
+                tr:hover {
+                    background-color: var(--surface-hover);
+                }
+            }
+        }
+        @include below("md") {
+            font-size: var(--text-sm);
+        }
+    }
+
+    // Everything a BlockNote article needs lives in the shared mixin so the reader, the
+    // admin preview and the editor cannot drift apart again.
+    .article-body {
+        @include article-content;
+    }
+}
+
+.blog-post-figure {
+    background-color: var(--muted);
+    width: 100%;
+}
+
+.blog-post-figure img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.blog-post-figure img.placeholder-image {
+    max-width: 200px;
+    height: auto;
+    transition: none;
+}

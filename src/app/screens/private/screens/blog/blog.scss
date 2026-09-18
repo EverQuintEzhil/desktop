@@ -1,0 +1,29 @@
+.blogs-page-details {
+    .blogs-container {
+        .blog-featured-image {
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+}
+
+.blog-details-header h1 {
+    font-size: var(--text-3xl);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+@include below("lg") {
+    .blog-details-header h1 {
+        font-size: var(--text-2xl);
+    }
+}
+
+@include below("sm") {
+    .blog-details-header h1 {
+        font-size: var(--text-xl);
+    }
+}

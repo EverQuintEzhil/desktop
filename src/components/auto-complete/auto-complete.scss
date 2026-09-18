@@ -1,0 +1,51 @@
+.auto-complete {
+    position: relative;
+
+    /* Popover defaults include w-max; cap width in TSX. Ensure cmdk items wrap inside the panel. */
+    [cmdk-item] {
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+
+    &.label-overlay {
+        label {
+            position: absolute;
+            z-index: 1;
+            background-color: var(--card);
+            font-size: var(--text-xs);
+            left: 8px;
+            top: -9px;
+            padding-left: 2px;
+            padding-right: 2px;
+            width: initial;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    &.has-error {
+        padding-bottom: 20px;
+        position: relative;
+
+        .input-holder {
+            input {
+                border-color: #e6492c;
+            }
+
+            svg {
+                color: #e6492c;
+            }
+        }
+    }
+}
+
+.input-holder {
+    input {
+        padding-right: 40px;
+        height: 32px;
+    }
+}
+
+.auto-complete-loading {
+    border-radius: inherit;
+}

@@ -1,0 +1,64 @@
+// Shared styles for recents in chat_agent (v1) and chat_agent_v2 (v2).
+// Import path from both: @import '../../../recents-shared'
+@use "breakpoints" as *;
+
+// Inner content of .conversation-list: li cards + custom scrollbar.
+@mixin conversation-list-content {
+    li {
+        background-color: var(--card);
+        border-radius: var(--radius-xl);
+
+        &:not(:first-child) {
+            border-top: 1px solid var(--card);
+        }
+    }
+
+    @include scrollbar;
+}
+
+.conversation-item {
+    .conversation-link {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        text-decoration: none;
+        color: #1d1c1b;
+        gap: 16px;
+
+        > div:first-child {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .popup {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            flex-shrink: 0;
+            margin-top: 4px;
+
+            @include below("lg") {
+                opacity: 1;
+            }
+        }
+    }
+
+    &:hover {
+        box-shadow: var(--shadow-surface);
+        background-color: var(--surface-hover);
+
+        .conversation-link .popup {
+            opacity: 1;
+        }
+    }
+
+    &.active .conversation-link {
+        background-color: transparent;
+    }
+}
+
+@include below("lg") {
+    .recents-header-actions button {
+        font-size: 0;
+        gap: 0;
+    }
+}

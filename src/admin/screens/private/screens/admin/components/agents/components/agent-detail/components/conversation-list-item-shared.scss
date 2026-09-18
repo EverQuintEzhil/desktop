@@ -1,0 +1,6 @@
+.history-list-item,
+.conversation-list-item {
+    &:hover .conversation-delete-button {
+        opacity: 1;
+    }
+}

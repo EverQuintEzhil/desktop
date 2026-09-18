@@ -1,0 +1,38 @@
+.file-upload-section {
+    background-color: var(--card);
+
+    .dropzone-style {
+        border-radius: var(--radius-xl);
+    }
+
+    .section-title {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+}
+
+.file-uploaded {
+    .file-details {
+        span {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+
+    .file-progress {
+        .progress-bar {
+            margin-top: 4px;
+        }
+    }
+
+    .file-list {
+        .file-item {
+            &:not(:last-child) {
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--border-secondary, #d9d9d9);
+            }
+        }
+    }
+}

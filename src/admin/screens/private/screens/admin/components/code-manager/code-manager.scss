@@ -1,0 +1,128 @@
+@use "../tool-info-shared" as *;
+
+@keyframes tool-code-history-item-select {
+    0% {
+        transform: scale(0.97);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tool-code-with-execute {
+    max-height: calc(100svh - 115px);
+}
+
+.tool-code-history {
+    max-height: calc(100svh - 115px);
+}
+
+// The code manager fills its detail tab edge to edge, overriding the padding
+// that `.tab-content.tool-tab` applies to other tool tabs.
+.code-manager-tab {
+    &.p-0\! {
+        padding: 0 !important;
+    }
+}
+
+.lua-badge {
+    background-color: #1e3a5f;
+    color: #7ec8e3;
+    border: 1px solid #2a5080;
+    letter-spacing: 0.04em;
+}
+
+.new-badge {
+    background-color: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
+    letter-spacing: 0.06em;
+}
+
+.tool-code-editor {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 0;
+
+    &.border-0\! {
+        border: 0 !important;
+    }
+
+    &.rounded-none\! {
+        border-radius: 0 !important;
+    }
+
+    .tool-code-mirror {
+        height: 100%;
+
+        .cm-editor {
+            height: 100%;
+            font-size: 13px;
+            font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Menlo", "Monaco", "Consolas", monospace;
+        }
+
+        .cm-scroller {
+            overflow: auto;
+        }
+    }
+}
+
+.switch--read-only {
+    .switch-item:disabled {
+        cursor: default;
+        opacity: 1;
+    }
+}
+
+.tool-code-readonly-ui {
+    input:disabled,
+    textarea:disabled,
+    button:disabled,
+    [data-slot="checkbox"]:disabled {
+        cursor: default;
+        opacity: 1;
+    }
+
+    .peer:disabled ~ label {
+        cursor: default;
+        opacity: 1;
+    }
+}
+
+/* Scrollbar styling */
+.scrollbar-thin {
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--border-secondary);
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--border-primary, #d1d5db);
+    }
+}
+
+.editor-controller {
+    .plain-text {
+        padding: 16px;
+    }
+
+    .markdown-editor {
+        margin-bottom: 0;
+
+        .w-md-editor {
+            height: 100% !important;
+        }
+    }
+}

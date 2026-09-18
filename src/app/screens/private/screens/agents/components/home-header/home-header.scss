@@ -1,0 +1,26 @@
+.header {
+    &.sticky {
+        box-shadow: var(--shadow-xs);
+    }
+}
+
+.home-header-menu-item {
+    span {
+        width: 100%;
+    }
+    a {
+        text-decoration: none;
+
+        span {
+            color: var(--text-primary);
+            width: 100%;
+        }
+
+        &:hover {
+            // background-color: var(--background);
+            span {
+                color: var(--primary);
+            }
+        }
+    }
+}

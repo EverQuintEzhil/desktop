@@ -1,0 +1,57 @@
+.skill-file-row {
+    transition:
+        background-color 140ms ease,
+        box-shadow 140ms ease;
+
+    &:hover,
+    &:focus-within {
+        background: color-mix(in srgb, var(--primary) 5%, transparent);
+    }
+
+    &--selected {
+        background: color-mix(in srgb, var(--primary) 6%, transparent);
+
+        button:not(.skill-file-delete-button) {
+            color: var(--primary);
+            font-weight: 400;
+        }
+
+        &:hover,
+        &:focus-within {
+            background: color-mix(in srgb, var(--primary) 6%, transparent);
+        }
+    }
+
+    &--context {
+        background: color-mix(in srgb, var(--primary) 6%, transparent);
+
+        button:not(.skill-file-delete-button) {
+            color: var(--primary);
+            font-weight: 400;
+        }
+    }
+
+    &:hover,
+    &:focus-within {
+        .skill-file-delete-button,
+        .skill-file-action-button {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+}
+
+.skill-file-action-button,
+.skill-file-delete-button {
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 140ms ease,
+        background-color 140ms ease;
+}
+
+.skill-file-delete-button {
+    &:hover {
+        background: color-mix(in srgb, var(--destructive) 10%, transparent);
+    }
+}

@@ -1,0 +1,12 @@
+@use "../dark-mode-shared" as *;
+@use "../selected-parameters-shared" as *;
+
+.parameter-selector-popover {
+    @include dark-mode-popover;
+
+    // Dropdown option labels are 12px, overriding the CommandItem default.
+    .command-item,
+    .command-item span {
+        font-size: var(--text-xs);
+    }
+}

@@ -1,0 +1,111 @@
+// Shared styles for prompt_detail in chat_agent (v1) and chat_agent_v2 (v2).
+// Import path from both: @import '../../../prompt-detail-shared'
+@use "breakpoints" as *;
+
+.prompt-detail-panel {
+    background-color: var(--card);
+    border-radius: var(--radius-xl);
+}
+
+.prompt-content {
+    font-size: var(--text-h5);
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol,
+    blockquote,
+    pre,
+    code,
+    table,
+    th,
+    td {
+        margin-bottom: 1rem;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background-color: var(--border-secondary);
+    }
+
+    p,
+    ul,
+    ol,
+    blockquote,
+    pre,
+    code,
+    table,
+    th,
+    td {
+        margin-top: 1rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 1.5rem;
+    }
+
+    li {
+        margin-bottom: 8px;
+        margin-top: 8px;
+    }
+
+    ol,
+    ul {
+        padding-left: 1.5rem;
+
+        li {
+            list-style: inherit;
+        }
+    }
+}
+
+// Tab list item mixin — $accent controls the hover/active highlight colour.
+// chat_agent (v1) passes var(--text-primary); chat_agent_v2 passes var(--primary).
+@mixin prompt-detail-tab-list-item($accent) {
+    display: inline-block;
+    margin: 0;
+    cursor: pointer;
+
+    .tab-button {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: 8px 12px;
+        height: 35px;
+        position: relative;
+        border-bottom: 2px solid transparent;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+        border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+        margin: 0 1px;
+
+        &:hover {
+            background: var(--background);
+
+            span {
+                color: $accent;
+            }
+        }
+    }
+
+    &.active .tab-button {
+        border-bottom-color: $accent;
+        background: var(--background);
+
+        span {
+            color: $accent;
+            font-weight: 700;
+        }
+    }
+}

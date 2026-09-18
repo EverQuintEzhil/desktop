@@ -1,0 +1,203 @@
+@use "../../../admin-detail-shared" as *;
+@use "../../../detail-tabs-shared" as *;
+
+// Agent-only metabar chrome (shared typography/layout lives in admin-detail-shared-global.scss).
+.secondary-header .metabar .secondary {
+    font-size: 13px;
+    margin: 0;
+    display: block;
+    line-height: 1.4;
+}
+
+.tab-content .no-conversation,
+.tab-content .no-history {
+    i,
+    svg {
+        width: 60px;
+        height: 60px;
+        font-size: 48px;
+    }
+}
+
+.tab-content .split-pane {
+    .home-screen {
+        height: calc(100svh - 48px - 138px);
+    }
+
+    .search-block .search-input {
+        max-width: 100%;
+    }
+
+    .reply-area .source-tab .source-list .source-tab-list-item {
+        padding: 0;
+    }
+
+    .conversation-list {
+        background-color: var(--card);
+    }
+
+    &.vertical-split {
+        height: calc(100svh - 48px - 138px);
+
+        .resizer:active {
+            background-color: #d4d4d4;
+        }
+
+        .pane {
+            overflow: auto;
+
+            @include scrollbar;
+
+            .message-list {
+                min-height: calc(100svh - 368px);
+                max-width: 776px;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+
+                .message.last {
+                    min-height: calc(100svh - 368px - 24px);
+                }
+
+                .message-list-item.last {
+                    min-height: calc(100svh - 368px - 40px - 16px - 24px);
+                }
+            }
+
+            .reply-area-inner {
+                min-height: initial;
+                max-width: 776px;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                padding-top: 0;
+
+                .message-q-a {
+                    .message-tab-list {
+                        top: 53px;
+                    }
+
+                    &:last-child {
+                        min-height: calc(100svh - 250px);
+                    }
+                }
+            }
+
+            &:has(.conversation-list) {
+                position: relative;
+            }
+        }
+
+        > * {
+            height: calc(100svh - 48px - 138px);
+        }
+
+        .conversation-block .message-list {
+            gap: 16px;
+            padding-bottom: 1.5rem;
+
+            .message-list-item {
+                gap: 12px;
+
+                .message-answer .prose,
+                .message-question span {
+                    font-size: var(--text-h5);
+                }
+            }
+        }
+
+        .spinner-block {
+            padding-top: 1.5rem;
+        }
+
+        .conversation-panel .container,
+        .reply-area .container {
+            max-width: 100%;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .reply-area {
+            .container {
+                background-color: var(--background);
+            }
+
+            .continue-reply {
+                padding-bottom: 16px;
+            }
+
+            .reply-area-inner .reply-content {
+                padding-bottom: 16px;
+                gap: 12px;
+
+                h2 {
+                    font-size: var(--text-xl);
+                }
+
+                .answer-title span {
+                    color: #6c6c6c;
+                    font-weight: 500;
+                }
+
+                .answer-block {
+                    .answer-label h4 {
+                        font-size: var(--text-h3);
+                    }
+
+                    .prose {
+                        font-size: var(--text-h5);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.agent-tab.tab-content {
+    padding: 16px 1.5rem 0;
+    gap: 16px;
+
+    // Repeated from the base's `tab-content-common`: a media query adds no specificity, so the
+    // base's below-lg reset is (0,1,0) and cannot override this (0,2,0) rule.
+    @include below("lg") {
+        padding: 16px;
+    }
+
+    @include detail-tab-items;
+}
+
+// Agent-only chrome inside the detail tab area. Sits on a route-owned class so it
+// keeps one-class-deep specificity; the shared .tab-content-area background lives
+// in admin-detail-shared-global.scss.
+.agent-tab-content-area {
+    .data-explorer-step {
+        padding: 16px 16px 24px;
+    }
+    .table-controller {
+        background-color: var(--card);
+    }
+    .message {
+        &.last {
+            &.first {
+                min-height: calc(100svh - 16px - 72px - 110px - 24px - 134px - 49px);
+            }
+        }
+        &.last {
+            min-height: calc(100svh - 24px - 110px - 24px - 134px - 49px);
+        }
+    }
+    .answer-list-item {
+        &.last {
+            min-height: calc(100svh - 24px - 64px - 24px - 110px - 24px - 134px - 49px);
+        }
+        &.last {
+            &.first {
+                min-height: calc(100svh - 16px - 72px - 110px - 64px - 24px - 24px - 134px - 49px);
+            }
+        }
+    }
+}
+
+.error-state-wrapper {
+    max-width: 320px;
+}

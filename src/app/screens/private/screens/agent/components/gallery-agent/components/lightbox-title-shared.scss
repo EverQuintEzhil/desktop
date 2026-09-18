@@ -1,0 +1,10 @@
+// Row wrapper — separator spans thumbnails + title together
+.lightbox-title-row {
+    border-bottom: 2px solid #ffffff26;
+    padding-bottom: 8px;
+
+    .lightbox-message {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}

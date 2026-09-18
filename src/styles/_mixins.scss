@@ -1,0 +1,674 @@
+// `below()` lives in _breakpoints.scss. Vite prepends both partials to entry
+// stylesheets, but not to a partial loaded through @use — so this file has to load
+// breakpoints itself before article-content can call it.
+@use "breakpoints" as *;
+
+/// Single-line text truncation (ellipsis)
+@mixin text-truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/// Multi-line text clamp
+/// @param {Number} $lines - number of visible lines
+@mixin line-clamp($lines) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    line-clamp: $lines;
+    -webkit-box-orient: vertical;
+}
+
+/// Visually hidden (accessible)
+@mixin visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/// Full overlay (absolute cover parent)
+@mixin overlay {
+    position: absolute;
+    inset: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Scrollbar mixins
+// ---------------------------------------------------------------------------
+
+/// Theme-aware scrollbar using CSS design tokens.
+/// Colours are supplied by --track-background / --thumb-background / --thumb-background-hover,
+/// so light/dark is handled automatically by the theme.
+/// @param {Number} $width  - scrollbar width            [default: 6px]
+/// @param {Number} $height - scrollbar height (horizontal scroll) [default: null → omitted]
+/// @param {Boolean} $with-gutter - add scrollbar-gutter:stable on &.is-overflowing [default: false]
+@mixin scrollbar($width: 6px, $height: null, $with-gutter: false) {
+    @if $with-gutter {
+        &.is-overflowing {
+            scrollbar-gutter: stable;
+        }
+    }
+    &::-webkit-scrollbar {
+        width: $width;
+        @if $height {
+            height: $height;
+        }
+    }
+    &::-webkit-scrollbar-track {
+        background: var(--track-background);
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--thumb-background);
+        border-radius: 3px;
+        &:hover {
+            background: var(--thumb-background-hover);
+        }
+    }
+    // Firefox only — scrollbar-width in Chrome suppresses ::-webkit-scrollbar
+    @supports not selector(::-webkit-scrollbar) {
+        scrollbar-width: thin;
+        scrollbar-color: var(--thumb-background) var(--track-background);
+    }
+}
+
+/// Scrollbar for overlay/panel contexts where the component manages its own
+/// light/dark toggle via a .dark-mode class (e.g. text areas, code panels).
+/// Light mode: neutral greys.  Dark mode: white-alpha tokens.
+/// Always adds scrollbar-gutter:stable on &.is-overflowing.
+/// @param {Boolean} $dark-mode - include .dark-mode colour overrides [default: true]
+@mixin scrollbar-overlay($dark-mode: true) {
+    &.is-overflowing {
+        scrollbar-gutter: stable;
+    }
+    &::-webkit-scrollbar-track {
+        background: var(--track-background);
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--thumb-background);
+        border-radius: 3px;
+        &:hover {
+            background: var(--thumb-background-hover);
+        }
+    }
+    @if $dark-mode {
+        &.dark-mode {
+            &::-webkit-scrollbar-track {
+                background: var(--white-alpha-1) !important;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: var(--white-alpha-2) !important;
+                &:hover {
+                    background: var(--white-alpha-3) !important;
+                }
+            }
+        }
+    }
+}
+
+/// Completely hides the scrollbar while preserving scroll behaviour.
+@mixin scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/// Wraps lucide path data in an SVG the `mask-image` property can use.
+///
+/// The stroke is a literal black rather than currentColor: a mask reads the alpha
+/// channel and throws the colour away, and currentColor cannot resolve inside a
+/// data URI anyway. The visible colour comes from background-color on the same
+/// pseudo-element.
+@function callout-icon($paths) {
+    @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E#{$paths}%3C/svg%3E");
+}
+
+/// The tenant's colours a writer can pick in the blog editor, as token names. Declared
+/// here rather than in the editor's own stylesheet because two files need the same list —
+/// the callout classes below and the editor's data-attribute rules in blog-editor.scss —
+/// and a token in one but not the other is a swatch that paints nothing. Must track
+/// THEME_COLORS in src/lib/article-colors.ts, which is what writes these values.
+$article-theme-colors:
+    "primary", "primary-foreground", "secondary", "secondary-foreground", "accent", "accent-foreground", "destructive",
+    "destructive-foreground", "success", "success-foreground", "foreground", "text-secondary", "muted-foreground";
+
+/// Note / Tip / Important / Warning / Troubleshooting boxes.
+///
+/// Neither the icon nor the word "Note" is written into the article HTML — both are
+/// generated from the variant class. That is what keeps <svg> off the article
+/// sanitizer's tag list and makes the block's `parse` a single class lookup, with no
+/// label element sitting in the content that a round trip would duplicate. The word
+/// still reaches assistive tech: the block renders aria-label on the box itself.
+///
+/// Included by article-content for the reader and the admin preview, and again by
+/// blog-editor.scss for the editor, which is the one surface that does not include
+/// article-content.
+///
+/// The palette lives here rather than in index.css because these colours belong to one
+/// block, not to the app. index.css is the theme every screen reads from; a hue that
+/// only a knowledge base article can produce has no business in it.
+///
+/// Names match BlockNote's own colour list, because that is what the writer picks from
+/// in the drag handle's Colors menu. Values do not: BlockNote's are pale backgrounds
+/// with no dark-mode pair, and each one is used here at full strength for the icon, the
+/// label and the border. These are GitHub Primer's foreground colours, which are
+/// contrast-checked against a light and a dark surface.
+@mixin callout-palette($mode: "light") {
+    @if $mode == "light" {
+        --callout-gray: #57606a;
+        --callout-brown: #6f4e37;
+        --callout-red: #cf222e;
+        --callout-orange: #bc4c00;
+        --callout-yellow: #9a6700;
+        --callout-green: #1a7f37;
+        --callout-blue: #0969da;
+        --callout-purple: #8250df;
+        --callout-pink: #bf3989;
+    } @else {
+        --callout-gray: #8b949e;
+        --callout-brown: #c4a484;
+        --callout-red: #f85149;
+        --callout-orange: #db6d28;
+        --callout-yellow: #d29922;
+        --callout-green: #3fb950;
+        --callout-blue: #2f81f7;
+        --callout-purple: #a371f7;
+        --callout-pink: #db61a2;
+    }
+}
+
+@mixin callout {
+    .callout {
+        @include callout-palette("light");
+
+        // Fallback for a class the sanitizer let through but this file does not know —
+        // a grey box beats an invisible one.
+        --callout-color: var(--callout-gray);
+        --callout-icon: none;
+        --callout-label: "";
+
+        position: relative;
+        margin-block: 1rem;
+        padding: 12px 16px 12px 44px;
+        border: 1px solid color-mix(in srgb, var(--callout-color) 30%, transparent);
+        border-radius: var(--radius);
+        background-color: color-mix(in srgb, var(--callout-color) 8%, transparent);
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            width: 18px;
+            height: 18px;
+            background-color: var(--callout-color);
+            mask-image: var(--callout-icon);
+            mask-size: contain;
+            mask-repeat: no-repeat;
+        }
+
+        // The label runs into the first words rather than sitting on its own line, which
+        // is what the content editor's reference shows. That puts it on the paragraph,
+        // not on the box — a ::before on the box would be a block-level sibling.
+        > p:first-child::before {
+            content: var(--callout-label);
+            margin-right: 0.35em;
+            color: var(--callout-color);
+            font-weight: 700;
+        }
+
+        // The box already carries the top and bottom padding.
+        > p {
+            margin-block: 0;
+        }
+    }
+
+    // `.dark` sits on <html>, so prefixing the whole nested selector is what reaches it.
+    // The extra class also outranks the light declarations above, whatever the include
+    // site's own nesting depth is.
+    .dark & .callout {
+        @include callout-palette("dark");
+    }
+
+    .callout-note {
+        --callout-color: var(--callout-blue);
+        --callout-label: "Note:";
+        --callout-icon: #{callout-icon(
+                "%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E"
+            )};
+    }
+
+    .callout-tip {
+        --callout-color: var(--callout-green);
+        --callout-label: "Tip:";
+        --callout-icon: #{callout-icon(
+                "%3Cpath d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5'/%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E"
+            )};
+    }
+
+    .callout-important {
+        --callout-color: var(--callout-purple);
+        --callout-label: "Important:";
+        --callout-icon: #{callout-icon(
+                "%3Cpath d='M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z'/%3E%3Cpath d='M12 15h.01'/%3E%3Cpath d='M12 7v4'/%3E"
+            )};
+    }
+
+    .callout-warning {
+        --callout-color: var(--callout-yellow);
+        --callout-label: "Warning:";
+        --callout-icon: #{callout-icon(
+                "%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E"
+            )};
+    }
+
+    .callout-troubleshooting {
+        --callout-color: var(--callout-gray);
+        --callout-label: "Troubleshooting:";
+        --callout-icon: #{callout-icon(
+                "%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z'/%3E"
+            )};
+    }
+
+    // A colour the writer picked from the drag handle's Colors menu. These have to come
+    // after the variant rules: both are one class on the same element, so source order
+    // is what decides, not specificity.
+    //
+    // The whole accent moves, not only the background. Tinting the box green and leaving
+    // an amber triangle and an amber "Warning:" on top of it reads as a rendering bug.
+    // Quoted: gray, red, green, blue, purple and pink are CSS colour keywords, and Sass
+    // reads a bare one as a colour value rather than a name to build a selector from.
+    @each $name in "gray", "brown", "red", "orange", "yellow", "green", "blue", "purple", "pink" {
+        .callout-color-#{$name} {
+            --callout-color: var(--callout-#{$name});
+        }
+    }
+
+    // The tenant's own colours, from the same menu. These need no light/dark pair of
+    // their own: the token already carries one, because applyBranding writes every one of
+    // them under both :root and html.dark. Names are article-colors.ts's — a class cannot
+    // spell the `var(--primary)` the block actually stores.
+    @each $token in $article-theme-colors {
+        .callout-color-theme-#{$token} {
+            --callout-color: var(--#{$token});
+        }
+    }
+}
+
+/**
+ * Blog article body — the HTML a BlockNote editor produced.
+ *
+ * The editor, the reader page and the admin preview all render the same markup, so they
+ * all include this. Without it they drifted: an h2 measured 32px/700 in the editor,
+ * 32px/400 on the reader and 14px/400 in the admin preview, and paragraphs ran 16/15/14px.
+ * The values below match what BlockNote itself renders, since that is the WYSIWYG the
+ * writer is looking at — headings on its 2em / 1.3em scale, 18px of space above a heading.
+ */
+@mixin article-content {
+    font-size: 1rem;
+    line-height: 1.5;
+
+    @include callout;
+
+    p {
+        margin-block: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    h2,
+    h3 {
+        margin-block: 1.125rem 0.5rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    // rem, not em: in the admin preview the wrapper inherits a 14px body size, and an
+    // em-based heading resolved against that came out at 28px instead of 32px.
+    //
+    // The desktop sizes match BlockNote's own scale so the editor and the reader agree.
+    // The steps below exist because the page title shrinks at the same breakpoints
+    // (blog.scss) — without them a body h2 ends up larger than the article title on a phone.
+    h2 {
+        font-size: 2rem;
+    }
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    @include below("lg") {
+        h2 {
+            font-size: 1.75rem;
+        }
+    }
+
+    @include below("sm") {
+        h2 {
+            font-size: 1.375rem;
+        }
+        h3 {
+            font-size: 1.15rem;
+        }
+    }
+
+    // The legacy rule this defends against is `a, span, p` (blogs.scss), so both inline
+    // elements need an answer, not just the link. A span carries inline colour marks, and
+    // left alone it rendered 15px inside 16px body text and 15px inside a 32px heading.
+    // inherit rather than a fixed size so either one matches whatever it sits in.
+    a,
+    span {
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+
+    // display is stated for the same reason: the legacy rule makes reader lists flex
+    // columns, so margins between items stopped collapsing and the reader spaced a list
+    // differently from the editor and the admin preview. Markers still render on a flex
+    // item, so this is about the spacing, not the bullets.
+    ol,
+    ul {
+        display: block;
+        margin-block: 0.75rem;
+        padding-left: 1.75rem;
+    }
+
+    // The marker goes on the li, not the list. index.css has a bare `li { list-style: none }`,
+    // and a declaration on the element beats the value inherited from its ul or ol, so
+    // styling only the list leaves every item unmarked. The legacy rules in blogs.scss
+    // target the li for the same reason.
+    ul > li {
+        list-style-type: disc;
+    }
+    ol > li {
+        list-style-type: decimal;
+    }
+
+    // Sizes are explicit rather than inherited: the admin preview's container resolves to
+    // 14px from an admin rule this mixin cannot outrank, so anything left to inherit
+    // drifts a step smaller there than on the reader.
+    li {
+        margin-block: 0.25rem;
+        font-size: 1rem;
+        line-height: 1.5;
+
+        > p {
+            margin-block: 0;
+        }
+    }
+
+    blockquote {
+        margin-block: 0.75rem;
+        padding-left: 1rem;
+        border-left: 3px solid var(--border);
+        color: var(--muted-foreground);
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    pre {
+        margin-block: 0.75rem;
+        padding: 12px 14px;
+        border-radius: var(--radius);
+        background-color: var(--muted);
+        overflow-x: auto;
+        @include scrollbar(6px, 6px);
+
+        code {
+            font-size: var(--text-sm);
+        }
+    }
+
+    hr {
+        margin-block: 1.25rem;
+        border: 0;
+        border-top: 1px solid var(--border);
+    }
+
+    img,
+    video {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin-block: 1rem;
+        border-radius: var(--radius-sm);
+    }
+
+    // A video has no natural size until its metadata arrives, so `height: auto` above
+    // leaves it at the 300x150 default object size and the box then snaps to the clip's
+    // real dimensions — 150px of reflow, with every paragraph below it moving. The ratio
+    // reserves the box on the first paint and then keeps it: a specified aspect-ratio wins
+    // over the natural one, so the frame letterboxes inside a box that never changes size.
+    // The background is what those letterbox bars are drawn in.
+    video {
+        aspect-ratio: 16 / 9;
+        object-fit: contain;
+        background-color: var(--muted);
+    }
+
+    // The 300x150 default is also why an unresized clip is 300px wide — a quarter of the
+    // column, with its caption centred under the full-width figure rather than under the
+    // clip. previewWidth is BlockNote's own record of a writer's drag and the only width
+    // it serialises, so `:not([width])` separates "the writer never sized this" from "the
+    // writer sized it to this" — the same guard the table columns use for colwidth.
+    video:not([width]) {
+        width: 100%;
+    }
+
+    audio {
+        display: block;
+        width: 100%;
+        margin-block: 1rem;
+    }
+
+    // BlockNote's image and video blocks serialise to <figure><img|video><figcaption>, so
+    // the caption is a sibling of the media rather than a paragraph after it.
+    //
+    // The figure shrink-wraps its media instead of filling the column. That does two jobs:
+    // a small screenshot keeps its own size rather than being upscaled, and the caption box
+    // ends up exactly as wide as the media, so centring the caption text puts it under the
+    // media at every alignment. A flex column with align-self on the media fixed the first
+    // and broke the second — the caption stayed column-wide and a left-aligned 100px image
+    // ended up 290px from its own caption.
+    //
+    // display:table is what keeps the caption out of that width. Under block layout
+    // fit-content takes the widest child's max-content width, and the caption is a child:
+    // a 100px screenshot captioned "Figure 3 — the settings panel after saving" measured a
+    // 259px figure, leaving the image at the left edge of a caption-wide box. A
+    // table-caption box is laid out once the table is already sized, so the media alone
+    // decides the width and a long caption wraps inside it.
+    figure {
+        display: table;
+        width: fit-content;
+        max-width: 100%;
+        margin-block: 1rem;
+
+        img,
+        video {
+            display: block;
+            margin-block: 0;
+        }
+
+        figcaption {
+            display: table-caption;
+            caption-side: bottom;
+            margin-top: 8px;
+        }
+    }
+
+    // Neither media type can size a shrink-wrapped figure: a video carries no intrinsic
+    // size until its metadata arrives and would collapse to the 300x150 default, and an
+    // audio player's `width: 100%` counts as auto against a fit-content parent — measured
+    // at 26px, against 700px for the same clip with no caption. Full width is the right
+    // default for both anyway.
+    figure:has(> video),
+    figure:has(> audio) {
+        width: 100%;
+    }
+
+    // A resized video is the one case that can shrink-wrap: the width attribute is a
+    // definite length, so the figure sizes to the clip and the caption sits under it
+    // rather than centred in the column. An unresized one cannot — its `width: 100%`
+    // counts as auto against a fit-content parent, the same trap the audio player above
+    // falls into.
+    figure:has(> video[width]) {
+        width: fit-content;
+    }
+
+    // No text-align here on purpose. The caption inherits it from the figure, which
+    // carries the writer's own alignment as inline style — so left, center and right all
+    // land the same way the editor draws them. A fixed `text-align: center` was the one
+    // thing the reader did differently: BlockNote puts the caption at the left edge of an
+    // unaligned image, and the reader centred it under the same picture.
+    //
+    // Centring is not what keeps the caption under its media — the table layout above is.
+    // The caption box is already exactly as wide as the media at every alignment, so
+    // inheriting is safe: the text moves inside that box, never away from it.
+    figcaption {
+        color: var(--muted-foreground);
+        font-size: var(--text-sm);
+        line-height: 1.5;
+    }
+
+    // text-align moves inline children, and these are display:block, so alignment only
+    // takes effect through the margins. A captioned block carries the alignment on the
+    // figure and an uncaptioned one on the media itself, so both shapes are matched — and
+    // for a figure the whole box moves, keeping the caption with its media.
+    figure[style*="text-align: center"],
+    img[style*="text-align: center"],
+    video[style*="text-align: center"] {
+        margin-inline: auto;
+    }
+
+    figure[style*="text-align: right"],
+    img[style*="text-align: right"],
+    video[style*="text-align: right"] {
+        margin-inline: auto 0;
+    }
+
+    // Toggle list and toggle heading blocks; the marker sits on the summary, so a heading
+    // inside it has to be inline or it wraps onto its own line.
+    details {
+        margin-block: 1rem;
+
+        summary {
+            cursor: pointer;
+
+            > * {
+                display: inline;
+            }
+        }
+    }
+
+    // Checklist boxes are disabled by the sanitiser — they show state, they do not take
+    // input, so the cursor must not suggest otherwise.
+    li:has(> input[type="checkbox"]) {
+        list-style-type: none;
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+            cursor: default;
+        }
+
+        > p {
+            display: inline;
+        }
+    }
+
+    // BlockNote emits a bare <table> with no wrapper. display:block is what lets a wide
+    // table scroll inside itself instead of stretching the article column.
+    //
+    // Descendant, not child: the reader puts the HTML directly in .article-body but the
+    // admin preview wraps it in a div, so `> table` reached only one of the two surfaces.
+    // The legacy .table-container rules cannot collide here — div is not on the article
+    // sanitizer's tag list, so that wrapper never survives into article content.
+    table {
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        margin-block: 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        border-collapse: collapse;
+        overflow-x: auto;
+        font-size: var(--text-sm);
+        line-height: 1.5;
+        @include scrollbar(6px, 6px);
+
+        th,
+        td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top;
+
+            p {
+                margin-block: 0;
+                font-size: inherit;
+            }
+        }
+
+        // Without this every column shrinks to its own content, so a table of mostly
+        // empty cells collapses: measured 130px wide with columns of 52/25/25/25 against
+        // the editor's 480px and 120 each. `display: block` above is what causes it —
+        // the rows end up in an anonymous table that shrink-wraps — and it has to stay,
+        // because a bare <table> with no wrapper has nothing else to scroll inside.
+        //
+        // 120px and the :not([colwidth]) guard are both BlockNote's own rule
+        // (--default-cell-min-width, `td:not([colwidth])`), so an untouched table is the
+        // same width on both surfaces and a column the writer dragged keeps the size
+        // they gave it rather than being floored at the default.
+        th:not([colwidth]),
+        td:not([colwidth]) {
+            min-width: 120px;
+        }
+
+        th {
+            background-color: var(--muted);
+            color: var(--foreground);
+            font-weight: 600;
+        }
+
+        // Zebra rows. Always on rather than a per-table choice, because a table-level
+        // choice is not available: BlockNote's table implementation ships a prebuilt
+        // ProseMirror node whose attributes are fixed, so a prop added to the block's
+        // propSchema is accepted and then silently dropped. See the note on alignment
+        // below.
+        //
+        // Mixed from --foreground, not --muted, so the stripe cannot vanish into the
+        // surface it sits on. --muted and --card are both #262626 in dark mode, and the
+        // reader paints the article on bg-card (blog.tsx), so a tint of --muted there
+        // came out exactly the colour of the card and the stripe disappeared. It still
+        // showed in the admin preview, whose card is --white in both themes, which is
+        // what made it look correct. --foreground is the one token guaranteed to
+        // contrast with whatever surface the article is on, in either theme.
+        //
+        // On the row, not the cell, so a cell background still paints over the stripe —
+        // a cell paints above its row. A header cell keeps its own fill the same way.
+        tbody tr:nth-child(even) {
+            background-color: color-mix(in srgb, var(--foreground) 4%, transparent);
+        }
+    }
+
+    // Tables cannot be aligned, and this is the reason rather than an oversight.
+    // Alignment for a figure or an image is driven by textAlignment, which every block
+    // gets from BlockNote's defaultProps — except the table, whose propSchema is only
+    // `{ textColor }`. Adding one is not possible from outside the library: the table's
+    // attributes come from implementation.node, a Tiptap node that is already built by
+    // the time a consumer sees the spec, so an extra entry in propSchema never reaches
+    // the document. Centring every table here instead would take the choice away from
+    // the writer, so a table stays where a block goes: at the start of the line.
+}

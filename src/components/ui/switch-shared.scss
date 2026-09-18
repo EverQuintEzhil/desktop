@@ -1,0 +1,91 @@
+.switch {
+    min-height: 33px;
+    position: relative;
+    user-select: none;
+
+    --switch-width: var(--switch-width-default, 92px);
+
+    &.switch--color-primary {
+        background-color: var(--secondary);
+        span,
+        i,
+        svg {
+            color: var(--primary);
+        }
+        .active-indicator {
+            background-color: var(--primary);
+        }
+        .switch-item.active span,
+        .switch-item.active i,
+        .switch-item.active svg {
+            color: var(--primary-foreground);
+        }
+    }
+
+    &.switch--color-white {
+        background-color: var(--white-alpha-2);
+        span,
+        i,
+        svg {
+            color: var(--white);
+        }
+        .active-indicator {
+            background-color: var(--white-alpha-2);
+        }
+        .switch-item.active span,
+        .switch-item.active i,
+        .switch-item.active svg {
+            color: var(--white);
+        }
+    }
+
+    .active-indicator {
+        position: absolute;
+        width: var(--switch-width, 92px);
+        height: 33px;
+        left: calc(var(--switch-width, 92px) * var(--switch-active-index, 0));
+        border-radius: 99px;
+        transition: all 0.15s ease-out 0s;
+    }
+
+    .switch-item {
+        min-height: 33px;
+        min-width: var(--switch-width, 92px);
+        position: relative;
+        border-radius: 99px;
+    }
+
+    /* Responsive width overrides */
+    &.switch--width-md {
+        @media (max-width: 1366px) {
+            --switch-width: var(--switch-width-md);
+        }
+    }
+    &.switch--width-sm {
+        @media (max-width: 1023px) {
+            --switch-width: var(--switch-width-sm);
+        }
+    }
+    &.switch--width-xs {
+        @media (max-width: 575px) {
+            --switch-width: var(--switch-width-xs);
+        }
+    }
+
+    /* Hide label on mobile */
+    &.hide-label-mobile-sm .switch-item .hide-label-mobile {
+        @include below("lg") {
+            display: none;
+        }
+    }
+    &.hide-label-mobile-xs .switch-item .hide-label-mobile {
+        @include below("sm") {
+            display: none;
+        }
+    }
+    &.hide-label-mobile-md .switch-item .hide-label-mobile {
+        @include below("xl") {
+            display: none;
+        }
+    }
+}

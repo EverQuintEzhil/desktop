@@ -1,0 +1,19 @@
+.source-list {
+    .source-list-item {
+        border-radius: var(--radius-3xl);
+
+        a {
+            text-decoration: none;
+        }
+
+        &:hover {
+            background-color: var(--background);
+        }
+    }
+}
+
+.source-meta img {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-circle);
+}

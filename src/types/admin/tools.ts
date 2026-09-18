@@ -1,0 +1,36 @@
+import type { AgentType } from './agents';
+import type { DataStoreType } from './data-stores';
+import type { ModelType } from './models';
+import type { SecurityGroupType, UserType } from './users';
+
+export type ToolType = {
+    readonly _id: string;
+    name: string;
+    description: string;
+    descriptionDuringExecution?: string;
+    descriptionPostExecution?: string;
+    refName: string;
+    toolCodeId: string;
+    isDev: boolean;
+    needsApproval: boolean;
+    isPublic?: boolean;
+    showInAgentBuilder?: boolean;
+    agents: AgentType[];
+    dataStores: DataStoreType[];
+    dataStoreIds: string[];
+    models: ModelType[];
+    modelIds: string[];
+    fileStoreIds: string[];
+    toolIds: string[];
+    parameters: object;
+    admins: UserType[];
+    includeUsers: UserType[];
+    includeSecurityGroups: SecurityGroupType[];
+    excludeUsers: UserType[];
+    excludeSecurityGroups: SecurityGroupType[];
+    creator: UserType;
+    updatedBy: UserType;
+    createdAt: string;
+    updatedAt: string;
+    noAccess?: boolean;
+};

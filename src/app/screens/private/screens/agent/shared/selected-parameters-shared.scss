@@ -1,0 +1,65 @@
+// Styles for the `.selected-parameters` pill shared by every parameter control
+// (select, range, toggle, textbox) and by the composer wrappers that group them.
+@use "./dark-mode-shared" as *;
+
+.selected-parameters {
+    .globe-icon {
+        display: flex;
+    }
+
+    .xmark-icon {
+        display: none;
+    }
+
+    .icon-wrapper:focus {
+        outline: none;
+    }
+
+    &.dark-mode {
+        @include dark-mode-trigger-border;
+
+        > button {
+            border: none;
+            padding-right: 0;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+
+        .icon-wrapper:focus,
+        &:hover .icon-wrapper {
+            background-color: var(--white-alpha-2);
+        }
+    }
+
+    .icon-wrapper:focus,
+    &:hover .icon-wrapper {
+        background-color: var(--primary);
+
+        i,
+        svg {
+            color: var(--primary-foreground);
+        }
+
+        .xmark-icon {
+            display: flex;
+        }
+
+        .globe-icon {
+            display: none;
+        }
+    }
+
+    button.parameter-selector:hover {
+        background-color: transparent;
+    }
+
+    /* Select trigger chevron: 12px when overridden via triggerChevronIconClassName (Icon styled-component default is 16px) */
+    button span.shrink-0 i,
+    button span.shrink-0 svg {
+        font-size: var(--text-xs);
+        width: 1em;
+        height: 1em;
+    }
+}

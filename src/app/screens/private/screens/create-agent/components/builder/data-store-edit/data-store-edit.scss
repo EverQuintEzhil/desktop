@@ -1,0 +1,119 @@
+.data-store-edit-page {
+    .breadcrumbs-list-item {
+        a,
+        button,
+        span {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            line-height: 1.4;
+            transition: color 0.2s ease;
+        }
+
+        button {
+            text-decoration: none;
+            color: #6c6c6c;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+
+            &:hover {
+                color: #2d2d2d;
+                text-decoration: underline;
+            }
+        }
+
+        span {
+            color: #2d2d2d;
+            font-weight: 600;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:last-child {
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        &:not(:last-child)::after {
+            content: "/";
+            color: #6c6c6c;
+            margin: 0 8px;
+            font-size: var(--text-xs);
+        }
+    }
+
+    .secondary-header .metabar {
+        padding: var(--space-2) var(--space-4);
+        line-height: 1.4;
+    }
+
+    .data-store-edit-tabs {
+        [data-slot="tabs-list"][data-variant="line"] {
+            gap: var(--space-1);
+
+            @media (min-width: 1280px) {
+                gap: var(--space-2);
+            }
+        }
+
+        [data-slot="tabs-trigger"] {
+            display: inline-flex;
+            align-items: center;
+            flex: none;
+            height: 28px;
+            padding: var(--space-1) var(--space-2);
+            position: relative;
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+            transition:
+                color 0.15s ease,
+                background-color 0.15s ease,
+                border-color 0.15s ease;
+            white-space: nowrap;
+            background: transparent;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            box-shadow: none !important;
+            outline: none;
+
+            &::after {
+                display: none;
+            }
+
+            &:hover {
+                background: var(--background);
+                color: var(--primary);
+            }
+
+            &:focus-visible {
+                outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
+                outline-offset: 2px;
+            }
+
+            &[data-state="active"] {
+                border-bottom-color: var(--primary) !important;
+                background: var(--background);
+                color: var(--primary);
+            }
+        }
+    }
+
+    .data-store-edit-skeleton {
+        min-height: min(420px, calc(100svh - 240px));
+    }
+
+    .tab-content-area {
+        min-height: 0;
+    }
+
+    .tab-content-area .data-explorer-step {
+        gap: 1rem;
+    }
+}

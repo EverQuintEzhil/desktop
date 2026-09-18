@@ -1,0 +1,230 @@
+:root {
+    /* Base radius (shadcn / design token) */
+    --radius: 8px;
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
+    --radius-pill: 9999px;
+    --radius-circle: 50%;
+    --spacing-value: 0.25rem;
+    --letter-spacing: 0em;
+
+    /* Tailwind border utility (border-b, border, etc.) */
+    --tw-border-style: solid;
+
+    /* ── Brand primitives (override these to rebrand) ── */
+    --brand-primary: #171717;
+    --brand-primary-foreground: #fafafa;
+    --brand-secondary: #f5f5f5;
+    --brand-secondary-foreground: #171717;
+    --brand-bg: #f5f5f5;
+    --neutral-dark: #171717;
+    --neutral-mid: #737373;
+    --neutral-light: #f5f5f5;
+    --neutral-border: #e5e5e5;
+    --neutral-border-2: #d4d4d4;
+    --surface: #ffffff;
+    --surface-hover: #f5f5f5;
+    --surface-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    --danger: #e7000b;
+    /* Success — green-700, WCAG AA on white / #f5f5f5 surfaces */
+    --success: #15803d;
+    --success-foreground: #ffffff;
+
+    /* ── Semantic tokens — derived from primitives ── */
+    --background: var(--brand-bg);
+    --foreground: var(--neutral-dark);
+    --card: var(--surface);
+    --card-foreground: var(--neutral-dark);
+    --card-hover: var(--brand-bg);
+    --card-hover-foreground: var(--neutral-dark);
+    --popover: var(--surface);
+    --popover-foreground: var(--neutral-dark);
+    --primary: var(--brand-primary);
+    --primary-foreground: var(--brand-primary-foreground);
+    --secondary: var(--brand-secondary);
+    --secondary-foreground: var(--brand-secondary-foreground);
+    --muted: var(--neutral-light);
+    --muted-foreground: var(--neutral-mid);
+    --accent: var(--brand-bg);
+    --accent-foreground: var(--neutral-dark);
+    --destructive: var(--danger);
+    --destructive-foreground: var(--surface);
+    --border: var(--neutral-border);
+    --border-secondary: var(--neutral-border-2);
+    --input: var(--neutral-border);
+    --ring: var(--neutral-dark);
+    --color-focus-ring: var(--primary);
+    --chart-1: var(--neutral-dark);
+    --chart-2: var(--brand-primary);
+    --chart-3: var(--neutral-mid);
+    --chart-4: var(--danger);
+    --chart-5: var(--brand-bg);
+    --sidebar: var(--primary);
+    --sidebar-foreground: var(--white);
+    --sidebar-primary: var(--white);
+    --sidebar-primary-foreground: var(--primary);
+    --sidebar-accent: var(--white);
+    --sidebar-accent-foreground: var(--neutral-dark);
+    --sidebar-border: var(--neutral-border);
+    --sidebar-ring: var(--neutral-dark);
+    --text-primary: var(--neutral-dark);
+    --text-secondary: var(--neutral-mid);
+    --black: #000000;
+    --white: #ffffff;
+    --white-alpha-06: rgba(255, 255, 255, 0.06);
+    --white-alpha-15: rgba(255, 255, 255, 0.15);
+    --white-alpha-3: rgba(255, 255, 255, 0.3);
+    --white-alpha-2: rgba(255, 255, 255, 0.2);
+    --white-alpha-1: rgba(255, 255, 255, 0.1);
+    --grey-alpha-6: rgba(37, 37, 37, 0.6);
+
+    /* Scrollbar */
+    --track-background: #f3f4f6;
+    --thumb-background: #d1d5db;
+    --thumb-background-hover: #9ca3af;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 1.25rem;
+    --spacing-4xl: 1.5rem;
+    --spacing-5xl: 1.75rem;
+    --spacing-6xl: 2rem;
+    --spacing-7xl: 2.25rem;
+    --spacing-8xl: 2.5rem;
+    --spacing-9xl: 2.75rem;
+    --spacing-10xl: 3rem;
+    --space-0: 0px;
+    --space-px: 1px;
+    --space-0-5: calc(var(--spacing-value) * 0.5);
+    --space-1: calc(var(--spacing-value) * 1);
+    --space-1-5: calc(var(--spacing-value) * 1.5);
+    --space-2: calc(var(--spacing-value) * 2);
+    --space-2-5: calc(var(--spacing-value) * 2.5);
+    --space-3: calc(var(--spacing-value) * 3);
+    --space-3-5: calc(var(--spacing-value) * 3.5);
+    --space-4: calc(var(--spacing-value) * 4);
+    --space-5: calc(var(--spacing-value) * 5);
+    --space-6: calc(var(--spacing-value) * 6);
+    --space-7: calc(var(--spacing-value) * 7);
+    --space-8: calc(var(--spacing-value) * 8);
+    --space-9: calc(var(--spacing-value) * 9);
+    --space-10: calc(var(--spacing-value) * 10);
+    --space-11: calc(var(--spacing-value) * 11);
+    --space-12: calc(var(--spacing-value) * 12);
+    --space-14: calc(var(--spacing-value) * 14);
+    --space-16: calc(var(--spacing-value) * 16);
+    --space-20: calc(var(--spacing-value) * 20);
+    --space-24: calc(var(--spacing-value) * 24);
+    --space-28: calc(var(--spacing-value) * 28);
+    --space-32: calc(var(--spacing-value) * 32);
+    --space-36: calc(var(--spacing-value) * 36);
+    --space-40: calc(var(--spacing-value) * 40);
+    --space-44: calc(var(--spacing-value) * 44);
+    --space-48: calc(var(--spacing-value) * 48);
+    --space-52: calc(var(--spacing-value) * 52);
+    --space-56: calc(var(--spacing-value) * 56);
+    --space-60: calc(var(--spacing-value) * 60);
+    --space-64: calc(var(--spacing-value) * 64);
+    --space-72: calc(var(--spacing-value) * 72);
+    --space-80: calc(var(--spacing-value) * 80);
+    --space-96: calc(var(--spacing-value) * 96);
+
+    /* Shadows */
+    --shadow-xs: 0 8px 10px #00000008;
+    --shadow-color: #000000;
+    --shadow-opacity: 0.08;
+    --shadow-blur: 8px;
+    --shadow-spread: -2px;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 4px;
+    --shadow-lg-dark:
+        rgb(255, 255, 255) 0px 0px 0px 0px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset,
+        rgba(0, 0, 0, 0.2) 0px 6px 12px;
+    --shadow-dark-value: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    --shadow-dark: var(--shadow-dark-value);
+    --shadow-surface: var(--surface-shadow);
+    --shadow-sm: var(--shadow-offset-x) var(--shadow-offset-y) var(--shadow-blur) var(--shadow-spread)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-md: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 2) calc(var(--shadow-blur) * 2)
+        calc(var(--shadow-spread) * 2)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-lg: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 3) calc(var(--shadow-blur) * 3)
+        var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+
+    /* Font weights */
+    --font-weight-thin: 100;
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+
+    /* Z-index */
+    --z-index-1: 9;
+    --z-index-2: 99;
+    --z-index-3: 999;
+    --z-index-max: 9999;
+
+    /* Font sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+    --text-7xl: 4.5rem;
+    --text-8xl: 6rem;
+    --text-9xl: 8rem;
+    --text-h1: 1.5rem;
+    --text-h2: 1.25rem;
+    --text-h3: 1.0625rem;
+    --text-h4: 1rem;
+    --text-h5: 0.9375rem;
+    --text-h6: 0.875rem;
+}
+
+.dark {
+    --brand-primary: #fafafa;
+    --brand-primary-foreground: #171717;
+    --brand-secondary: #262626;
+    --brand-secondary-foreground: #fafafa;
+    --brand-bg: #171717;
+    --neutral-dark: #fafafa;
+    --neutral-mid: #a3a3a3;
+    --neutral-light: #262626;
+    --neutral-border: #404040;
+    --neutral-border-2: #525252;
+    --surface: #262626;
+    --surface-hover: #404040;
+    --surface-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    --danger: #e7000b;
+    /* Brighter green for success affordances on dark surfaces */
+    --success: #22c55e;
+    --success-foreground: #171717;
+    /* Exceptions: tokens that don't follow the primitive mapping in dark mode */
+    --background: var(--brand-bg);
+    --sidebar: var(--surface);
+    --sidebar-border: var(--neutral-light);
+    --input: var(--neutral-light);
+    --track-background: var(--white-alpha-1);
+    --thumb-background: var(--white-alpha-2);
+    --thumb-background-hover: var(--white-alpha-3);
+}

@@ -1,0 +1,15 @@
+.black-select {
+    border: var(--white-alpha-2) solid 1px;
+    &:focus-visible {
+        border-color: var(--white);
+    }
+}
+
+.select-item {
+    &:hover {
+        background-color: var(--background);
+        span {
+            color: var(--primary);
+        }
+    }
+}

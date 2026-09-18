@@ -1,0 +1,25 @@
+@use "../../../../app/screens/private/screens/agent/shared/dark-mode-shared" as *;
+
+.button-plus {
+    &.dark-mode {
+        @include dark-mode-trigger-border;
+
+        i,
+        svg {
+            color: var(--white);
+        }
+    }
+}
+
+.plus-dropdown-content {
+    &.dark-mode {
+        border: none;
+        box-shadow: var(--shadow-lg-dark);
+
+        @include dark-mode-backdrop;
+
+        .dropdown-menu-item {
+            @include dark-mode-item;
+        }
+    }
+}

@@ -1,0 +1,117 @@
+.permission-switch {
+    --segment-width: 36px;
+    --active-index: 0;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 2px;
+    border-radius: 9999px;
+    background-color: var(--card);
+    user-select: none;
+
+    @include above("sm") {
+        --segment-width: 76px;
+    }
+
+    .permission-switch-indicator {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: var(--segment-width);
+        height: calc(100% - 4px);
+        border-radius: 9999px;
+        background-color: var(--muted);
+        transition:
+            transform 0.15s ease-out,
+            background-color 0.15s ease-out;
+        transform: translateX(calc(var(--segment-width) * var(--active-index)));
+        pointer-events: none;
+    }
+
+    .permission-switch-item {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        min-width: var(--segment-width);
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 0 8px;
+        border: 0;
+        border-radius: 9999px;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        transition: none;
+
+        &[data-state="on"],
+        &[data-state="off"] {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        &:hover:not(.active) {
+            color: var(--foreground);
+            background: transparent !important;
+        }
+
+        &.active {
+            color: var(--foreground);
+
+            svg {
+                color: inherit;
+            }
+        }
+
+        &:focus-visible {
+            outline: none;
+            box-shadow:
+                0 0 0 2px var(--background),
+                0 0 0 4px var(--color-focus-ring, var(--ring));
+        }
+    }
+
+    .permission-switch-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        line-height: 1;
+
+        @include below("sm") {
+            display: none;
+        }
+    }
+
+    /* Accent tone — one colour pair per state, so the label stays legible when the
+       palette inverts in dark mode (--primary is white there). These must follow
+       the base .permission-switch-item rules: same specificity, so order decides. */
+    &--allow {
+        .permission-switch-indicator {
+            background-color: var(--success);
+        }
+        .permission-switch-item.active {
+            color: var(--success-foreground);
+        }
+    }
+
+    &--ask {
+        .permission-switch-indicator {
+            background-color: var(--primary);
+        }
+        .permission-switch-item.active {
+            color: var(--primary-foreground);
+        }
+    }
+
+    &--block {
+        .permission-switch-indicator {
+            background-color: var(--foreground);
+        }
+        .permission-switch-item.active {
+            color: var(--background);
+        }
+    }
+}

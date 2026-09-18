@@ -1,0 +1,283 @@
+{
+    "api": [
+        {
+            "label": "none",
+            "config": {
+                "baseUrl": { "type": "string", "required": true },
+                "resourcePath": { "type": "string", "required": false },
+                "openapi": {
+                    "url": { "type": "string", "required": false }
+                },
+                "timeoutMs": { "type": "number", "required": false },
+                "headers": { "type": "object", "required": false },
+                "auth": {
+                    "type": { "type": "string", "required": true }
+                },
+                "operationId": { "type": "select", "required": false, "otherFieldsShouldComplete": true }
+            }
+        },
+        {
+            "label": "bearer",
+            "config": {
+                "baseUrl": { "type": "string", "required": true },
+                "resourcePath": { "type": "string", "required": false },
+                "openapi": {
+                    "url": { "type": "string", "required": false }
+                },
+                "timeoutMs": { "type": "number", "required": false },
+                "headers": { "type": "object", "required": false },
+                "auth": {
+                    "type": { "type": "string", "required": true },
+                    "token": { "type": "string", "required": true, "sensitive": true }
+                },
+                "operationId": { "type": "select", "required": false, "otherFieldsShouldComplete": true }
+            }
+        },
+        {
+            "label": "apiKey",
+            "config": {
+                "baseUrl": { "type": "string", "required": true },
+                "resourcePath": { "type": "string", "required": false },
+                "openapi": {
+                    "url": { "type": "string", "required": false }
+                },
+                "timeoutMs": { "type": "number", "required": false },
+                "headers": { "type": "object", "required": false },
+                "auth": {
+                    "type": { "type": "string", "required": true },
+                    "apiKey": { "type": "string", "required": true, "sensitive": true },
+                    "in": { "type": "string", "required": false },
+                    "name": { "type": "string", "required": false }
+                },
+                "operationId": { "type": "select", "required": false, "otherFieldsShouldComplete": true }
+            }
+        },
+        {
+            "label": "basic",
+            "config": {
+                "baseUrl": { "type": "string", "required": true },
+                "resourcePath": { "type": "string", "required": false },
+                "openapi": {
+                    "url": { "type": "string", "required": false }
+                },
+                "timeoutMs": { "type": "number", "required": false },
+                "headers": { "type": "object", "required": false },
+                "auth": {
+                    "type": { "type": "string", "required": true },
+                    "username": { "type": "string", "required": true },
+                    "password": { "type": "string", "required": true, "sensitive": true }
+                },
+                "operationId": { "type": "select", "required": false, "otherFieldsShouldComplete": true }
+            }
+        },
+        {
+            "label": "oauth2",
+            "config": {
+                "baseUrl": { "type": "string", "required": true },
+                "resourcePath": { "type": "string", "required": false },
+                "openapi": {
+                    "url": { "type": "string", "required": false }
+                },
+                "timeoutMs": { "type": "number", "required": false },
+                "headers": { "type": "object", "required": false },
+                "auth": {
+                    "type": { "type": "string", "required": true },
+                    "tokenUrl": { "type": "string", "required": true },
+                    "clientId": { "type": "string", "required": true },
+                    "clientSecret": { "type": "string", "required": true, "sensitive": true },
+                    "scope": { "type": "string", "required": false },
+                    "audience": { "type": "string", "required": false },
+                    "authStyle": { "type": "string", "required": false }
+                },
+                "operationId": { "type": "select", "required": false, "otherFieldsShouldComplete": true }
+            }
+        }
+    ],
+
+    "mongodb": [
+        {
+            "label": "uri",
+            "config": {
+                "uri": { "type": "string", "required": true },
+                "database": { "type": "string", "required": false },
+                "collection": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        },
+        {
+            "label": "fields",
+            "config": {
+                "host": { "type": "string", "required": true },
+                "port": { "type": "number", "required": false },
+                "database": { "type": "string", "required": true },
+                "username": { "type": "string", "required": false },
+                "password": { "type": "string", "required": false, "sensitive": true },
+                "authSource": { "type": "string", "required": false },
+                "ssl": { "type": "boolean", "required": false },
+                "collection": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        }
+    ],
+
+    "postgresql": [
+        {
+            "label": "uri",
+            "config": {
+                "uri": { "type": "string", "required": true },
+                "table": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        },
+        {
+            "label": "fields",
+            "config": {
+                "host": { "type": "string", "required": true },
+                "port": { "type": "number", "required": false },
+                "database": { "type": "string", "required": true },
+                "user": { "type": "string", "required": true },
+                "password": { "type": "string", "required": true, "sensitive": true },
+                "ssl": { "type": "boolean", "required": false },
+                "table": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        }
+    ],
+
+    "mysql": [
+        {
+            "config": {
+                "host": { "type": "string", "required": true },
+                "port": { "type": "number", "required": false },
+                "database": { "type": "string", "required": true },
+                "user": { "type": "string", "required": true },
+                "password": { "type": "string", "required": true, "sensitive": true },
+                "ssl": { "type": "boolean", "required": false },
+                "table": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        }
+    ],
+
+    "mssql": [
+        {
+            "config": {
+                "server": { "type": "string", "required": true },
+                "port": { "type": "number", "required": false },
+                "database": { "type": "string", "required": true },
+                "user": { "type": "string", "required": true },
+                "password": { "type": "string", "required": true, "sensitive": true },
+                "trustServerCertificate": { "type": "boolean", "required": false },
+                "encrypt": { "type": "boolean", "required": false },
+                "table": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        }
+    ],
+
+    "cassandra": [
+        {
+            "config": {
+                "contactPoints": { "type": "array", "required": true },
+                "port": { "type": "number", "required": false },
+                "keyspace": { "type": "string", "required": true },
+                "datacenter": { "type": "string", "required": false },
+                "username": { "type": "string", "required": false },
+                "password": { "type": "string", "required": false, "sensitive": true },
+                "ssl": { "type": "boolean", "required": false },
+                "table": { "type": "select", "required": true, "otherFieldsShouldComplete": true }
+            }
+        }
+    ],
+
+    "elasticsearch": [
+        {
+            "label": "fields",
+            "config": {
+                "url": { "type": "string", "required": true },
+                "username": { "type": "string", "required": true },
+                "password": { "type": "string", "required": true, "sensitive": true },
+                "index": { "type": "select", "required": true, "otherFieldsShouldComplete": true },
+                "ssl": { "type": "boolean", "required": false, "derivedFromUrl": true }
+            }
+        },
+        {
+            "label": "apiKey",
+            "config": {
+                "url": { "type": "string", "required": true },
+                "apiKey": { "type": "string", "required": true },
+                "index": { "type": "select", "required": true, "otherFieldsShouldComplete": true },
+                "ssl": { "type": "boolean", "required": false, "derivedFromUrl": true }
+            }
+        }
+    ],
+
+    "opensearch": [
+        {
+            "label": "fields",
+            "config": {
+                "url": { "type": "string", "required": true },
+                "username": { "type": "string", "required": true },
+                "password": { "type": "string", "required": true, "sensitive": true },
+                "index": { "type": "select", "required": true, "otherFieldsShouldComplete": true },
+                "ssl": { "type": "boolean", "required": false, "derivedFromUrl": true }
+            }
+        },
+        {
+            "label": "apiKey",
+            "config": {
+                "url": { "type": "string", "required": true },
+                "apiKey": { "type": "string", "required": true },
+                "index": { "type": "select", "required": true, "otherFieldsShouldComplete": true },
+                "ssl": { "type": "boolean", "required": false, "derivedFromUrl": true }
+            }
+        }
+    ],
+
+    "s3": [
+        {
+            "config": {
+                "bucket": { "type": "string", "required": true },
+                "region": { "type": "string", "required": true },
+                "accessKeyId": { "type": "string", "required": true },
+                "secretAccessKey": { "type": "string", "required": true },
+                "keyPrefix": { "type": "string", "required": false },
+                "endpoint": { "type": "string", "required": false },
+                "forcePathStyle": { "type": "boolean", "required": false }
+            }
+        }
+    ],
+
+    "sharepoint": [
+        {
+            "config": {
+                "tenantId": { "type": "string", "required": true },
+                "clientId": { "type": "string", "required": true },
+                "clientSecret": { "type": "string", "required": true },
+                "siteUrl": { "type": "string", "required": true }
+            }
+        }
+    ],
+
+    "azure-blob-storage": [
+        {
+            "label": "connectionString",
+            "config": {
+                "connectionString": { "type": "string", "required": true },
+                "containerName": { "type": "string", "required": true }
+            }
+        },
+        {
+            "label": "fields",
+            "config": {
+                "accountName": { "type": "string", "required": true },
+                "accountKey": { "type": "string", "required": true },
+                "containerName": { "type": "string", "required": true },
+                "endpointSuffix": { "type": "string", "required": false }
+            }
+        }
+    ],
+
+    "custom": [
+        {
+            "label": "connection",
+            "config": {
+                "connection": { "type": "json", "required": true }
+            }
+        }
+    ]
+}

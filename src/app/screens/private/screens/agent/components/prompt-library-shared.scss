@@ -1,0 +1,116 @@
+// Shared styles for prompt_library in chat_agent (v1) and chat_agent_v2 (v2).
+// chat_agent uses: @include prompt-item-base(var(--radius-2xl), var(--muted-foreground))
+// chat_agent_v2 uses: @include prompt-item-base(var(--radius-3xl), var(--text-secondary))
+@use "breakpoints" as *;
+
+.prompts-header {
+    position: sticky;
+    top: 0;
+    background-color: var(--background);
+    z-index: 1;
+
+    &.sticky {
+        box-shadow: var(--shadow-xs);
+    }
+}
+
+.prompt-list {
+    .use-prompt-button {
+        span {
+            border-bottom: 2px solid transparent;
+        }
+
+        &:hover {
+            text-decoration: none;
+
+            span {
+                border-color: var(--primary);
+            }
+        }
+    }
+}
+
+@mixin prompt-item-base($border-radius, $description-color) {
+    position: relative;
+    list-style: none;
+    cursor: pointer;
+    height: 100%;
+    background-color: var(--card);
+    border-radius: $border-radius;
+
+    .prompt-link {
+        justify-content: space-between;
+        text-decoration: none;
+        height: 100%;
+        transition: all 0.2s ease;
+        color: var(--text-primary);
+
+        h4 {
+            line-height: 1.2;
+        }
+
+        > div:first-child {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .prompt-description {
+            font-weight: 500;
+            color: $description-color;
+            font-size: var(--text-sm);
+            line-height: 1.4;
+            flex: 1;
+            margin: 8px 0;
+            word-break: break-word;
+        }
+
+        .popup {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            flex-shrink: 0;
+            margin-left: auto;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-xl);
+            background-color: var(--background);
+        }
+
+        @include below("lg") {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+
+            .popup {
+                opacity: 1;
+            }
+        }
+    }
+
+    .on-hover {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        @include below("lg") {
+            opacity: 1;
+        }
+    }
+
+    &:hover {
+        box-shadow: var(--shadow-surface);
+        background-color: var(--surface-hover);
+
+        .on-hover {
+            opacity: 1;
+        }
+    }
+
+    &.active .prompt-link {
+        background-color: var(--sidebar-primary);
+        color: var(--white);
+
+        p,
+        span,
+        h4 {
+            color: var(--white) !important;
+        }
+    }
+}

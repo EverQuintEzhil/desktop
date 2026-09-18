@@ -1,0 +1,132 @@
+.answer-list-item {
+    .message-answer {
+        .answer-content {
+            max-width: calc(100% - 32px - 12px);
+        }
+    }
+}
+
+.message {
+    .message-question {
+        span {
+            font-size: var(--text-h5);
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+    }
+
+    .image-list {
+        .message-image-item {
+            flex-shrink: 0;
+            cursor: pointer;
+            background-color: var(--card);
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+
+            img {
+                height: 150px;
+                width: 150px;
+                flex-shrink: 0;
+                object-fit: cover;
+                overflow: hidden;
+            }
+
+            &:first-child {
+                margin-left: auto;
+            }
+
+            &:hover {
+                background-color: var(--surface-hover);
+
+                img {
+                    transition: all 0.2s ease;
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}
+
+.message:focus-within .copy-button-container,
+.message:hover .copy-button-container {
+    opacity: 1;
+}
+
+.textarea-wrapper {
+    max-width: 810px;
+}
+
+.queue-composer-wrap {
+    .queued-messages-panel {
+        padding-bottom: 22px;
+    }
+
+    .queue-composer-shell {
+        margin-top: -16px;
+        border-radius: var(--radius-3xl);
+        background-color: var(--card);
+        box-shadow: var(--shadow-surface);
+    }
+
+    .queue-composer-editing {
+        border-bottom: 1px solid var(--border);
+    }
+
+    .chat-block {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    // `.queue-composer-shell` is already the card here, so the composer stack must not draw a second one.
+    .composer-stack:has(> .recommended-capabilities-banner) {
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    // With the editing bar above it the banner is no longer the top of the card.
+    .queue-composer-editing ~ * .recommended-capabilities-row-first {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .chat-composer-block {
+        padding-bottom: 8px;
+    }
+}
+
+.left-side > .header-title {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    min-height: 48px;
+    padding: 12px 12px 12px 44px;
+    background-color: var(--background);
+    box-shadow: none;
+    z-index: 1;
+
+    @include above("lg") {
+        padding-left: 16px;
+        padding-right: 12px;
+    }
+
+    @media (max-width: 1023px) {
+        padding-left: 58px;
+    }
+}
+
+/* The left inset above reserves room for the mobile menu trigger, keyed on the
+   VIEWPORT. The assistant panel suppresses that trigger and sizes itself from a
+   drag handle, so it inherited a 44-58px gutter for a button that is not there. */
+[data-slot="app-assistant-panel"] .left-side > .header-title {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.left-side.header-title-shadow-visible > .header-title {
+    box-shadow: var(--shadow-xs);
+}

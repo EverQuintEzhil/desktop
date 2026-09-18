@@ -1,0 +1,72 @@
+.builder-chat-dropzone {
+    .dropzone-drag-illustration {
+        max-width: 120px;
+    }
+}
+
+.recents-panel {
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 8%, transparent), transparent 34%),
+        var(--background);
+
+    .recents-panel-header {
+        backdrop-filter: blur(10px);
+    }
+
+    .recents-panel-item {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+        background-color: color-mix(in srgb, var(--surface) 74%, var(--background));
+        transition:
+            background-color 0.16s ease,
+            border-color 0.16s ease,
+            box-shadow 0.16s ease,
+            transform 0.16s ease;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            bottom: 12px;
+            left: 0;
+            width: 3px;
+            background-color: transparent;
+            border-radius: 999px;
+            transition: background-color 0.16s ease;
+        }
+
+        &:hover {
+            border-color: color-mix(in srgb, var(--primary) 18%, var(--border));
+            background-color: var(--surface-hover);
+            box-shadow: var(--shadow-surface);
+            transform: translateY(-1px);
+        }
+
+        &.active {
+            border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+            background-color: color-mix(in srgb, var(--primary) 10%, var(--surface));
+            box-shadow: var(--shadow-xs);
+
+            &::before {
+                background-color: var(--primary);
+            }
+
+            .recents-panel-item-icon {
+                color: var(--primary);
+                background-color: color-mix(in srgb, var(--primary) 14%, var(--surface));
+            }
+        }
+    }
+
+    .recents-panel-item-icon,
+    .recents-panel-empty-icon {
+        color: var(--text-secondary);
+        background-color: color-mix(in srgb, var(--primary) 7%, var(--surface));
+    }
+
+    .recents-panel-empty {
+        border: 1px dashed color-mix(in srgb, var(--border) 84%, transparent);
+        background-color: color-mix(in srgb, var(--surface) 68%, var(--background));
+    }
+}

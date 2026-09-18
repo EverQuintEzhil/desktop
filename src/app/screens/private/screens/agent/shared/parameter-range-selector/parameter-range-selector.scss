@@ -1,0 +1,18 @@
+@use "../selected-parameters-shared" as *;
+
+.stepper-popover-content {
+    &.dark-mode {
+        background-color: transparent;
+        border: none;
+        box-shadow: var(--shadow-lg-dark);
+        .popover-inner {
+            padding: var(--spacing-sm);
+            background-color: var(--grey-alpha-6);
+            .stepper-wrapper {
+                button {
+                    background-color: var(--white-alpha-06);
+                }
+            }
+        }
+    }
+}

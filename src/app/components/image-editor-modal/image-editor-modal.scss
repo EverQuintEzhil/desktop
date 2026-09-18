@@ -1,0 +1,46 @@
+.image-editor-modal {
+    background: var(--background);
+    border-radius: var(--radius-2xl);
+}
+
+.image-editor-modal * {
+    transition: none;
+}
+
+.image-editor-modal .workspace {
+    min-height: 0;
+    background: var(--background);
+}
+
+.image-editor-modal .workspace.with-panel {
+    grid-template-columns: 80px 270px 1fr;
+}
+
+.image-editor-modal .workspace.no-panel {
+    grid-template-columns: 80px 1fr;
+}
+
+#image-editor-modal .modal-header {
+    display: none;
+}
+
+#image-editor-modal .modal-body {
+    padding: 0;
+}
+
+#image-editor-modal .modal-block {
+    background-color: transparent;
+    overflow: visible;
+    max-width: 1400px;
+}
+
+#image-editor-modal .modal-block > * {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+@include below("lg") {
+    #image-editor-modal .modal-block {
+        max-height: 100svh;
+    }
+}

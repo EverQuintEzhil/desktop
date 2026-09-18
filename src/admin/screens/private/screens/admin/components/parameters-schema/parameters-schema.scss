@@ -1,0 +1,64 @@
+.parameters-schema-tab {
+    transition: none;
+    padding-bottom: 24px;
+    * {
+        transition: none;
+    }
+    .cm-editor {
+        .cm-scroller {
+            max-height: calc(var(--params-schema-h, calc(100svh - 147px)) - 85px);
+
+            @include scrollbar;
+        }
+    }
+}
+
+.schema-builder {
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    max-height: var(--params-schema-h, calc(100svh - 147px));
+    min-height: var(--params-schema-h, calc(100svh - 147px));
+    overflow-y: auto;
+    @include scrollbar;
+}
+
+.json-editor-pane {
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    min-height: var(--params-schema-h, calc(100svh - 147px));
+    max-height: var(--params-schema-h, calc(100svh - 147px));
+    overflow: hidden;
+    // display:flex/flex-direction handled by Tailwind `flex flex-col` in JSX.
+    // Keeping them here (unlayered) would override `max-lg:hidden` in Tailwind v4
+    // (unlayered CSS beats layered utilities) and leak this pane into mobile.
+    .vanilla-json-editor {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+    }
+}
+
+.nested-fields {
+    background-color: var(--background-secondary);
+}
+
+.field-accordion-header:hover {
+    background-color: var(--background-secondary);
+    border-radius: 0.5rem;
+}
+
+.field-accordion-chevron {
+    transition: transform 0.15s ease;
+
+    &.is-expanded {
+        transform: rotate(90deg);
+    }
+}
+
+.field-accordion-body {
+    border-top: 1px solid var(--border-secondary);
+}

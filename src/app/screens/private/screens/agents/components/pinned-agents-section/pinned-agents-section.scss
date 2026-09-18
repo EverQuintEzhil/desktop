@@ -1,0 +1,81 @@
+// AccordionContent keeps overflow:hidden for the collapse animation. Once open, card hover shadows
+// (--shadow-surface is a 7px blur) must paint past the panel edge — the mx/px gutter trick cannot
+// help here because className lands on the inner wrapper, not the clipping node.
+.pinned-agents-section [data-slot="accordion-content"][data-state="open"] {
+    overflow: visible;
+}
+
+// A pinned tile is the same card as one in the grid — same background, border, elevation, title and
+// padding. The grip overlays the top-left corner rather than claiming layout space of its own, so
+// nothing here changes the card's box; everything below is grip styling or a drag state.
+.agent-pinned-tile {
+    // The grip lives outside the card's anchor, so its reveal cannot key on .agent-card:hover.
+    .agent-grip-handle {
+        color: var(--text-secondary);
+        opacity: 0;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--primary);
+            opacity: 1;
+        }
+    }
+
+    &:hover .agent-grip-handle {
+        opacity: 1;
+    }
+
+    // Hovering the grip (a sibling of the card) would otherwise drop .agent-card:hover. Mirror the
+    // card hover surface here so the tile stays visually hovered for the whole pointer path.
+    &:hover .agent-card {
+        box-shadow: var(--shadow-surface);
+        background-color: var(--surface-hover);
+
+        .popup,
+        .link-icon {
+            opacity: 1;
+        }
+    }
+
+    // Touch has no hover, so the grip could never be revealed there.
+    @media (pointer: coarse) {
+        .agent-grip-handle {
+            opacity: 1;
+        }
+    }
+
+    // The lifted copy of the tile lives in the DragOverlay; what stays behind is the gap it came
+    // from, dimmed so the drop target is legible instead of collapsing the layout.
+    &.is-dragging {
+        opacity: 0.4;
+
+        .agent-grip-handle {
+            opacity: 0;
+        }
+    }
+
+    &.is-drag-preview .agent-card {
+        box-shadow:
+            var(--shadow-surface),
+            0 0 0 1px var(--primary);
+        cursor: grabbing;
+    }
+}
+
+// While a tile is being dragged, nothing else on the page should look draggable or selectable.
+.agent-drag-active {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* Mirrors agent-card.scss: tenant branding injects a light --surface-hover into
+ html.dark, so the dark hover lift is pinned to app-owned neutral primitives. */
+.dark .agent-pinned-tile:hover .agent-card {
+    background-color: var(--neutral-border-2);
+
+    h4,
+    i,
+    svg {
+        color: var(--card-hover-foreground);
+    }
+}

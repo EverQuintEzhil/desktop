@@ -1,0 +1,22 @@
+.accouncement-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-circle);
+    border: none;
+    background-color: var(--border-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.accouncement-dot.is-active {
+    background-color: var(--primary);
+}
+
+.accouncement-dot:hover {
+    background-color: var(--text-secondary);
+}
+
+.accouncement-dot.is-active:hover {
+    background-color: var(--primary);
+}

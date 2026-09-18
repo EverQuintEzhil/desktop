@@ -1,0 +1,58 @@
+.account-page {
+    background-color: var(--background);
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+
+    h3 {
+        font-weight: 500;
+    }
+
+    .logo {
+        min-height: 30px;
+        flex-shrink: 0;
+
+        img {
+            max-width: 300px;
+            max-height: 160px;
+        }
+    }
+
+    .account-inner {
+        .otp-block,
+        .login-block,
+        .signin-block {
+            gap: 2.5rem;
+            max-width: 360px;
+            width: 100%;
+            align-items: normal;
+
+            button {
+                min-height: 48px;
+            }
+        }
+
+        .otp-block {
+            position: relative;
+
+            h3 {
+                text-align: center;
+            }
+        }
+
+        .welcome-note {
+            position: relative;
+        }
+
+        button {
+            &.back {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 32px;
+                padding: 0;
+                min-height: 32px;
+            }
+        }
+    }
+}

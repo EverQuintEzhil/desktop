@@ -1,0 +1,124 @@
+@use "mixins" as *;
+
+.value-pre {
+    background: var(--card);
+    font-size: 10px;
+    line-height: 1.3;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid var(--border);
+    max-height: 200px;
+    font-family: inherit;
+    overflow: auto;
+    @include scrollbar-overlay;
+}
+
+.flow-header-row {
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--card);
+}
+
+.flow-accordion {
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.flow-chevron-icon {
+    color: #656d76;
+    transition: transform 0.2s ease;
+
+    &.is-expanded {
+        transform: rotate(90deg);
+    }
+}
+
+.flow-status-icon {
+    &[data-status="completed"] {
+        color: #10b981;
+    }
+    &[data-status="failed"] {
+        color: #ef4444;
+    }
+    &[data-status="running"] {
+        color: #f59e0b;
+    }
+    &[data-status="pending"] {
+        color: #6b7280;
+    }
+}
+
+.flow-tag {
+    min-height: 24px;
+
+    span {
+        font-size: 10px;
+    }
+}
+
+.json-view-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    max-height: 40svh;
+    overflow: auto;
+    font-family: inherit;
+    font-size: var(--text-xs);
+    line-height: 1.3;
+
+    > div {
+        background: transparent;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    span[class*="_"][class*="MGIk"],
+    span[class*="_"][class*="bSDX"] {
+        color: #1a1a1a;
+        font-weight: 500;
+    }
+    span[class*="_"][class*="MFti"] {
+        color: #1a1a1a;
+        cursor: pointer;
+        &:hover {
+            color: #6b7280;
+            user-select: none;
+        }
+    }
+    span[class*="_"][class*="f10Tu"],
+    span[class*="_"][class*="UmXx"],
+    span[class*="_"][class*="LId0"] {
+        color: #6b7280;
+        &:hover {
+            user-select: none;
+            color: #1a1a1a;
+        }
+    }
+    span[class*="_"][class*="pNG9"] {
+        color: #6b7280;
+    }
+    span[class*="_"][class*="uHL6"],
+    span[class*="_"][class*="gsbQL"],
+    span[class*="_"][class*="KJWg"],
+    span[class*="_"][class*="AXVT"],
+    span[class*="_"][class*="oLqym"] {
+        color: #6b7280;
+    }
+    span[class*="_"][class*="vGjyY"] {
+        color: #1a1a1a;
+    }
+    span[class*="_"][class*="bQdo"] {
+        color: #0969da;
+    }
+    span[class*="_"][class*="T6PJ"],
+    span[class*="_"][class*="Gho6"] {
+        color: #cf222e;
+    }
+    span[class*="_"][class*="xvuR"] {
+        color: #6b7280;
+    }
+    span[class*="_"][class*="zQKs"] {
+        color: #6b7280;
+    }
+
+    @include scrollbar;
+}

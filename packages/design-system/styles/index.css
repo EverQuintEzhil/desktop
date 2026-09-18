@@ -1,0 +1,15 @@
+/*
+ * Build input for the precompiled dist/index.css — used ONLY by surfaces with
+ * no Tailwind build (standalone dev harness, MCP iframe). Tailwind hosts import
+ * ./tailwind.css instead. Shared theme + component rules live in ./theme.css.
+ */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "tw-animate-css";
+@import "./theme.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@source "../../../src/components/ui";

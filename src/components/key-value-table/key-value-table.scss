@@ -1,0 +1,84 @@
+.key-value-table {
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    overflow: hidden;
+
+    // ── Header ────────────────────────────────────────────────────────────────
+
+    .kv-header {
+        background-color: var(--muted);
+        border-bottom: 1px solid var(--border-secondary);
+
+        span {
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+    }
+
+    // ── Rows ──────────────────────────────────────────────────────────────────
+
+    .kv-row {
+        min-height: 40px;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--border-secondary);
+        }
+    }
+
+    // ── Columns ───────────────────────────────────────────────────────────────
+
+    .kv-col {
+        &.kv-key-col {
+            width: 40%;
+            border-right: 1px solid var(--border-secondary);
+            word-break: break-all;
+        }
+
+        &.kv-value-col {
+            flex: 1;
+            word-break: break-all;
+        }
+
+        &.kv-actions-col {
+            width: 100px;
+            border-left: 1px solid var(--border-secondary);
+            flex-shrink: 0;
+        }
+
+        &.editable {
+            cursor: text;
+            transition: background-color 0.12s ease;
+
+            &:hover {
+                background-color: var(--accent);
+            }
+        }
+    }
+
+    // ── Inline input (editing / new-row) ──────────────────────────────────────
+
+    .kv-input {
+        &[aria-invalid="true"] {
+            border: 1px solid var(--destructive);
+        }
+    }
+
+    // ── Empty state ───────────────────────────────────────────────────────────
+
+    .kv-empty {
+        color: var(--text-secondary);
+    }
+
+    // ── Footer (add row) ──────────────────────────────────────────────────────
+
+    .kv-footer {
+        border-top: 1px solid var(--border-secondary);
+    }
+}
+
+// ── Error message ─────────────────────────────────────────────────────────
+
+.kv-error-msg {
+    color: var(--destructive);
+}

@@ -1,0 +1,146 @@
+@theme inline {
+    --spacing: var(--spacing-value);
+    --tracking-normal: var(--letter-spacing);
+
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
+    --radius-pill: 9999px;
+    --radius-circle: 50%;
+
+    --shadow-sm: var(--shadow-offset-x) var(--shadow-offset-y) var(--shadow-blur) var(--shadow-spread)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-md: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 2) calc(var(--shadow-blur) * 2)
+        calc(var(--shadow-spread) * 2)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-lg: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 3) calc(var(--shadow-blur) * 3)
+        var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-surface: var(--surface-shadow);
+    --shadow-dark: var(--shadow-dark-value);
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+    --text-7xl: 4.5rem;
+    --text-8xl: 6rem;
+    --text-9xl: 8rem;
+    --text-h1: 1.5rem;
+    --text-h2: 1.25rem;
+    --text-h3: 1.0625rem;
+    --text-h4: 1rem;
+    --text-h5: 0.9375rem;
+    --text-h6: 0.875rem;
+
+    --font-weight-thin: 100;
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-text-secondary: var(--text-secondary);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-card-hover: var(--card-hover);
+    --color-card-hover-foreground: var(--card-hover-foreground);
+    --color-surface-hover: var(--surface-hover);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-border: var(--border);
+    --color-border-secondary: var(--border-secondary);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-white-alpha-06: var(--white-alpha-06);
+    --color-white-alpha-15: var(--white-alpha-15);
+    --color-white-alpha-2: var(--white-alpha-2);
+    --color-white-alpha-1: var(--white-alpha-1);
+    --color-grey-alpha-6: var(--grey-alpha-6);
+}
+
+/*
+ * Utility-class safelist for GenUI mini-apps. Mini-apps can only use utility
+ * classes that exist in the compiled CSS, so common layout/typography/color
+ * utilities are force-included here regardless of component source usage.
+ * This file is imported by both styles/tailwind.css (Tailwind hosts) and
+ * styles/index.css (precompiled dist/index.css), so the safelist reaches
+ * both builds.
+ */
+@source inline("flex inline-flex flex-col flex-row flex-wrap flex-1 shrink-0 grid grid-cols-{1,2,3,4} items-{start,center,end,baseline} justify-{start,center,between,end} self-{start,center,end}");
+@source inline("gap-{1,1.5,2,3,4,6} p-{1,2,3,4,6} px-{2,3,4,6} py-{1,2,3,4} pt-{1,2,4} pb-{1,2,4} mt-{1,2,4} mb-{1,2,4}");
+@source inline("w-full w-fit min-w-0 h-full max-w-{xs,sm,md,lg,xl} size-{3,4,5,6,8}");
+@source inline("text-{xs,sm,base,lg,xl,2xl} font-{normal,medium,semibold,bold} text-{left,center,right} truncate break-words whitespace-nowrap");
+@source inline("text-foreground text-muted-foreground text-primary text-destructive text-secondary-foreground bg-muted bg-muted/50 bg-card bg-background bg-primary/10 border-border");
+@source inline("rounded-{sm,md,lg,xl,full} border border-t border-b overflow-hidden overflow-auto");
+
+@layer components {
+    [data-slot="button"] i,
+    [data-slot="button"] svg {
+        color: inherit;
+    }
+
+    [data-slot="button"][data-variant="destructive"] i,
+    [data-slot="button"][data-variant="destructive"] svg {
+        color: var(--destructive);
+    }
+
+    [data-slot="button"][data-size="icon-xs"] i,
+    [data-slot="button"][data-size="icon-xs"] svg {
+        font-size: var(--text-xs);
+    }
+
+    [data-slot="button"][data-size="icon-xs"] svg {
+        width: 1em;
+        height: 1em;
+    }
+
+    .checkbox-default-border {
+        border-width: 1.5px;
+        border-style: solid;
+    }
+
+    textarea {
+        resize: none;
+    }
+}

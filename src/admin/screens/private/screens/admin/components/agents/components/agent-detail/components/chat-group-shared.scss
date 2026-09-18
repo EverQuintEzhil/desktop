@@ -1,0 +1,29 @@
+.collapsed-expanded.chat-group {
+    overflow: hidden;
+}
+
+.chat-group-view-details {
+    font-size: var(--text-xs);
+}
+
+.chat-group-header {
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    transition: background-color 0.15s ease;
+    background-color: var(--card);
+}
+
+.chat-group-header:hover {
+    background-color: var(--background);
+}
+
+.chat-group-chevron {
+    color: #656d76;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+}
+
+.chat-group-chevron.is-expanded {
+    transform: rotate(90deg);
+}

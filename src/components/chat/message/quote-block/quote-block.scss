@@ -1,0 +1,14 @@
+@keyframes quote-source-flash {
+    0% {
+        background-color: color-mix(in srgb, var(--primary) 14%, transparent);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.quote-source-highlight {
+    border-radius: var(--radius-md);
+    animation: quote-source-flash 1.6s ease-out forwards;
+}

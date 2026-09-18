@@ -1,0 +1,105 @@
+.template-count-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.template-search-wrapper {
+    position: relative;
+
+    .template-search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 14px;
+        height: 14px;
+        color: var(--muted-foreground);
+        pointer-events: none;
+    }
+
+    .template-search-input {
+        padding-left: 32px;
+    }
+}
+
+.template-list {
+    border: 1px solid var(--border-secondary);
+    border-radius: 8px;
+    overflow-y: auto;
+
+    .template-row {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border-secondary);
+        transition: background-color 0.1s ease;
+        cursor: pointer;
+        user-select: none;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background-color: var(--muted);
+        }
+
+        &.selected {
+            background-color: color-mix(in srgb, var(--primary) 5%, transparent);
+        }
+    }
+
+    .template-name {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .template-description,
+    .template-ref-name {
+        font-size: var(--text-sm);
+        color: var(--text-primary);
+    }
+}
+
+.template-key-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+    line-height: 1.8;
+    flex-shrink: 0;
+}
+
+.template-key-find {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+.template-key-findone {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+.template-key-insert {
+    background: #dcfce7;
+    color: #15803d;
+}
+.template-key-update {
+    background: #fef3c7;
+    color: #92400e;
+}
+.template-key-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+.template-key-aggregate {
+    background: #cffafe;
+    color: #0e7490;
+}
+.template-key-other {
+    background: var(--muted);
+    color: var(--muted-foreground);
+}

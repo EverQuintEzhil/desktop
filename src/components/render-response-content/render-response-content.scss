@@ -1,0 +1,7 @@
+.json-container {
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+    background: #f8fafc;
+    @include scrollbar-overlay;
+}

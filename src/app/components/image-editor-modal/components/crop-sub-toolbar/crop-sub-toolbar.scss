@@ -1,0 +1,40 @@
+@use "../crop-tooltip-shared" as *;
+
+.crop-sub-toolbar {
+    transform: none;
+    border-radius: var(--radius-sm);
+    background: var(--background);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+.straighten-controls {
+    height: 33px;
+    border-radius: var(--radius-sm);
+}
+
+.straighten-controls .straighten-slider-wrapper {
+    min-width: 140px;
+}
+
+.straighten-controls .straighten-number {
+    font-variant-numeric: tabular-nums;
+    width: 56px;
+}
+
+@include below("lg") {
+    .straighten-controls {
+        gap: 8px;
+    }
+
+    .straighten-controls .straighten-slider-wrapper {
+        min-width: 120px;
+    }
+
+    .crop-transform-controls {
+        display: none;
+    }
+
+    .crop-sub-toolbar-right {
+        display: none;
+    }
+}

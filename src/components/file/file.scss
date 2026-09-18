@@ -1,0 +1,235 @@
+.file-input {
+    position: absolute;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    opacity: 0;
+    z-index: 1;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+.avatar-label {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    cursor: pointer;
+    display: inline-block;
+    background-color: var(--background);
+
+    > button {
+        z-index: 1;
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+    }
+
+    > i,
+    > svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    span {
+        background-color: #2d2d2d;
+        font-size: var(--text-base);
+        font-weight: 700;
+        color: white;
+    }
+
+    img {
+        background-color: white;
+        position: relative;
+    }
+
+    figure {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    > figure {
+        border-radius: var(--radius-full, 9999px);
+    }
+
+    @keyframes loadingState {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.5);
+        }
+    }
+
+    &.file-avatar {
+        height: 120px;
+        width: 120px;
+
+        > i,
+        > svg {
+            font-size: 50px;
+            color: #c1c1c1;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    &.uploading-file {
+        > i,
+        > svg {
+            animation: loadingState 0.75s alternate infinite ease-in;
+        }
+    }
+}
+
+.avatar-label-wrapper {
+}
+
+.file-upload-zone {
+    position: relative;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    background-color: var(--background);
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+    overflow: hidden;
+
+    &.is-dragging {
+        border-color: var(--primary);
+        background-color: color-mix(in srgb, var(--primary) 6%, transparent);
+    }
+
+    &.has-error {
+        border-color: var(--destructive);
+    }
+
+    &.is-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    &.has-file {
+        border-style: solid;
+    }
+
+    .file-upload-input {
+        position: absolute;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .file-upload-empty {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        outline: none;
+
+        &:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: -2px;
+            border-radius: var(--radius);
+        }
+    }
+
+    .file-upload-icon {
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+        color: var(--muted-foreground);
+        transition:
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    &.is-dragging .file-upload-icon {
+        color: var(--primary);
+        transform: translateY(-3px);
+    }
+
+    .file-upload-label {
+        font-size: var(--text-sm);
+        color: var(--muted-foreground);
+    }
+
+    .file-upload-browse {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    .file-upload-hint-text {
+        font-size: var(--text-xs);
+        color: var(--muted-foreground);
+        opacity: 0.75;
+    }
+
+    .file-upload-selected {
+        width: 100%;
+    }
+
+    .file-upload-preview {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+        border: 1px solid var(--border);
+    }
+
+    .file-upload-file-icon {
+        font-size: 2rem;
+        width: 48px;
+        height: 48px;
+        color: var(--primary);
+        flex-shrink: 0;
+        text-align: center;
+    }
+
+    .file-upload-name {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--foreground);
+    }
+
+    .file-upload-size {
+        font-size: var(--text-xs);
+        color: var(--muted-foreground);
+    }
+
+    .file-upload-spinner {
+        font-size: 1.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        color: var(--primary);
+        animation: file-upload-spin 0.9s linear infinite;
+    }
+
+    @keyframes file-upload-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}

@@ -1,0 +1,28 @@
+.adjust-section:not(:last-child) {
+    border-bottom: 1px solid var(--border-secondary);
+    padding-bottom: 16px;
+}
+
+.adjust-section-content:has(.accordion-adjustment) {
+    gap: 0;
+}
+
+.accordion-adjustment {
+    cursor: pointer;
+    user-select: none;
+}
+
+.accordion-content {
+    padding-left: 4px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.accordion-item:has(.accordion-content) {
+    gap: 4px;
+}
+
+.accordion-item:hover .accordion-adjustment span,
+.accordion-adjustment.active span {
+    color: var(--primary);
+}

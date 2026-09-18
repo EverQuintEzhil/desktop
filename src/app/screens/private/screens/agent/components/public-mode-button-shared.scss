@@ -1,0 +1,12 @@
+.public-mode-button {
+    &.dark-mode {
+        border: var(--white-alpha-2) solid 1px;
+        &:focus-visible {
+            border-color: var(--white);
+        }
+    }
+
+    &.active {
+        background-color: var(--white-alpha-2);
+    }
+}

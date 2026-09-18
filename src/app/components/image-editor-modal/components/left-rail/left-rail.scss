@@ -1,0 +1,57 @@
+.left-rail {
+    background: var(--background);
+    button {
+        border-color: transparent;
+    }
+}
+
+.left-rail button.active {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: var(--primary-foreground);
+}
+
+.left-rail button.active i,
+.left-rail button.active svg {
+    color: var(--primary-foreground);
+}
+
+.left-rail button.active .spinner .blade {
+    background-color: var(--primary-foreground);
+}
+
+.left-rail button.active:hover {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: var(--primary-foreground);
+}
+
+.left-rail button.active:hover i,
+.left-rail button.active:hover svg {
+    color: var(--primary-foreground);
+}
+
+.left-rail button.active:hover .spinner .blade {
+    background-color: var(--primary-foreground);
+}
+
+.left-rail .mode-button:hover {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+    color: var(--secondary-foreground);
+}
+
+.left-rail .mode-button:hover i,
+.left-rail .mode-button:hover svg {
+    color: var(--secondary-foreground);
+}
+
+.left-rail .mode-button:hover .spinner .blade {
+    background-color: var(--secondary-foreground);
+}
+
+@include below("lg") {
+    .left-rail button {
+        min-width: 80px;
+    }
+}

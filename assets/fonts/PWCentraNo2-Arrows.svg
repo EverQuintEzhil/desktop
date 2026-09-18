@@ -1,0 +1,119 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<metadata>
+Created by FontForge 20180321 at Wed Aug 15 10:24:22 2018
+ By Josh
+Copyright (c) 2017 by Josh Finklea. All rights reserved.
+</metadata>
+<defs>
+<font id="PWCentraNo2-Arrows" horiz-adv-x="840" >
+  <font-face 
+    font-family="PW Centra No2 Arrows"
+    font-weight="251"
+    font-stretch="normal"
+    units-per-em="1000"
+    panose-1="0 0 0 0 0 0 0 0 0 0"
+    ascent="800"
+    descent="-200"
+    x-height="639"
+    cap-height="694"
+    bbox="-4 -558 1905 1257"
+    underline-thickness="50"
+    underline-position="-100"
+    unicode-range="U+000D-0070"
+  />
+<missing-glyph horiz-adv-x="500" 
+ />
+    <glyph glyph-name=".notdef" horiz-adv-x="500" 
+ />
+    <glyph glyph-name="NULL" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="NULL" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="nonmarkingreturn" unicode="&#xd;" horiz-adv-x="500" 
+ />
+    <glyph glyph-name="space" unicode=" " horiz-adv-x="250" 
+ />
+    <glyph glyph-name="e" unicode="e" 
+d="M164 -201l220 -220v1678h72v-1678l220 220l50 -50l-306 -307l-306 307z" />
+    <glyph glyph-name="B" unicode="B" 
+d="M345 -558v1528l-154 -154l-106 106l335 335l335 -335l-106 -106l-154 154v-1528h-150z" />
+    <glyph glyph-name="D" unicode="D" 
+d="M372 -558v1631l-200 -199l-67 67l315 316l315 -316l-67 -67l-200 199v-1631h-96z" />
+    <glyph glyph-name="G" unicode="G" 
+d="M407 -558v1765l-258 -259l-18 18l289 291l289 -291l-18 -18l-258 259v-1765h-26z" />
+    <glyph glyph-name="F" unicode="F" 
+d="M122 957l298 300l298 -300l-35 -35l-238 237v-1717h-50v1717l-238 -237z" />
+    <glyph glyph-name="H" unicode="H" 
+d="M425 -558h-10v1796l-271 -273l-7 7l283 285l283 -285l-7 -7l-271 273v-1796z" />
+    <glyph glyph-name="C" unicode="C" 
+d="M360 -558v1584l-179 -178l-85 84l324 325l324 -325l-85 -84l-179 178v-1584h-120z" />
+    <glyph glyph-name="A" unicode="A" 
+d="M333 -558v1483l-134 -134l-123 122l344 344l344 -344l-123 -122l-134 134v-1483h-174z" />
+    <glyph glyph-name="a" unicode="a" 
+d="M507 1257v-1483l134 134l123 -122l-344 -344l-344 344l123 122l134 -134v1483h174z" />
+    <glyph glyph-name="b" unicode="b" 
+d="M495 1257v-1528l154 154l106 -106l-335 -335l-335 335l106 106l154 -154v1528h150z" />
+    <glyph glyph-name="c" unicode="c" 
+d="M480 1257v-1584l179 178l85 -84l-324 -325l-324 325l85 84l179 -178v1584h120z" />
+    <glyph glyph-name="d" unicode="d" 
+d="M468 1257v-1631l200 199l67 -67l-315 -316l-315 316l67 67l200 -199v1631h96z" />
+    <glyph glyph-name="f" unicode="f" 
+d="M157 -223l238 -237v1717h50v-1717l238 237l35 -35l-298 -300l-298 300z" />
+    <glyph glyph-name="g" unicode="g" 
+d="M433 1257v-1765l258 259l18 -18l-289 -291l-289 291l18 18l258 -259v1765h26z" />
+    <glyph glyph-name="h" unicode="h" 
+d="M425 -539l271 273l7 -7l-283 -285l-283 285l7 7l271 -273v1796h10v-1796z" />
+    <glyph glyph-name="I" unicode="I" horiz-adv-x="1826" 
+d="M1810 263h-1482l134 -134l-122 -123l-344 344l344 344l122 -123l-134 -134h1482v-174z" />
+    <glyph glyph-name="J" unicode="J" horiz-adv-x="1934" 
+d="M1870 275h-1528l154 -154l-106 -106l-335 335l335 335l106 -106l-154 -154h1528v-150z" />
+    <glyph glyph-name="K" unicode="K" horiz-adv-x="1944" 
+d="M1874 290h-1584l178 -179l-84 -85l-325 324l325 324l84 -85l-178 -179h1584v-120z" />
+    <glyph glyph-name="L" unicode="L" horiz-adv-x="1953" 
+d="M1878 302h-1631l199 -200l-67 -67l-316 315l316 315l67 -67l-199 -200h1631v-96z" />
+    <glyph glyph-name="M" unicode="M" horiz-adv-x="1962" 
+d="M424 606l-220 -220h1678v-72h-1678l220 -220l-50 -50l-307 306l307 306z" />
+    <glyph glyph-name="N" unicode="N" horiz-adv-x="1971" 
+d="M372 52l-300 298l300 298l35 -35l-237 -238h1717v-50h-1717l237 -238z" />
+    <glyph glyph-name="O" unicode="O" horiz-adv-x="1983" 
+d="M1895 337h-1765l259 -258l-18 -18l-291 289l291 289l18 -18l-259 -258h1765v-26z" />
+    <glyph glyph-name="P" unicode="P" horiz-adv-x="1990" 
+d="M1900 355v-10h-1796l273 -271l-7 -7l-285 283l285 283l7 -7l-273 -271h1796z" />
+    <glyph glyph-name="i" unicode="i" horiz-adv-x="1826" 
+d="M16 437h1482l-134 134l122 123l344 -344l-344 -344l-122 123l134 134h-1482v174z" />
+    <glyph glyph-name="j" unicode="j" horiz-adv-x="1934" 
+d="M64 425h1528l-154 154l106 106l335 -335l-335 -335l-106 106l154 154h-1528v150z" />
+    <glyph glyph-name="k" unicode="k" horiz-adv-x="1944" 
+d="M70 410h1584l-178 179l84 85l325 -324l-325 -324l-84 85l178 179h-1584v120z" />
+    <glyph glyph-name="l" unicode="l" horiz-adv-x="1953" 
+d="M75 398h1631l-199 200l67 67l316 -315l-316 -315l-67 67l199 200h-1631v96z" />
+    <glyph glyph-name="m" unicode="m" horiz-adv-x="1962" 
+d="M1588 656l307 -306l-307 -306l-50 50l220 220h-1678v72h1678l-220 220z" />
+    <glyph glyph-name="n" unicode="n" horiz-adv-x="1971" 
+d="M1564 87l237 238h-1717v50h1717l-237 238l35 35l300 -298l-300 -298z" />
+    <glyph glyph-name="o" unicode="o" horiz-adv-x="1983" 
+d="M88 363h1765l-259 258l18 18l291 -289l-291 -289l-18 18l259 258h-1765v26z" />
+    <glyph glyph-name="p" unicode="p" horiz-adv-x="1990" 
+d="M1886 355l-273 271l7 7l285 -283l-285 -283l-7 7l273 271h-1796v10h1796z" />
+    <glyph glyph-name="two" unicode="2" horiz-adv-x="1730" 
+d="M64 425h1602v-150h-1602v150z" />
+    <glyph glyph-name="one" unicode="1" horiz-adv-x="1634" 
+d="M16 437h1602v-175h-1602v175z" />
+    <glyph glyph-name="three" unicode="3" horiz-adv-x="1742" 
+d="M70 410h1602v-120h-1602v120z" />
+    <glyph glyph-name="four" unicode="4" horiz-adv-x="1752" 
+d="M75 398h1602v-96h-1602v96z" />
+    <glyph glyph-name="five" unicode="5" horiz-adv-x="1762" 
+d="M80 386h1602v-72h-1602v72z" />
+    <glyph glyph-name="six" unicode="6" horiz-adv-x="1770" 
+d="M84 375h1602v-50h-1602v50z" />
+    <glyph glyph-name="seven" unicode="7" horiz-adv-x="1778" 
+d="M88 363h1602v-26h-1602v26z" />
+    <glyph glyph-name="eight" unicode="8" horiz-adv-x="1782" 
+d="M90 355h1602v-10h-1602v10z" />
+    <glyph glyph-name="E" unicode="E" 
+d="M676 900l-220 220v-1678h-72v1678l-220 -220l-50 50l306 307l306 -307z" />
+  </font>
+</defs></svg>

@@ -1,0 +1,8 @@
+@use "../../../conversation-list-item-shared" as *;
+@use "../../../conversations-shared" as *;
+
+.histories-tab {
+    .side-sheet {
+        background-color: var(--card);
+    }
+}

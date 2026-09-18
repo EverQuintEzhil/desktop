@@ -1,0 +1,50 @@
+@use "mixins" as *;
+
+.tab-list {
+    @include scrollbar-hidden;
+}
+
+.tab-list-item {
+    display: inline-block;
+    margin: 0;
+
+    // A priority+ tab bar measures a hidden ghost row of bare spans against the real
+    // row, so both have to carry the same box or the ruler reads short.
+    > a,
+    > span {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: var(--space-1) var(--space-2);
+        height: 28px;
+        position: relative;
+        border-bottom: 2px solid transparent;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+        border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+
+        &:hover {
+            background: var(--background);
+
+            span {
+                color: var(--primary);
+            }
+        }
+    }
+
+    // The bar clips overflow to hide the ghost measurement row, so the global
+    // 2px-offset focus ring would be cut off top and bottom — inset it instead.
+    :where(a, button):focus-visible {
+        outline-offset: -1.5px;
+        border-radius: var(--radius-xs);
+    }
+
+    &.active a {
+        border-bottom-color: var(--primary);
+        background: var(--background);
+
+        span {
+            color: var(--primary);
+        }
+    }
+}

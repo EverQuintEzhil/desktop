@@ -1,0 +1,21 @@
+.tags-input {
+    label {
+        margin-bottom: 0;
+    }
+
+    &.has-error {
+        padding-bottom: 20px;
+        position: relative;
+
+        input {
+            border-color: var(--destructive);
+        }
+        svg {
+            color: var(--destructive);
+        }
+    }
+}
+
+.tag-group {
+    flex: 100%;
+}

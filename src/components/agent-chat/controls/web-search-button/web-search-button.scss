@@ -1,0 +1,29 @@
+.web-search-button {
+    .xmark-icon {
+        display: none;
+    }
+
+    &:focus-visible,
+    &:hover {
+        span {
+            color: var(--primary);
+        }
+
+        .icon-wrapper {
+            background-color: var(--primary);
+
+            i,
+            svg {
+                color: var(--primary-foreground);
+            }
+
+            .xmark-icon {
+                display: flex;
+            }
+
+            .globe-icon {
+                display: none;
+            }
+        }
+    }
+}

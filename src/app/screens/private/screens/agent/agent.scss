@@ -1,0 +1,9 @@
+.page-styled {
+    &:has(.reply-area) {
+        background-color: var(--background);
+
+        @include below("lg") {
+            background-color: var(--card);
+        }
+    }
+}

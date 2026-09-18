@@ -1,0 +1,75 @@
+.logout-screen {
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 34%),
+        linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--background) 72%, var(--surface)) 100%);
+
+    &::before {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        content: "";
+        background-image:
+            linear-gradient(color-mix(in srgb, var(--border) 34%, transparent) 1px, transparent 1px),
+            linear-gradient(90deg, color-mix(in srgb, var(--border) 34%, transparent) 1px, transparent 1px);
+        background-size: 44px 44px;
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.38), transparent 62%);
+    }
+}
+
+.logout-screen-accent {
+    position: absolute;
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0.82;
+    pointer-events: none;
+}
+
+.logout-screen-accent-primary {
+    top: 20%;
+    left: max(8%, calc(50% - 380px));
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.logout-screen-accent-secondary {
+    right: max(6%, calc(50% - 420px));
+    bottom: 18%;
+    background: color-mix(in srgb, var(--primary) 7%, var(--surface));
+}
+
+.logout-card {
+    box-shadow: var(--shadow-dark);
+}
+
+.logout-icon-shell {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+.logout-icon-shell-error {
+    color: var(--destructive);
+    background: color-mix(in srgb, var(--destructive) 10%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--destructive) 14%, transparent);
+}
+
+.logout-progress {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.logout-progress-bar {
+    width: 42%;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 64%, transparent), var(--primary));
+    animation: logout-progress 1.4s ease-in-out infinite;
+}
+
+@keyframes logout-progress {
+    0% {
+        transform: translateX(-120%);
+    }
+
+    100% {
+        transform: translateX(250%);
+    }
+}

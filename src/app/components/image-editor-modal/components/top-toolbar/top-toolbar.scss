@@ -1,0 +1,93 @@
+@use "../crop-tooltip-shared" as *;
+
+.top-toolbar {
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+@include below("lg") {
+    #zoom-tooltip {
+        display: none;
+    }
+}
+
+.toolbar-group-start button {
+    min-height: 33px;
+}
+
+.toolbar-group-start button:disabled {
+    color: var(--text-secondary);
+}
+
+.toolbar-group-start button:disabled i,
+.toolbar-group-start button:disabled svg {
+    color: var(--text-secondary);
+}
+
+@include below("lg") {
+    .toolbar-group-start button {
+        font-size: 0;
+        gap: 0;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+.close-media-editor {
+    display: inline-flex;
+}
+
+.zoom-dropdown-trigger {
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+}
+
+.zoom-dropdown-trigger:hover {
+    opacity: 0.9;
+}
+
+.zoom-dropdown-trigger:hover span,
+.zoom-dropdown-trigger:hover i,
+.zoom-dropdown-trigger:hover svg {
+    color: var(--subtle-button-foreground-hover);
+}
+
+.zoom-menu-item {
+    width: 100%;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+}
+
+.zoom-menu-item.selected {
+    background-color: var(--background);
+}
+
+.zoom-menu-item.selected .zoom-menu-left span {
+    color: var(--primary);
+}
+
+.zoom-menu-item:hover {
+    background-color: var(--background);
+}
+
+.zoom-menu-item.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.zoom-menu-separator {
+    height: 1px;
+    background: var(--border-secondary);
+}
+
+@include below("lg") {
+    .zoom-controls .hide-mobile {
+        display: none;
+    }
+}

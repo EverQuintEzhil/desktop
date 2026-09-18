@@ -1,0 +1,17 @@
+/*
+ * Tailwind source partial for hosts that run their own Tailwind v4 build
+ * (same pattern as `shadcn/tailwind.css`). Import from the app's Tailwind entry:
+ *   @import "@thefluentmind/design-system/tailwind.css";
+ * The precompiled dist/index.css is only for surfaces with no Tailwind build
+ * (standalone dev harness, MCP iframe).
+ */
+
+@import "./theme.css";
+
+/* Component class strings live in the bundled output (the source now lives in the
+   host app's src tree), so point Tailwind at the built JS to generate utilities. */
+@source "../dist/index.js";
+
+/* Components use `dark:` with a class-based scheme; declare it here so the
+   partial is self-sufficient in hosts that don't declare it themselves. */
+@custom-variant dark (&:is(.dark *));

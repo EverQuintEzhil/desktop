@@ -1,0 +1,109 @@
+.canvas-viewport {
+    grid-template-columns: 0 1fr 0;
+    grid-template-rows: 0 1fr 0;
+    background: var(--background);
+}
+
+.canvas-scroll-area {
+    grid-area: 2 / 2 / 3 / 3;
+    place-content: safe center;
+}
+
+.canvas-content-wrapper {
+    box-sizing: border-box;
+    padding: var(--canvas-padding, 20px);
+}
+
+.webgl-canvas {
+    display: block;
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.crop-overlay {
+    position: absolute;
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-md);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+    background-size: calc(100% / 3) calc(100% / 3);
+    cursor: move;
+    touch-action: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.crop-overlay:focus-visible {
+    box-shadow:
+        0 0 0 9999px rgba(0, 0, 0, 0.45),
+        0 0 0 2px var(--primary);
+}
+
+.crop-handle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-circle);
+    border: 2px solid var(--primary);
+    background: var(--white);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    touch-action: none;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.crop-handle:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.crop-handle.handle-nw {
+    top: 0;
+    left: 0;
+    cursor: nwse-resize;
+}
+.crop-handle.handle-n {
+    top: 0;
+    left: 50%;
+    cursor: ns-resize;
+}
+.crop-handle.handle-ne {
+    top: 0;
+    left: 100%;
+    cursor: nesw-resize;
+}
+.crop-handle.handle-e {
+    top: 50%;
+    left: 100%;
+    cursor: ew-resize;
+}
+.crop-handle.handle-se {
+    top: 100%;
+    left: 100%;
+    cursor: nwse-resize;
+}
+.crop-handle.handle-s {
+    top: 100%;
+    left: 50%;
+    cursor: ns-resize;
+}
+.crop-handle.handle-sw {
+    top: 100%;
+    left: 0;
+    cursor: nesw-resize;
+}
+.crop-handle.handle-w {
+    top: 50%;
+    left: 0;
+    cursor: ew-resize;
+}

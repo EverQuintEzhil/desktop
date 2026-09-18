@@ -1,0 +1,13 @@
+.error-boundary {
+    background-color: var(--background);
+}
+
+.error-boundary-title {
+    font-size: var(--text-xl);
+}
+
+.error-boundary-message {
+    color: var(--text-primary);
+    background-color: var(--background);
+    border-radius: var(--radius-sm);
+}

@@ -1,0 +1,33 @@
+import type { UserType } from './users';
+
+export type MemoryType = {
+    readonly _id: string;
+    name: string;
+    refName: string;
+    description: string;
+    kind: string;
+    cardinality?: string;
+    scope?: string;
+    retrieval?: string;
+    topK?: number;
+    isShareable?: boolean;
+    specification?: Record<string, unknown>;
+    extractorModelId?: string;
+    piiVerifierModelId?: string;
+    embedModelId?: string;
+    agents?: { _id: string; name: string; slug: string }[];
+    agentIds?: string[];
+    adminIds?: string[];
+    admins?: UserType[];
+    generatePolicy?: boolean;
+    policyCodeId: string | null;
+    isDev?: boolean;
+    creator?: UserType;
+    updatedBy?: UserType;
+    createdAt?: string;
+    updatedAt?: string;
+    preference?: { disabled: boolean };
+    globalEnabled?: boolean;
+    agentEnabled?: boolean | null;
+    effectiveEnabled?: boolean;
+};

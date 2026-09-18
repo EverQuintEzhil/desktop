@@ -1,0 +1,1155 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "tw-shimmer";
+@import "@thefluentmind/design-system/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========== Theme: same as src/styles/theme.ts (shadcn + styled-components) ========== */
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Base radius (shadcn / design token); Tailwind `rounded-*` uses @theme --radius-* (same literals below) */
+    --radius: 8px;
+    /* Radius steps on :root so `var(--radius-*)` resolves in SCSS/CSS (not only inside @theme) */
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
+    --radius-pill: 9999px;
+    --radius-circle: 50%;
+    --spacing-value: 0.25rem;
+    --letter-spacing: 0em;
+
+    /* Tailwind border utility (border-b, border, etc.) */
+    --tw-border-style: solid;
+
+    /* ── Brand primitives (override these to rebrand) ── */
+    --brand-primary: #171717;
+    --brand-primary-foreground: #fafafa;
+    --brand-secondary: #f5f5f5;
+    --brand-secondary-foreground: #171717;
+    --brand-bg: #f5f5f5;
+    --neutral-dark: #171717;
+    --neutral-mid: #6b6b6b;
+    --neutral-light: #f5f5f5;
+    --neutral-border: #e5e5e5;
+    --neutral-border-2: #d4d4d4;
+    --surface: #ffffff;
+    --surface-hover: #f5f5f5;
+    --surface-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    --danger: #e7000b;
+    /* Success — green-700, WCAG AA on white / #f5f5f5 surfaces */
+    --success: #15803d;
+    --success-foreground: #ffffff;
+    /* Warning — amber-600, WCAG AA on white / #f5f5f5 surfaces. Worn by states that owe an
+     action but have not failed, so they are not spoken in the same red as a failure. */
+    --warning: #b45309;
+    --warning-foreground: #ffffff;
+
+    /* ── File-type icon accents ──
+     One accent per file category, worn by the glyph's stroke. Values come from the
+     design's category set, which was drawn on a light canvas, so the three that
+     fall below the 3:1 non-text contrast floor on a dark surface are brightened
+     in `.dark` below. */
+    --file-type-pdf: #e8453c;
+    --file-type-doc: #2f6ce5;
+    --file-type-sheet: #1aa15c;
+    --file-type-slides: #e2712c;
+    --file-type-markdown: #4a4842;
+    --file-type-code: #5c7080;
+    --file-type-html: #1f8f9c;
+    --file-type-image: #7d55b8;
+    --file-type-audio: #b8558f;
+    --file-type-video: #d94f70;
+    --file-type-archive: #8a6d3b;
+    --file-type-file: #8a857c;
+    /* Label inside the pdf and doc glyphs' filled chip. */
+    --file-type-label: #ffffff;
+
+    /* ── Semantic tokens — derived from primitives ── */
+    --background: var(--brand-bg);
+    --foreground: var(--neutral-dark);
+    --card: var(--surface);
+    --card-foreground: var(--neutral-dark);
+    --card-hover: var(--brand-bg);
+    --card-hover-foreground: var(--neutral-dark);
+    --popover: var(--surface);
+    --popover-foreground: var(--neutral-dark);
+    --primary: var(--brand-primary);
+    --primary-foreground: var(--brand-primary-foreground);
+    --secondary: var(--brand-secondary);
+    --secondary-foreground: var(--brand-secondary-foreground);
+    --muted: var(--neutral-light);
+    --muted-foreground: var(--neutral-mid);
+    --accent: var(--brand-bg);
+    --accent-foreground: var(--neutral-dark);
+    --destructive: var(--danger);
+    --destructive-foreground: var(--surface);
+    --border: var(--neutral-border);
+    --border-secondary: var(--neutral-border-2);
+    --input: var(--neutral-border);
+    --ring: var(--neutral-dark);
+    --color-focus-ring: var(--primary);
+    --find-highlight: #fde68a;
+    --find-highlight-current: #fb923c;
+    --find-highlight-foreground: #1c1917;
+    --find-highlight-current-foreground: #1c1917;
+    --chart-1: var(--neutral-dark);
+    --chart-2: var(--brand-primary);
+    --chart-3: var(--neutral-mid);
+    --chart-4: var(--danger);
+    --chart-5: var(--brand-bg);
+    --sidebar: var(--primary);
+    --sidebar-foreground: var(--white);
+    --sidebar-primary: var(--white);
+    --sidebar-primary-foreground: var(--primary);
+    --sidebar-accent: var(--white);
+    --sidebar-accent-foreground: var(--neutral-dark);
+    --sidebar-border: var(--neutral-border);
+    --sidebar-ring: var(--neutral-dark);
+    --text-primary: var(--neutral-dark);
+    --text-secondary: var(--neutral-mid);
+    --black: #000000;
+    --white: #ffffff;
+    --white-alpha-06: rgba(255, 255, 255, 0.06);
+    --white-alpha-15: rgba(255, 255, 255, 0.15);
+    --white-alpha-3: rgba(255, 255, 255, 0.3);
+    --white-alpha-2: rgba(255, 255, 255, 0.2);
+    --white-alpha-1: rgba(255, 255, 255, 0.1);
+    --grey-alpha-6: rgba(37, 37, 37, 0.6);
+
+    /* Scrollbar — @include scrollbar() and .scrollbar-controller */
+    --track-background: #f3f4f6;
+    --thumb-background: #d1d5db;
+    --thumb-background-hover: #9ca3af;
+
+    /* Design tokens from theme.ts – for styled-components (var(--*)) and Tailwind @theme */
+    /* Space (spacing) */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 1.25rem;
+    --spacing-4xl: 1.5rem;
+    --spacing-5xl: 1.75rem;
+    --spacing-6xl: 2rem;
+    --spacing-7xl: 2.25rem;
+    --spacing-8xl: 2.5rem;
+    --spacing-9xl: 2.75rem;
+    --spacing-10xl: 3rem;
+    /* Numeric space scale — use `var(--space-*)` in SCSS/CSS; scales with --spacing-value */
+    --space-0: 0px;
+    --space-px: 1px;
+    --space-0-5: calc(var(--spacing-value) * 0.5);
+    --space-1: calc(var(--spacing-value) * 1);
+    --space-1-5: calc(var(--spacing-value) * 1.5);
+    --space-2: calc(var(--spacing-value) * 2);
+    --space-2-5: calc(var(--spacing-value) * 2.5);
+    --space-3: calc(var(--spacing-value) * 3);
+    --space-3-5: calc(var(--spacing-value) * 3.5);
+    --space-4: calc(var(--spacing-value) * 4);
+    --space-5: calc(var(--spacing-value) * 5);
+    --space-6: calc(var(--spacing-value) * 6);
+    --space-7: calc(var(--spacing-value) * 7);
+    --space-8: calc(var(--spacing-value) * 8);
+    --space-9: calc(var(--spacing-value) * 9);
+    --space-10: calc(var(--spacing-value) * 10);
+    --space-11: calc(var(--spacing-value) * 11);
+    --space-12: calc(var(--spacing-value) * 12);
+    --space-14: calc(var(--spacing-value) * 14);
+    --space-16: calc(var(--spacing-value) * 16);
+    --space-20: calc(var(--spacing-value) * 20);
+    --space-24: calc(var(--spacing-value) * 24);
+    --space-28: calc(var(--spacing-value) * 28);
+    --space-32: calc(var(--spacing-value) * 32);
+    --space-36: calc(var(--spacing-value) * 36);
+    --space-40: calc(var(--spacing-value) * 40);
+    --space-44: calc(var(--spacing-value) * 44);
+    --space-48: calc(var(--spacing-value) * 48);
+    --space-52: calc(var(--spacing-value) * 52);
+    --space-56: calc(var(--spacing-value) * 56);
+    --space-60: calc(var(--spacing-value) * 60);
+    --space-64: calc(var(--spacing-value) * 64);
+    --space-72: calc(var(--spacing-value) * 72);
+    --space-80: calc(var(--spacing-value) * 80);
+    --space-96: calc(var(--spacing-value) * 96);
+    /* Article measure: the reading column width the blog reader gives an article.
+       Surfaces that preview the same article cap to this, so a post is not a
+       different width there than it is once published. */
+    --article-measure: 680px;
+    /* Shadows (theme.ts shadows) – use in styles: box-shadow: var(--shadow-xs); etc. */
+    --shadow-xs: 0 8px 10px #00000008;
+    --shadow-color: #000000;
+    --shadow-opacity: 0.08;
+    --shadow-blur: 8px;
+    --shadow-spread: -2px;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 4px;
+    --shadow-lg-dark:
+        rgb(255, 255, 255) 0px 0px 0px 0px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset,
+        rgba(0, 0, 0, 0.2) 0px 6px 12px;
+    /* Layered elevation shadow — design token `shadow-dark` maps to --shadow-dark-value */
+    --shadow-dark-value: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    --shadow-dark: var(--shadow-dark-value);
+    --shadow-surface-current: var(--surface-shadow);
+    /* Alias for box-shadow in SCSS / inline styles; @theme also maps shadow-surface → this */
+    --shadow-surface: var(--surface-shadow);
+    /* Composite shadows on :root so `var(--shadow-sm)` etc. work in SCSS (match @theme) */
+    --shadow-sm: var(--shadow-offset-x) var(--shadow-offset-y) var(--shadow-blur) var(--shadow-spread)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-md: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 2) calc(var(--shadow-blur) * 2)
+        calc(var(--shadow-spread) * 2)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-lg: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 3) calc(var(--shadow-blur) * 3)
+        var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    /* Font weights */
+    --font-weight-thin: 100;
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+    /* Z-index – use style={{ zIndex: number }} or var(--z-index-1) */
+    --z-index-1: 9;
+    --z-index-2: 99;
+    --z-index-3: 999;
+    --z-index-max: 9999;
+    /* Font sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+    --text-7xl: 4.5rem;
+    --text-8xl: 6rem;
+    --text-9xl: 8rem;
+    --text-h1: 1.5rem;
+    --text-h2: 1.25rem;
+    --text-h3: 1.0625rem;
+    --text-h4: 1rem;
+    --text-h5: 0.9375rem;
+    --text-h6: 0.875rem;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: color-mix(in srgb, var(--primary) 85%, transparent);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+/* Mobile drawer covers the viewport; paint body to match so safe-area
+   insets (bottom toolbar / home indicator) don't show the light bg. */
+body.sidebar-mobile-open {
+    background-color: var(--sidebar);
+}
+
+h1 {
+    font-size: 1.25rem;
+}
+
+:root {
+    color: var(--foreground);
+    background-color: var(--background);
+}
+
+a:hover {
+    color: color-mix(in srgb, var(--primary) 85%, transparent);
+}
+
+/* Tailwind @theme: uses your theme.ts tokens (colors, radius, spacing, font-size) */
+@theme inline {
+    --spacing: var(--spacing-value);
+    --tracking-normal: var(--letter-spacing);
+    /* Radius – same rem values as Tailwind @theme default (rounded-xs … rounded-4xl) */
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
+    --radius-pill: 9999px;
+    --radius-circle: 50%;
+    /* Shadows – dynamic, respond to shadow design tokens */
+    --shadow-sm: var(--shadow-offset-x) var(--shadow-offset-y) var(--shadow-blur) var(--shadow-spread)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-md: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 2) calc(var(--shadow-blur) * 2)
+        calc(var(--shadow-spread) * 2)
+        color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-lg: var(--shadow-offset-x) calc(var(--shadow-offset-y) * 3) calc(var(--shadow-blur) * 3)
+        var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    /* Routed through the themable --shadow-surface-current alias (not --surface-shadow
+     directly) so the dark neutralization also reaches the Tailwind utility. */
+    --shadow-surface: var(--shadow-surface-current);
+    --shadow-dark: var(--shadow-dark-value);
+    /* Font size – matches Tailwind v4 defaults + custom h1–h6 */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+    --text-7xl: 4.5rem;
+    --text-8xl: 6rem;
+    --text-9xl: 8rem;
+    --text-h1: 1.5rem;
+    --text-h2: 1.25rem;
+    --text-h3: 1.0625rem;
+    --text-h4: 1rem;
+    --text-h5: 0.9375rem;
+    --text-h6: 0.875rem;
+    /* Font weight – Tailwind scale (font-* → font-weight) */
+    --font-weight-thin: 100;
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+    /* Colors – shadcn */
+    --color-find-highlight: var(--find-highlight);
+    --color-find-highlight-current: var(--find-highlight-current);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-text-secondary: var(--text-secondary);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-card-hover: var(--card-hover);
+    --color-card-hover-foreground: var(--card-hover-foreground);
+    --color-surface-hover: var(--surface-hover);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-border: var(--border);
+    --color-border-secondary: var(--border-secondary);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-white-alpha-06: var(--white-alpha-06);
+    --color-white-alpha-15: var(--white-alpha-15);
+    --color-white-alpha-2: var(--white-alpha-2);
+    --color-white-alpha-1: var(--white-alpha-1);
+    --color-grey-alpha-6: var(--grey-alpha-6);
+    --animate-accordion-down: accordion-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-accordion-up: accordion-up 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+    /* Native controls, scrollbars and the canvas behind the page must switch with the class,
+     not with the OS preference — an explicit in-app "Dark" on a light-mode OS still counts. */
+    color-scheme: dark;
+    --find-highlight: #78350f;
+    --find-highlight-current: #f59e0b;
+    --find-highlight-foreground: #fafafa;
+    --find-highlight-current-foreground: #1c1917;
+    --brand-primary: #fafafa;
+    --brand-primary-foreground: #171717;
+    --brand-secondary: #262626;
+    --brand-secondary-foreground: #fafafa;
+    --brand-bg: #1a1a1a;
+    --neutral-dark: #f2f1f4;
+    --neutral-mid: #b0aeb5;
+    --neutral-light: #262626;
+    --neutral-border: #3b3b3b;
+    --neutral-border-2: #4d4d4d;
+    --surface: #2d2d2d;
+    /* One step between the page bg and card surfaces — the sidebar rail in dark. */
+    --surface-rail: #242424;
+    --surface-hover: #404040;
+    --surface-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    /* Tenant branding injects its light-mode glow into html.dark via --surface-shadow;
+     redefining the aliases here keeps every dark elevation neutral regardless. */
+    --shadow-surface: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    --shadow-surface-current: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    /* Brightened for dark surfaces — the light-mode red falls under 4.5:1 on #1a1a1a */
+    --danger: #ff6467;
+    /* Brighter green for success affordances on dark surfaces */
+    --success: #22c55e;
+    --success-foreground: #171717;
+    /* Brighter amber for the same reason — amber-600 falls under 4.5:1 on #1a1a1a */
+    --warning: #fbbf24;
+    --warning-foreground: #171717;
+    /* Exceptions: tokens that don't follow the primitive mapping in dark mode */
+    --background: var(--brand-bg);
+    /* Its own step between page bg and card, so the sidebar reads as its own pane
+     next to full-height card panes (e.g. settings). */
+    --sidebar: var(--surface-rail);
+    --sidebar-border: var(--neutral-light);
+    --sidebar-primary: var(--brand-primary);
+    --sidebar-primary-foreground: var(--brand-primary-foreground);
+    --sidebar-accent: var(--neutral-light);
+    --sidebar-accent-foreground: var(--neutral-dark);
+    --input: var(--neutral-light);
+    --track-background: var(--white-alpha-1);
+    --thumb-background: var(--white-alpha-2);
+    --thumb-background-hover: var(--white-alpha-3);
+    /* File-type accents: the design drew these on a light canvas, so the darkest three fall below the
+     3:1 non-text contrast floor on a dark chip. Brightened here, same hue. */
+    --file-type-markdown: #a5a19a;
+    --file-type-image: #b294e0;
+    --file-type-code: #93a7b8;
+}
+
+/* Tenant branding injects its dark palette as a later html.dark style block, and several
+ tenants carry pre-dark-mode values there (near-white borders, a light hover, the light-mode
+ glow, a primary-filled sidebar). :root.dark outranks html.dark, so the structural neutrals
+ stay on the theme base while tenant color branding (background, card, primary) still applies. */
+:root.dark {
+    --border: var(--neutral-border);
+    --border-secondary: var(--neutral-border-2);
+    --surface-hover: #404040;
+    --surface-shadow: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    --shadow-surface-current: rgba(0, 0, 0, 0.35) 0px 0px 7px;
+    --destructive: var(--danger);
+    /* In dark the sidebar is always a neutral surface, never the tenant's brand fill —
+     tenants that generated their dark palette from light carry the primary-filled sidebar
+     (and its accent/border) into html.dark. Mirrors the .dark sidebar exceptions above. */
+    --sidebar: var(--surface-rail);
+    --sidebar-foreground: var(--neutral-dark);
+    --sidebar-border: var(--neutral-light);
+    --sidebar-primary: var(--brand-primary);
+    --sidebar-primary-foreground: var(--brand-primary-foreground);
+    --sidebar-accent: var(--neutral-light);
+    --sidebar-accent-foreground: var(--neutral-dark);
+}
+
+/* Destructive button: text and icon use destructive color */
+[data-slot="button"][data-variant="destructive"] {
+    color: var(--destructive);
+}
+
+[data-slot="button"][data-variant="destructive"] i,
+[data-slot="button"][data-variant="destructive"] svg {
+    color: var(--destructive);
+}
+
+@layer base {
+    *:not(:where(.katex, .katex *)) {
+        @apply border-border outline-ring/50;
+        box-sizing: border-box;
+        font-family: "Poppins", serif;
+        letter-spacing: var(--letter-spacing);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        word-break: break-word;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Checkbox default border: 1.5px solid; color is controlled via Tailwind utility classes */
+.checkbox-default-border {
+    border-width: 1.5px;
+    border-style: solid;
+}
+
+/* Textarea: resize-none */
+textarea {
+    resize: none;
+}
+
+/* ========== Global base ========== */
+html {
+    scroll-behavior: smooth;
+}
+
+#uiMonospace,
+#uiMonospace * {
+    font-family:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* The tenant font arrives at runtime as a `<style>` appended to <head> whose selector is
+   `*:not([class^="fa-"]) { font-family: PWCentra … !important }`. That outranks Tailwind's
+   `font-mono`, so code would render proportional. The class is repeated to out-specify it,
+   and the rule must stay more specific than that injected one. */
+.artifact-code.artifact-code.artifact-code,
+.artifact-code.artifact-code.artifact-code * {
+    font-family:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+#app {
+    width: 100%;
+    min-height: 100svh;
+}
+
+body.floating-assistant-sidepane-open #app {
+    width: calc(100% - var(--floating-assistant-sidepane-width, 420px));
+    transition: width 180ms ease;
+}
+
+@media (max-width: 900px) {
+    body.floating-assistant-sidepane-open #app {
+        width: 100%;
+    }
+}
+
+li {
+    list-style: none;
+}
+
+small {
+    font-size: 12px;
+}
+
+/* ========== Viewport helpers ========== */
+.viewport-height {
+    height: 100svh;
+
+    &.remove-header {
+        height: calc(88svh - 64px - 24px);
+    }
+}
+
+/* ========== Text utilities ========== */
+.text-error {
+    color: var(--destructive);
+}
+
+.secondary {
+    color: #6c6c6c;
+}
+
+.trim {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* ========== Scrollbar utilities ========== */
+.scrollbar-controller {
+    overflow: auto;
+}
+
+.scrollbar-controller.is-overflowing {
+    scrollbar-gutter: stable;
+}
+
+.scrollbar-controller::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollbar-controller::-webkit-scrollbar-track {
+    background: var(--track-background);
+    border-radius: 3px;
+}
+
+.scrollbar-controller::-webkit-scrollbar-thumb {
+    background: var(--thumb-background);
+    border-radius: 3px;
+}
+
+.scrollbar-controller::-webkit-scrollbar-thumb:hover {
+    background: var(--thumb-background-hover);
+}
+
+.scrollbar-controller.scrollbar-primary::-webkit-scrollbar-track {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.scrollbar-controller.scrollbar-primary::-webkit-scrollbar-thumb {
+    background: var(--thumb-background);
+    border-radius: 3px;
+}
+
+/* scrollbar-primary is drawn for the branded (primary-filled) sidebar; in dark the sidebar
+ is a neutral surface and --primary flips light, which painted a solid white track. */
+.dark .scrollbar-controller.scrollbar-primary::-webkit-scrollbar-track {
+    background: var(--sidebar);
+}
+
+.dark .scrollbar-controller.scrollbar-primary::-webkit-scrollbar-thumb {
+    background: var(--thumb-background);
+}
+
+/* Panels whose surface is white: the default grey track reads as a stripe outside the content,
+ so only the thumb is drawn. */
+.scrollbar-controller.scrollbar-track-transparent::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Firefox only — setting scrollbar-width in Chrome suppresses ::-webkit-scrollbar */
+@supports not selector(::-webkit-scrollbar) {
+    .scrollbar-controller {
+        scrollbar-width: thin;
+        scrollbar-color: var(--thumb-background) var(--track-background);
+    }
+
+    .scrollbar-controller.scrollbar-track-transparent {
+        scrollbar-color: var(--thumb-background) transparent;
+    }
+}
+
+.scrollbar-horizontal::-webkit-scrollbar {
+    height: 6px;
+}
+
+.scrollbar-vertical::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* ========== Legacy flex utilities ========== */
+.flex-center {
+    display: flex;
+    align-items: center;
+}
+
+.flex-start {
+    display: flex;
+    align-items: flex-start;
+}
+
+.flex-start-between {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.flex-start-center {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.flex-center-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-center-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.flex-center-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-center-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* ========== Container utilities ========== */
+.container {
+    max-width: 810px;
+    width: 100%;
+}
+
+.container-lg {
+    max-width: 1520px;
+    width: 100%;
+}
+
+/* ========== Misc utilities ========== */
+.fs-0 {
+    flex-shrink: 0;
+}
+
+.img-responsive {
+    max-width: 100%;
+}
+
+.card {
+    width: 100%;
+    border-radius: 4px;
+    border: #e6ebf1 1px solid;
+    background-color: #fff;
+}
+
+.content-editable .textarea {
+    max-height: 34svh;
+}
+
+/* ========== Animations ========== */
+@keyframes accordion-down {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: var(--radix-accordion-content-height);
+    }
+}
+
+@keyframes accordion-up {
+    from {
+        height: var(--radix-accordion-content-height);
+    }
+
+    to {
+        height: 0;
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes ca-dot-pulse {
+    0%,
+    80%,
+    100% {
+        opacity: 0.2;
+        transform: scale(0.75);
+    }
+    40% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+}
+
+@keyframes generating-logo {
+    0%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.logo-generating {
+    animation: generating-logo 1.2s ease-in-out infinite;
+}
+
+/* ========== Activity Log severity dot ========== */
+/* A halo that grows out of the dot's own colour and fades — the row keeps its severity
+   hue rather than borrowing an accent. Scale starts outside the dot's card-coloured ring,
+   which would otherwise clip the first half of every cycle. */
+@keyframes audit-severity-halo {
+    0% {
+        transform: scale(1.7);
+        opacity: 0.4;
+    }
+
+    70%,
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.audit-severity-halo {
+    animation: audit-severity-halo 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .audit-severity-halo {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+/* The volume chart's tip stands over the bar it describes. Radix wraps the tip in a
+   positioning div that is hit-testable on its own, so the tip's `pointer-events-none`
+   is not enough: a pointer nudged onto the wrapper still read as leaving the bar. */
+[data-radix-popper-content-wrapper]:has(> .audit-logs-volume-tip) {
+    pointer-events: none;
+}
+
+/* ========== Instructions editor (Tiptap programmatic classes) ========== */
+.ca-instr-editor {
+    outline: none;
+    min-height: 180px;
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+    caret-color: var(--primary);
+    background: var(--color-card);
+    padding: var(--spacing-lg);
+}
+
+.ca-instr-editor-file {
+    min-height: 400px;
+    height: 100%;
+}
+
+.ca-instr-editor p {
+    margin: 0 0 0.4em;
+}
+
+.ca-instr-editor h1,
+.ca-instr-editor h2,
+.ca-instr-editor h3,
+.ca-instr-editor h4,
+.ca-instr-editor h5,
+.ca-instr-editor h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    line-height: 1.25;
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.ca-instr-editor h1 strong,
+.ca-instr-editor h2 strong,
+.ca-instr-editor h3 strong,
+.ca-instr-editor h4 strong,
+.ca-instr-editor h5 strong,
+.ca-instr-editor h6 strong {
+    font-weight: inherit;
+}
+
+.ca-instr-editor h1 {
+    font-size: 1.875em;
+    letter-spacing: -0.01em;
+}
+.ca-instr-editor h2 {
+    font-size: 1.5em;
+    letter-spacing: -0.01em;
+    margin: 0.7em 0 0.3em;
+}
+.ca-instr-editor h3 {
+    font-size: 1.25em;
+    margin: 0.6em 0 0.25em;
+}
+.ca-instr-editor h4,
+.ca-instr-editor h5,
+.ca-instr-editor h6 {
+    font-size: 1.05em;
+    margin: 0.5em 0 0.25em;
+}
+
+.ca-instr-editor ul,
+.ca-instr-editor ol {
+    margin: 0.3em 0;
+    padding-left: 1.5em;
+}
+.ca-instr-editor ul {
+    list-style: disc inside !important;
+}
+.ca-instr-editor ol {
+    list-style: decimal inside !important;
+}
+.ca-instr-editor ul > li::marker {
+    content: "• ";
+    color: var(--text-primary);
+}
+.ca-instr-editor ol > li::marker {
+    content: counter(list-item) ". ";
+    color: var(--text-primary);
+}
+.ca-instr-editor li {
+    margin: 0.15em 0;
+}
+.ca-instr-editor li p {
+    margin: 0;
+}
+
+.ca-instr-editor blockquote {
+    margin: 0.5em 0;
+    padding-left: 1em;
+    border-left: 3px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.ca-instr-editor code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    padding: 0.15em 0.4em;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--border);
+    border: 1px solid var(--border-secondary);
+    color: var(--foreground);
+}
+
+.ca-instr-editor pre {
+    margin: 0.75em 0;
+    padding: 1em 1.25em;
+    border-radius: var(--radius);
+    background: var(--background);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+}
+
+.ca-instr-editor pre code {
+    padding: 0;
+    background: transparent;
+    border: none;
+    font-size: 0.875em;
+    line-height: 1.65;
+}
+
+.ca-instr-editor hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1em 0;
+}
+
+.ca-instr-editor a {
+    color: var(--primary);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ca-instr-editor p.is-editor-empty:first-child::before,
+.ca-instr-editor p.is-empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-secondary);
+    opacity: 0.55;
+    pointer-events: none;
+    float: left;
+    height: 0;
+}
+
+.ca-instr-mention {
+    display: inline;
+    padding: 0.05em 0.3em;
+    border-radius: calc(var(--radius) - 2px);
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.ca-suggest__popover {
+    min-width: 220px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+    z-index: 1100;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+/* ========== Rich text (sanitized WYSIWYG HTML) ========== */
+/* Pasted code blocks / long tokens must not widen the container that lays them out */
+.rich-text-content,
+.description-readable,
+.decription-readable,
+.blogs-content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.rich-text-content pre,
+.description-readable pre,
+.decription-readable pre,
+.blogs-content pre,
+.rich-text-content code,
+.description-readable code,
+.decription-readable code,
+.blogs-content code {
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* ========== Accessibility ========== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.overlay-open {
+    overflow: hidden;
+}
+
+/* ========== Third-party overrides ========== */
+#userback_button_container .userback-button.userback-button-e {
+    right: -12px;
+}
+
+.Toastify__toast-container {
+    @media only screen and (max-width: 480px) {
+        left: 16px !important;
+        width: auto !important;
+        right: 16px !important;
+    }
+}
+
+.toast-generation-ready {
+    @media only screen and (max-width: 480px) {
+        margin-bottom: 12px !important;
+    }
+}
+
+/* ========== Global focus-visible ========== */
+.dark-mode {
+    --color-focus-ring: var(--white);
+    --track-background: var(--white-alpha-1);
+    --thumb-background: var(--white-alpha-2);
+    --thumb-background-hover: var(--white-alpha-3);
+}
+
+@layer base {
+    *:focus-visible {
+        outline: 1.5px solid var(--color-focus-ring);
+        outline-offset: 2px;
+    }
+}
+/* ========== Tool timeline running indicator ========== */
+@keyframes tool-circle-pulse {
+    0%,
+    100% {
+        transform: scale(0.85);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+.animate-tool-circle-fill {
+    fill: currentColor;
+    fill-opacity: 1;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: tool-circle-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.shared-drag-illustration {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    max-width: 200px;
+}
+
+/*
+ * Find-in-conversation paints matches through the CSS Custom Highlight API, so
+ * the styling has to live here — a ::highlight() pseudo cannot be expressed as a
+ * utility class, and the registry names are global.
+ */
+::highlight(fm-find-match) {
+    background-color: var(--find-highlight);
+    color: var(--find-highlight-foreground);
+}
+
+::highlight(fm-find-current) {
+    background-color: var(--find-highlight-current);
+    color: var(--find-highlight-current-foreground);
+}

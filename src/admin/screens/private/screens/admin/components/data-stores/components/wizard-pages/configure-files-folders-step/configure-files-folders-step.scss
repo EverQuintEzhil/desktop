@@ -1,0 +1,4 @@
+// Tree view: align header and rows (Name | Date modified | Size | Kind)
+.configure-files-folders-tree-row {
+    grid-template-columns: minmax(0, 1.75fr) minmax(9rem, 1fr) 4.5rem minmax(5.5rem, 0.85fr);
+}

@@ -1,0 +1,27 @@
+/* Userback launcher — consumer app only (AMP-605).
+   Vendor default is a vertical tab centred at 50% height, which sits over the conversation
+   scrollbar and the message nav rail. At >=1200px this pins it 10px above the chat composer
+   instead; below that it's left alone, since the composer's right edge gets too close to the
+   tab at narrower widths. The open panel stays at vendor's `top: 50%` — it has no height cap,
+   and moving it clips a full feedback form off the bottom of the screen.
+
+   The vendor stylesheet loads at runtime, after this file, so the selector below is written to
+   out-specify it. `[wstyle="text"]` scopes it away from the "circle" launcher style.
+
+   Lives here, not index.css, because admin imports index.css too and its bottom-right corner is
+   already used by toasts and the floating assistant. */
+
+@media (min-width: 1200px) {
+    /* 157px is measured against the live vendor CSS, not calculated — its rotate transform
+       shifts the tab further than the box model suggests, and the exact shift depends on the
+       dashboard's current "Feedback" label (a longer label needs this re-measured). It gives a
+       10px gap above the composer's default height; a taller composer (attachments, banners,
+       queued messages) can still reach it, since this is a fixed value, not a live measurement.
+       margin-top is the vendor's own centring offset for `top: 50%` and no longer applies once
+       position comes from `bottom`. */
+    #userback_button_container .userback-button.userback-button-e[wstyle="text"] {
+        top: auto;
+        bottom: 157px;
+        margin-top: 0;
+    }
+}

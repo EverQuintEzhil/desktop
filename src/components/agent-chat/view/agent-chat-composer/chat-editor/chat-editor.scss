@@ -1,0 +1,175 @@
+.chat-editor {
+    display: block;
+
+    .chat-editor__content {
+        outline: none;
+        cursor: text;
+        position: relative;
+        white-space: pre-wrap;
+        min-height: 50px;
+        // A host that cannot spare the full-page allowance (the assistant panel) sets the variable.
+        max-height: var(--chat-editor-max-height, calc(100svh - 320px));
+        padding: 12px 0;
+        line-height: 1.6;
+        font-size: var(--text-h5);
+        font-weight: 500;
+        word-break: break-word;
+        transition: none;
+
+        * {
+            transition: none;
+        }
+
+        &::selection,
+        *::selection {
+            background-color: #0000000f;
+        }
+
+        &[contenteditable="false"] {
+            background-color: var(--card);
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
+
+        @include below("sm") {
+            font-size: var(--text-base);
+            min-height: 48px;
+        }
+
+        // Rendered as a block after ProseMirror's trailing <br>, pulled up one line so it starts
+        // where the caret sits. Unlike Tiptap's zero-height float, the paragraph grows with a
+        // wrapped placeholder, so a narrow column (the assistant panel) wraps it instead of
+        // clipping it behind the scrollbar.
+        p.is-editor-empty:first-child::after {
+            content: attr(data-placeholder);
+            display: block;
+            // em fallback mirrors this block's line-height for engines without the lh unit.
+            margin-top: -1.6em;
+            margin-top: -1lh;
+            pointer-events: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+    }
+
+    .directive-highlight {
+        display: inline;
+        color: var(--primary);
+        white-space: nowrap;
+        cursor: pointer;
+
+        &::before {
+            content: "@";
+            font-size: 1em;
+            margin-right: 4px;
+        }
+
+        &.has-favicon::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.2em;
+            background-image: var(--favicon);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 3px;
+        }
+    }
+
+    .variable-highlight {
+        background-color: var(--background);
+        border: 1px solid var(--border-secondary);
+        color: var(--primary);
+        padding: 2px 4px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+
+.chat-editor-suggestion {
+    position: fixed;
+    z-index: 60;
+    // Radix modal dialogs set pointer-events: none on <body>, making this portaled menu unclickable inside a dialog.
+    pointer-events: auto;
+
+    .composer-trigger-command-box {
+        width: min(280px, calc(100vw - 40px));
+        border: 1px solid var(--border-secondary);
+        border-radius: var(--radius-lg);
+        background-color: var(--popover);
+        color: var(--popover-foreground);
+        box-shadow: var(--shadow-surface);
+    }
+
+    .composer-trigger-command-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .composer-trigger-command-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+        padding: 7px 8px;
+        border: 0;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        color: var(--foreground);
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+            background-color: var(--background);
+            color: var(--primary);
+
+            svg {
+                color: var(--primary);
+            }
+        }
+    }
+
+    .composer-trigger-command-icon {
+        flex: 0 0 1rem;
+        margin-top: 3px;
+    }
+
+    .composer-trigger-command-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: var(--text-sm);
+        font-weight: 500;
+    }
+
+    .composer-trigger-command-description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--text-secondary);
+        font-size: var(--text-xs);
+        font-weight: 400;
+    }
+
+    .composer-trigger-command-section-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        opacity: 0.7;
+        padding: 6px 8px 3px;
+    }
+
+    .composer-trigger-command-empty {
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+        padding: 10px 8px;
+    }
+}

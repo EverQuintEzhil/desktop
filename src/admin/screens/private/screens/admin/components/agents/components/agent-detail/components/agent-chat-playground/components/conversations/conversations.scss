@@ -1,0 +1,6 @@
+@use "../../../conversation-list-item-shared" as *;
+@use "../../../conversation-skeleton-shared" as *;
+
+.history-list {
+    background-color: var(--card);
+}

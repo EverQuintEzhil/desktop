@@ -1,0 +1,235 @@
+.crop-overlay-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.crop-box {
+    position: absolute;
+    border: 1px solid var(--primary);
+    pointer-events: auto;
+    cursor: move;
+    user-select: none;
+    touch-action: none;
+    box-sizing: border-box;
+    will-change: transform, width, height;
+}
+
+.crop-box:active {
+    cursor: grabbing;
+}
+
+.crop-box:focus-visible,
+.corner-handle-container:focus-visible,
+.edge-handle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.crop-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image:
+        linear-gradient(
+            to right,
+            transparent calc(33.333% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(33.333% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(33.333% + 0.5px),
+            transparent calc(33.333% + 0.5px)
+        ),
+        linear-gradient(
+            to right,
+            transparent calc(66.666% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(66.666% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(66.666% + 0.5px),
+            transparent calc(66.666% + 0.5px)
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(33.333% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(33.333% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(33.333% + 0.5px),
+            transparent calc(33.333% + 0.5px)
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(66.666% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(66.666% - 0.5px),
+            rgba(255, 255, 255, 0.5) calc(66.666% + 0.5px),
+            transparent calc(66.666% + 0.5px)
+        );
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+}
+
+.corner-handle-container {
+    position: absolute;
+    pointer-events: auto;
+    z-index: 10;
+    touch-action: none;
+}
+
+.corner-handle-container:hover {
+    transform: scale(1.2);
+}
+
+.corner-handle-container:active {
+    transform: scale(1.1);
+}
+
+.corner-handle-container:hover .handle,
+.corner-handle-container:active .handle {
+    background: var(--primary);
+    border-color: var(--white);
+}
+
+.corner-handle-container:hover .handle::before,
+.corner-handle-container:active .handle::before {
+    background: var(--primary);
+}
+
+.corner-handle-container.handle-nw {
+    top: -3px;
+    left: -3px;
+    cursor: nwse-resize;
+}
+.corner-handle-container.handle-ne {
+    top: -3px;
+    left: calc(100% + 3px);
+    cursor: nesw-resize;
+}
+.corner-handle-container.handle-se {
+    top: calc(100% + 3px);
+    left: calc(100% + 3px);
+    cursor: nwse-resize;
+}
+.corner-handle-container.handle-sw {
+    top: calc(100% + 3px);
+    left: -3px;
+    cursor: nesw-resize;
+}
+
+.corner-handle-horizontal {
+    position: absolute;
+    width: 16px;
+    height: 6px;
+    background: var(--white);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-xs);
+}
+
+.corner-handle-horizontal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    z-index: 1;
+    border-radius: var(--radius-xs);
+}
+
+.corner-handle-horizontal.handle-nw,
+.corner-handle-horizontal.handle-sw {
+    left: 0;
+}
+
+.corner-handle-horizontal.handle-ne,
+.corner-handle-horizontal.handle-se {
+    right: 0;
+}
+
+.corner-handle-horizontal.handle-nw,
+.corner-handle-horizontal.handle-ne {
+    top: 0;
+}
+
+.corner-handle-horizontal.handle-sw,
+.corner-handle-horizontal.handle-se {
+    bottom: 0;
+}
+
+.corner-handle-vertical {
+    position: absolute;
+    width: 6px;
+    height: 16px;
+    background: var(--white);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-xs);
+}
+
+.corner-handle-vertical.handle-nw,
+.corner-handle-vertical.handle-sw {
+    left: 0;
+}
+
+.corner-handle-vertical.handle-ne,
+.corner-handle-vertical.handle-se {
+    right: 0;
+}
+
+.corner-handle-vertical.handle-nw,
+.corner-handle-vertical.handle-ne {
+    top: 0;
+}
+
+.corner-handle-vertical.handle-sw,
+.corner-handle-vertical.handle-se {
+    bottom: 0;
+}
+
+.edge-handle {
+    position: absolute;
+    pointer-events: auto;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    touch-action: none;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-xs);
+    background: var(--white);
+}
+
+.edge-handle.handle-n {
+    top: 0;
+    left: 50%;
+    width: 16px;
+    height: 6px;
+    cursor: ns-resize;
+}
+.edge-handle.handle-s {
+    top: 100%;
+    left: 50%;
+    width: 16px;
+    height: 6px;
+    cursor: ns-resize;
+}
+.edge-handle.handle-e {
+    top: 50%;
+    left: 100%;
+    width: 6px;
+    height: 16px;
+    cursor: ew-resize;
+}
+.edge-handle.handle-w {
+    top: 50%;
+    left: 0;
+    width: 6px;
+    height: 16px;
+    cursor: ew-resize;
+}
+
+.edge-handle:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.edge-handle:active {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.edge-handle.handle:hover,
+.edge-handle.handle:active {
+    background: var(--primary);
+    border-color: var(--white);
+}

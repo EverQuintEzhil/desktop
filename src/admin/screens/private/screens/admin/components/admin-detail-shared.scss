@@ -1,0 +1,85 @@
+// Mixins only — no top-level selectors here (avoids duplicate CSS when each
+// detail *.scss @use's this file; Vite compiles each imported SCSS separately).
+// Import: @use '../../../admin-detail-shared' as *;
+// Global detail chrome: admin-detail-shared-global.scss (import once from admin entry).
+@use "breakpoints" as *;
+
+// ─── Metabar inner content ────────────────────────────────────────────────────
+// Included once from admin-detail-shared-global.scss under .secondary-header .metabar.
+
+@mixin metabar-common {
+    line-height: 1.4;
+
+    .title {
+        margin-bottom: 0;
+
+        @include below("lg") {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+    }
+
+    h3 {
+        font-weight: 600;
+        font-size: var(--text-xl);
+        color: #1a1a1a;
+        margin: 0 0 2px 0;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+    }
+
+    .metabar-status {
+        gap: 6px;
+
+        @include below("lg") {
+            margin-left: 0;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+    }
+
+    .meta-details {
+        margin-top: 4px;
+    }
+}
+
+// ─── Tab content inner content ────────────────────────────────────────────────
+// Usage: .tab-content { padding: 16px; @include tab-content-common; }
+
+@mixin tab-content-common {
+    h4 {
+        font-weight: 600;
+    }
+
+    .hover-me {
+        .on-hover {
+            opacity: 0;
+
+            @include below("lg") {
+                opacity: 1;
+            }
+        }
+
+        &:hover .on-hover {
+            opacity: 1;
+        }
+    }
+
+    @include below("lg") {
+        padding: 16px;
+    }
+}
+
+// ─── Card tab items ───────────────────────────────────────────────────────────
+// The > * card styles shared by agent-tab, blog-post-tab, launcher-tab, prompt-tab.
+
+@mixin detail-tab-items {
+    > * {
+        &:not(button) {
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            background-color: var(--card);
+        }
+    }
+}

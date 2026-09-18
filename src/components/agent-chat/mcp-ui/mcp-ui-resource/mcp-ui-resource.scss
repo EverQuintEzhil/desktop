@@ -1,0 +1,42 @@
+.mcp-ui-frame {
+    --mcp-ui-frame-height: 150px;
+
+    position: relative;
+    width: 100%;
+    min-height: var(--mcp-ui-frame-height);
+
+    > div:first-child {
+        height: var(--mcp-ui-frame-height);
+    }
+
+    iframe {
+        width: 100% !important;
+        height: var(--mcp-ui-frame-height) !important;
+        display: block;
+    }
+}
+
+.mcp-ui-frame--issue {
+    min-height: 0;
+
+    > div:first-child {
+        height: auto;
+    }
+}
+
+.mcp-ui-frame--fullscreen {
+    height: 100%;
+    min-height: 0;
+
+    > div:first-child {
+        height: 100%;
+    }
+
+    iframe {
+        height: 100% !important;
+    }
+}
+
+.mcp-ui-frame-loading {
+    min-height: var(--mcp-ui-frame-height);
+}

@@ -1,0 +1,123 @@
+/* Tenant themes inject unlayered `font-family ... !important` rules that override KaTeX fonts.
+   Layered !important beats unlayered !important, so these @layer rules keep KaTeX fonts intact.
+   Selectors/values are extracted from katex/dist/katex.css — regenerate when upgrading katex. */
+
+@layer katex-protect {
+    .katex,
+    .katex * {
+        font-family: KaTeX_Main, "Times New Roman", serif !important;
+        letter-spacing: normal !important;
+        word-break: normal !important;
+    }
+
+    .katex .textrm {
+        font-family: KaTeX_Main !important;
+    }
+
+    .katex .textsf {
+        font-family: KaTeX_SansSerif !important;
+    }
+
+    .katex .texttt {
+        font-family: KaTeX_Typewriter !important;
+    }
+
+    .katex .mathnormal {
+        font-family: KaTeX_Math !important;
+    }
+
+    .katex .mathit {
+        font-family: KaTeX_Main !important;
+    }
+
+    .katex .mathbf {
+        font-family: KaTeX_Main !important;
+    }
+
+    .katex .boldsymbol {
+        font-family: KaTeX_Math !important;
+    }
+
+    .katex .amsrm {
+        font-family: KaTeX_AMS !important;
+    }
+
+    .katex .mathbb,
+    .katex .textbb {
+        font-family: KaTeX_AMS !important;
+    }
+
+    .katex .mathcal {
+        font-family: KaTeX_Caligraphic !important;
+    }
+
+    .katex .mathfrak,
+    .katex .textfrak {
+        font-family: KaTeX_Fraktur !important;
+    }
+
+    .katex .mathboldfrak,
+    .katex .textboldfrak {
+        font-family: KaTeX_Fraktur !important;
+    }
+
+    .katex .mathtt {
+        font-family: KaTeX_Typewriter !important;
+    }
+
+    .katex .mathscr,
+    .katex .textscr {
+        font-family: KaTeX_Script !important;
+    }
+
+    .katex .mathsf {
+        font-family: KaTeX_SansSerif !important;
+    }
+
+    .katex .mathboldsf,
+    .katex .textboldsf {
+        font-family: KaTeX_SansSerif !important;
+    }
+
+    .katex .mathsfit,
+    .katex .mathitsf,
+    .katex .textitsf {
+        font-family: KaTeX_SansSerif !important;
+    }
+
+    .katex .mainrm {
+        font-family: KaTeX_Main !important;
+    }
+
+    .katex .delimsizing.size1 {
+        font-family: KaTeX_Size1 !important;
+    }
+
+    .katex .delimsizing.size2 {
+        font-family: KaTeX_Size2 !important;
+    }
+
+    .katex .delimsizing.size3 {
+        font-family: KaTeX_Size3 !important;
+    }
+
+    .katex .delimsizing.size4 {
+        font-family: KaTeX_Size4 !important;
+    }
+
+    .katex .delimsizing.mult .delim-size1 > span {
+        font-family: KaTeX_Size1 !important;
+    }
+
+    .katex .delimsizing.mult .delim-size4 > span {
+        font-family: KaTeX_Size4 !important;
+    }
+
+    .katex .op-symbol.small-op {
+        font-family: KaTeX_Size1 !important;
+    }
+
+    .katex .op-symbol.large-op {
+        font-family: KaTeX_Size2 !important;
+    }
+}

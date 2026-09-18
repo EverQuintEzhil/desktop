@@ -1,0 +1,29 @@
+.data-stores-info-textarea .content-editable {
+    width: 100%;
+}
+
+.data-stores-tab {
+    .split-pane-column.split-pane {
+        padding: 0;
+        .wizard-steps {
+            margin-top: 16px;
+        }
+        .wizard-form-step-content-container.fields-list,
+        .jse-contents {
+            max-height: 20svh;
+            overflow-x: hidden;
+        }
+    }
+    .description-block {
+        .description-readable {
+            padding: 8px;
+            border: 1px solid transparent;
+            font-size: var(--text-sm);
+            cursor: text;
+            &:hover {
+                border-color: var(--surface-hover);
+                background-color: var(--surface-hover);
+            }
+        }
+    }
+}

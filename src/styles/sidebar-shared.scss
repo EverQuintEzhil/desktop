@@ -1,0 +1,1106 @@
+@use "breakpoints" as *;
+
+$sidebar-transition: width 0.2s ease-in-out;
+$sidebar-content-transition: max-width 0.2s ease-in-out;
+$sidebar-label-duration: 0.2s;
+$sidebar-label-easing: ease-in-out;
+$sidebar-label-delay-open: 75ms;
+$sidebar-label-fade-close-duration: 0.12s;
+$sidebar-nav-label-max-width: 220px;
+$sidebar-avatar-label-max-width: 160px;
+
+// Close: fade text out first, then remove width (avoids font-size squash while max-width animates).
+@mixin sidebar-collapsible-label-transition-collapsed {
+    transition:
+        opacity $sidebar-label-fade-close-duration $sidebar-label-easing,
+        max-width 0s linear $sidebar-label-fade-close-duration;
+}
+
+// Open: grow width first, then fade text in (matches sidebar expand).
+@mixin sidebar-collapsible-label-transition-expanded {
+    transition:
+        max-width $sidebar-label-duration $sidebar-label-easing,
+        opacity $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open;
+}
+
+@mixin sidebar-collapsible-gap-transition-expanded {
+    transition: gap $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open;
+}
+
+@mixin sidebar-collapsible-gap-transition-collapsed {
+    transition: gap $sidebar-label-duration $sidebar-label-easing $sidebar-label-fade-close-duration;
+}
+
+// Avatar + name in sidebar footer: name is out of flex flow so hiding it does not shift the avatar.
+@mixin sidebar-footer-avatar-menu {
+    position: relative;
+    justify-content: flex-start;
+
+    .avatar-menu-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // The footer sits on the sidebar fill, so the avatar reads from the sidebar token pair
+    // rather than the page's surface/primary pair, which inverts in dark.
+    [data-slot="avatar"] {
+        background-color: var(--sidebar-primary);
+        border-color: var(--sidebar-primary);
+
+        &:hover {
+            background-color: var(--sidebar-primary);
+            border-color: var(--sidebar-primary);
+        }
+
+        span {
+            color: var(--sidebar-primary-foreground);
+        }
+    }
+}
+
+@mixin sidebar-footer-avatar-menu-collapsed {
+    gap: 0;
+
+    .avatar-menu-name {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity $sidebar-label-duration $sidebar-label-easing;
+    }
+}
+
+@mixin sidebar-collapsible-label($max-width: $sidebar-nav-label-max-width) {
+    overflow: hidden;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 0;
+    opacity: 1;
+    max-width: $max-width;
+    @include sidebar-collapsible-label-transition-expanded;
+}
+
+@mixin sidebar-collapsible-label-collapsed {
+    opacity: 0;
+    max-width: 0;
+    pointer-events: none;
+    @include sidebar-collapsible-label-transition-collapsed;
+}
+
+@mixin sidebar-collapsible-label-expanded($max-width: $sidebar-nav-label-max-width) {
+    opacity: 1;
+    max-width: $max-width;
+    pointer-events: auto;
+    @include sidebar-collapsible-label-transition-expanded;
+}
+
+@mixin sidebar-collapsible-gap-expanded {
+    @include sidebar-collapsible-gap-transition-expanded;
+}
+
+@mixin sidebar-collapsible-gap-collapsed {
+    gap: 0;
+    @include sidebar-collapsible-gap-transition-collapsed;
+}
+
+.mobile-menu-button {
+    display: none;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    z-index: 2;
+
+    @include below("lg") {
+        display: flex;
+    }
+}
+
+.mobile-overlay {
+    display: none;
+
+    @include below("lg") {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.3s ease-in-out,
+            visibility 0.3s ease-in-out;
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.sidebar-icon-tooltip {
+    position: absolute !important;
+    border-radius: var(--radius-md) !important;
+    font-size: var(--text-xs) !important;
+    font-weight: 500 !important;
+    padding: 6px 12px !important;
+    z-index: 1001 !important;
+    background-color: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+}
+
+.button-tooltip {
+    border-radius: var(--radius-md) !important;
+    font-size: var(--text-xs) !important;
+    font-weight: 500 !important;
+    padding: 6px 12px !important;
+    z-index: 1000 !important;
+    background-color: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+// In dark both the sidebar and adjacent card panes are low-contrast greys; the hairline
+// keeps them reading as two panes. Light mode's brand-filled sidebar needs no border.
+.dark .aside {
+    border-right: 1px solid var(--border);
+}
+
+.aside {
+    width: var(--chat-sidebar-width, 280px);
+    flex-shrink: 0;
+    background-color: var(--sidebar);
+    --color-focus-ring: var(--white);
+
+    input:focus-visible {
+        outline: 1.5px solid var(--white);
+        outline-offset: 2px;
+        border-color: transparent;
+    }
+
+    height: 100svh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    user-select: none;
+    overflow-x: hidden;
+    transition: $sidebar-transition;
+
+    .aside-header {
+        padding: 16px;
+        height: 52px;
+        min-height: 52px;
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        background-color: var(--sidebar);
+
+        .brand-back {
+            gap: 8px;
+            opacity: 1;
+            visibility: visible;
+            transition:
+                opacity 0.2s ease-in-out $sidebar-label-delay-open,
+                visibility 0s linear 0s;
+
+            .brand-name {
+                line-height: 1;
+                overflow: hidden;
+                display: -webkit-box;
+                line-clamp: 2;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                cursor: pointer;
+
+                img {
+                    height: 28px;
+                    width: 28px;
+                }
+
+                &:hover {
+                    img {
+                        right: 32px;
+                    }
+
+                    .back-icon {
+                        right: 0;
+                        opacity: 1;
+                    }
+                }
+
+                @include below("lg") {
+                    font-size: var(--text-base);
+                }
+            }
+
+            .back-icon {
+                width: 30px;
+                height: 30px;
+                opacity: 0;
+                position: absolute;
+                right: -30px;
+                top: 50%;
+                transform: translateY(-50%);
+                /* The chip sits on the sidebar slab, so it reads from the sidebar pair rather than
+                 --primary, which the dark palette turns neutral while the slab stays branded. */
+                background-color: var(--sidebar);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s ease-in-out;
+
+                i,
+                svg {
+                    color: var(--sidebar-foreground);
+                }
+            }
+
+            @include below("lg") {
+                gap: 0;
+            }
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: var(--spacing-sm);
+            z-index: 2;
+            border: none;
+            overflow: hidden;
+            transition: background-color 0.2s ease;
+
+            i,
+            svg {
+                color: var(--sidebar-foreground);
+            }
+
+            @include below("lg") {
+                display: none;
+            }
+        }
+
+        .mobile-close {
+            display: none;
+
+            @include below("lg") {
+                display: flex;
+            }
+        }
+
+        @include below("sm") {
+            padding: 12px 16px;
+        }
+    }
+
+    .aside-footer {
+        padding: 12px 16px;
+        position: sticky;
+        z-index: 1;
+        height: 56px;
+        min-height: 56px;
+        bottom: 0;
+        background-color: var(--sidebar);
+        transition:
+            padding $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open,
+            padding-inline $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open;
+
+        .avatar-menu-wrapper {
+            width: 100%;
+
+            .avatar-menu {
+                @include sidebar-footer-avatar-menu;
+
+                .avatar-menu-name {
+                    color: var(--sidebar-foreground);
+                }
+            }
+        }
+    }
+
+    .aside-body {
+        padding-bottom: 16px;
+
+        .chat-sidebar-nav-list {
+            .chat-sidebar-accordion {
+                h3 {
+                    // Positioning context for the first header's divider.
+                    position: relative;
+                    padding-top: 2px;
+                }
+
+                // Single zone divider between the nav destinations and the collapsible groups.
+                // Anchored to whichever group renders first, so it survives Pinned being absent.
+                [data-slot="accordion-item"]:first-child h3 {
+                    padding-top: 32px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 16px;
+                        left: 8px;
+                        right: 8px;
+                        height: 1px;
+                        background-color: color-mix(in srgb, var(--sidebar-foreground) 15%, transparent);
+                    }
+                }
+            }
+
+            // Only the first group opens the zone; every accordion after it continues the
+            // same zone, so it must not draw a second divider of its own.
+            .chat-sidebar-accordion ~ .chat-sidebar-accordion [data-slot="accordion-item"]:first-child h3 {
+                padding-top: 2px;
+
+                &::before {
+                    content: none;
+                }
+            }
+        }
+
+        // Pinned only while every group is collapsed — sidebar-nav-list.tsx drops the class when a group expands.
+        .sticky-nav {
+            z-index: 2;
+            position: sticky;
+            top: 52px;
+            background-color: var(--sidebar);
+        }
+
+        .main-nav {
+            // direct rows only: an expanded group's nested list is styled by `.nav-list .nav-list-item` below
+            > li > .recent-block,
+            > li > a {
+                color: var(--sidebar-foreground);
+
+                i,
+                svg,
+                span {
+                    color: var(--sidebar-foreground);
+                }
+            }
+
+            > li > a {
+                // keep hover style while a nested tooltip trigger is open (e.g. incognito toggle)
+                &:hover,
+                &:has([data-state]:not([data-state="closed"])) {
+                    background-color: var(--sidebar-primary);
+
+                    i,
+                    svg,
+                    span {
+                        color: var(--sidebar-primary-foreground);
+                    }
+                }
+            }
+
+            .home-nav {
+                &.active {
+                    background-color: var(--sidebar-primary);
+
+                    i,
+                    svg,
+                    span {
+                        color: var(--sidebar-primary-foreground);
+                    }
+                }
+
+                // incognito toggle sits inside the nav link, so its icon color must out-specify
+                // the generic `.main-nav a svg` rule above
+                .incognito-button {
+                    border: 1px solid transparent;
+                    border-radius: var(--radius-pill);
+                    padding: 2px;
+                    transition:
+                        background-color 0.2s ease,
+                        border-color 0.2s ease,
+                        color 0.2s ease;
+
+                    &.is-incognito-on {
+                        background-color: var(--sidebar-primary);
+                        border-color: var(--sidebar-primary);
+
+                        svg {
+                            color: var(--sidebar-primary-foreground);
+                        }
+                    }
+                }
+
+                // row itself turns light on hover/active, so invert the chip to stay readable
+                &:hover,
+                &.active {
+                    .incognito-button.is-incognito-on {
+                        background-color: var(--sidebar-primary-foreground);
+                        border-color: var(--sidebar-primary-foreground);
+
+                        svg {
+                            color: var(--sidebar-primary);
+                        }
+                    }
+                }
+            }
+        }
+
+        .main-nav,
+        .sticky-nav {
+            > li > a,
+            > li > .recent-block {
+                @include sidebar-collapsible-gap-transition-expanded;
+
+                > span {
+                    @include sidebar-collapsible-label;
+                }
+            }
+        }
+
+        .nav-list {
+            .nav-list-item {
+                // Mixed from currentColor so the pill keeps a ground on the sidebar's purple and on the
+                // white it turns while hovered or active; a fixed white tint vanishes on the second one.
+                .sidebar-routines-list-new-chip {
+                    background-color: color-mix(in srgb, currentColor 14%, transparent);
+                }
+
+                // A white pill is the sidebar's own emphasis language (`--sidebar-primary` is white), so
+                // a chip carrying a real failure says so in red text on white. A reconnect-only chip has no
+                // `warning` token to reach for, so it stays in the sidebar's own neutral pill language.
+                .sidebar-routines-list-attention-chip {
+                    &[data-tone="destructive"] {
+                        background-color: var(--white);
+                    }
+
+                    &[data-tone="neutral"] {
+                        background-color: color-mix(in srgb, currentColor 14%, transparent);
+                    }
+                }
+
+                a,
+                .nav-list-item-trigger {
+                    color: var(--sidebar-foreground);
+
+                    // keep hover appearance while a popup/tooltip trigger is open
+                    // (Radix tooltip trigger = data-state delayed-open/instant-open, dropdown = open)
+                    &:hover,
+                    &:has(.delete-button[data-state]:not([data-state="closed"])) {
+                        background-color: var(--sidebar-primary);
+                        color: var(--sidebar-primary-foreground);
+
+                        i,
+                        svg,
+                        span {
+                            color: var(--sidebar-primary-foreground);
+                        }
+
+                        // The row turns white underneath, so the pill trades its white ground for a wash of
+                        // its own colour and keeps the red text either way.
+                        // The blanket svg recolour above reaches straight into this chip, so the icon
+                        // has to be named again or it turns dark while its count stays red — and the
+                        // icon is the only thing left saying which kind of attention this is.
+                        .sidebar-routines-list-attention-chip[data-tone="destructive"] {
+                            color: var(--destructive);
+                            background-color: color-mix(in srgb, var(--destructive) 10%, var(--white));
+
+                            svg {
+                                color: var(--destructive);
+                            }
+                        }
+                    }
+
+                    &:focus-visible {
+                        // draw the ring inside the row: an outward offset is painted over
+                        // by the opaque sticky nav above the first space, clipped by the
+                        // accordion content box that hides overflow for its height
+                        // animation, and cut at the aside's own scroll edge
+                        outline-offset: -2px;
+
+                        // inset means the ring sits on the row's own background, which goes
+                        // white while hovered or active — currentColor already flips with it
+                        outline-color: currentColor;
+
+                        .delete-button {
+                            opacity: 1;
+                            color: var(--sidebar-primary);
+                        }
+                    }
+                }
+
+                .delete-button {
+                    opacity: 0;
+                    transition: opacity 0.2s ease;
+                    background-color: transparent;
+                    border-color: transparent;
+
+                    &:focus-visible {
+                        opacity: 1;
+                        color: var(--sidebar-primary);
+                        border-radius: 8px;
+                        outline: 1px solid var(--white);
+                        outline-offset: 1px;
+                        box-shadow: none;
+                    }
+
+                    &[data-state]:not([data-state="closed"]) {
+                        opacity: 1;
+                        color: var(--sidebar-primary-foreground);
+                    }
+
+                    @include below("lg") {
+                        opacity: 1;
+                        background-color: var(--secondary);
+                        border-color: transparent;
+                    }
+
+                    &:hover {
+                        background-color: color-mix(in srgb, currentColor 12%, transparent);
+                        border-color: transparent;
+                    }
+                }
+
+                a:hover .delete-button,
+                .nav-list-item-trigger:hover .delete-button {
+                    color: var(--sidebar-primary-foreground);
+                }
+
+                // "Show more" is a Button, so it rings outward via box-shadow and lands on
+                // the accordion's clip edge as the last row; inset it like the rows above
+                > button:focus-visible {
+                    outline: 1.5px solid currentColor;
+                    outline-offset: -2px;
+                    box-shadow: none;
+                }
+
+                &:hover {
+                    .delete-button {
+                        opacity: 1;
+                    }
+                }
+
+                &.chat-nav-list-item {
+                    &.active {
+                        a,
+                        .nav-list-item-trigger {
+                            background-color: var(--sidebar-primary);
+                            color: var(--sidebar-primary-foreground);
+
+                            i,
+                            svg,
+                            span {
+                                color: var(--sidebar-primary-foreground);
+                            }
+
+                            .sidebar-routines-list-attention-chip[data-tone="destructive"] {
+                                color: var(--destructive);
+                                background-color: color-mix(in srgb, var(--destructive) 10%, var(--white));
+
+                                svg {
+                                    color: var(--destructive);
+                                }
+                            }
+
+                            .delete-button[data-state="open"] svg {
+                                color: var(--sidebar-primary-foreground);
+                            }
+                        }
+                    }
+                }
+
+                &.search-nav-list-item {
+                    overflow: hidden;
+
+                    a {
+                        mask-image: linear-gradient(to right, rgb(112, 72, 255) 94%, transparent 100%);
+                        white-space: nowrap;
+                    }
+
+                    &:hover,
+                    &.active {
+                        background-color: var(--sidebar-primary-foreground);
+                        color: var(--sidebar-primary);
+
+                        i,
+                        svg,
+                        span,
+                        a {
+                            color: var(--sidebar-primary);
+                        }
+                    }
+
+                    button {
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+
+                        &:hover {
+                            opacity: 1;
+                            background-color: var(--secondary);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &:not(.collapsed) {
+        .aside-body {
+            .main-nav,
+            .sticky-nav {
+                > li > a,
+                > li > .recent-block {
+                    @include sidebar-collapsible-gap-expanded;
+                }
+
+                > li > a > span,
+                > li > .recent-block > span {
+                    @include sidebar-collapsible-label-expanded;
+                }
+            }
+        }
+    }
+
+    &.collapsed {
+        width: 60px;
+
+        .aside-header {
+            .brand-back {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition:
+                    opacity 0.2s ease-in-out,
+                    visibility 0s linear 0.2s;
+            }
+
+            .toggle-button {
+                right: var(--spacing-md);
+
+                .toggle-button-brand {
+                    img,
+                    .back-icon {
+                        transition: all 0.2s ease-in-out;
+                    }
+
+                    img {
+                        position: relative;
+                        right: 0px;
+                        max-width: 28px;
+                        width: 28px;
+                        height: 28px;
+                    }
+
+                    .back-icon {
+                        width: 30px;
+                        height: 30px;
+                        opacity: 0;
+                        position: absolute;
+                        right: -30px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                    &:hover {
+                        img {
+                            right: 30px;
+                        }
+
+                        .back-icon {
+                            right: 0px;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        .aside-footer {
+            padding: 12px;
+            transition:
+                padding $sidebar-label-duration $sidebar-label-easing $sidebar-label-fade-close-duration,
+                padding-inline $sidebar-label-duration $sidebar-label-easing $sidebar-label-fade-close-duration;
+
+            .avatar-menu {
+                @include sidebar-footer-avatar-menu-collapsed;
+            }
+        }
+
+        .aside-body {
+            ul {
+                &.main-nav,
+                &.sticky-nav {
+                    > li > a,
+                    > li > .recent-block {
+                        @include sidebar-collapsible-gap-collapsed;
+
+                        > span {
+                            @include sidebar-collapsible-label-collapsed;
+                        }
+                    }
+                }
+
+                li {
+                    a {
+                        gap: 0;
+                        min-height: 40px;
+                        justify-content: center;
+                    }
+                }
+
+                > a {
+                    gap: 0;
+                    min-height: 40px;
+                    justify-content: center;
+
+                    > span {
+                        @include sidebar-collapsible-label-collapsed;
+                    }
+                }
+
+                &.nav-list {
+                    display: none;
+                }
+            }
+
+            .chat-sidebar-nav-list {
+                display: none;
+            }
+        }
+
+        & + .content-area {
+            max-width: calc(100% - 60px);
+
+            @include below("lg") {
+                max-width: 100%;
+            }
+        }
+    }
+
+    & + .content-area {
+        transition: $sidebar-content-transition;
+    }
+
+    &.open {
+        @include below("lg") {
+            display: flex;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            // Override the base `height: 100svh` so the drawer spans the full
+            // viewport (top:0 → bottom:0) and covers the bottom safe-area inset
+            // instead of leaving a gap where the dimmed page shows through.
+            height: 100lvh;
+            z-index: 11;
+            background-color: var(--sidebar);
+        }
+    }
+
+    @include below("lg") {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        width: 280px;
+        max-width: 80vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+
+        &.open {
+            transform: translateX(0);
+        }
+
+        &.collapsed {
+            width: 280px;
+
+            .aside-header .brand-back,
+            .aside-body .main-nav,
+            .aside-body .history-list,
+            .avatar-menu-wrapper {
+                opacity: 1;
+                pointer-events: all;
+            }
+        }
+    }
+}
+
+.accent-aside {
+    flex-shrink: 0;
+    background-color: var(--sidebar-accent);
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    user-select: none;
+    transition: $sidebar-transition;
+    border-right: 1px solid var(--border-secondary);
+
+    .aside-inner {
+        .nav-list .nav-list-item a {
+            @include sidebar-collapsible-gap-transition-expanded;
+
+            span {
+                @include sidebar-collapsible-label;
+            }
+        }
+
+        .aside-footer {
+            transition:
+                padding $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open,
+                padding-inline $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open;
+
+            .avatar-menu {
+                @include sidebar-footer-avatar-menu;
+            }
+
+            .admin-app-version {
+                @include sidebar-collapsible-label(80px);
+            }
+        }
+    }
+
+    &:not(.closed) {
+        .aside-inner {
+            .nav-list .nav-list-item a {
+                @include sidebar-collapsible-gap-expanded;
+
+                span {
+                    @include sidebar-collapsible-label-expanded;
+                }
+            }
+
+            .aside-footer .admin-app-version {
+                @include sidebar-collapsible-label-expanded(80px);
+            }
+        }
+    }
+
+    &.closed {
+        .aside-inner {
+            width: 60px;
+
+            .aside-header {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+
+            .aside-footer {
+                padding: 12px;
+                transition:
+                    padding $sidebar-label-duration $sidebar-label-easing $sidebar-label-fade-close-duration,
+                    padding-inline $sidebar-label-duration $sidebar-label-easing $sidebar-label-fade-close-duration;
+
+                .avatar-menu {
+                    @include sidebar-footer-avatar-menu-collapsed;
+                }
+
+                .admin-app-version {
+                    @include sidebar-collapsible-label-collapsed;
+                }
+            }
+
+            .nav-list {
+                .nav-list-item {
+                    a {
+                        gap: 0;
+                        justify-content: center;
+
+                        span {
+                            @include sidebar-collapsible-label-collapsed;
+                        }
+                    }
+                }
+            }
+        }
+
+        & + .content-area {
+            max-width: calc(100% - 61px);
+
+            @include below("lg") {
+                max-width: 100%;
+            }
+        }
+    }
+
+    & + .content-area {
+        transition: $sidebar-content-transition;
+    }
+
+    .aside-inner {
+        width: 200px;
+        overflow-x: hidden;
+        background-color: var(--sidebar-accent);
+        transition: $sidebar-transition;
+    }
+
+    .aside-header {
+        background-color: var(--sidebar-accent);
+        z-index: 1;
+        position: sticky;
+        top: 0;
+        height: 52px;
+
+        .brand-name {
+            img {
+                height: 34px;
+            }
+        }
+    }
+
+    .aside-footer {
+        border-top: 1px solid var(--border-secondary);
+        padding: 12px 16px;
+        position: sticky;
+        z-index: 1;
+        height: 56px;
+        min-height: 56px;
+        bottom: 0;
+        background-color: var(--sidebar-accent);
+        transition:
+            padding $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open,
+            padding-inline $sidebar-label-duration $sidebar-label-easing $sidebar-label-delay-open;
+
+        .avatar-menu-wrapper {
+            width: 100%;
+        }
+    }
+
+    .nav-list {
+        .nav-list-item {
+            a {
+                color: var(--sidebar-accent-foreground);
+
+                &:hover {
+                    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+                    color: var(--primary);
+
+                    i,
+                    svg {
+                        color: var(--primary);
+                    }
+                }
+            }
+
+            &.nav-list-item-active {
+                a {
+                    background-color: var(--primary);
+                    color: var(--primary-foreground);
+
+                    i,
+                    svg {
+                        color: var(--primary-foreground);
+                    }
+                }
+            }
+        }
+    }
+
+    & + .content-area {
+        max-width: calc(100% - 200px);
+        background-color: var(--background);
+
+        .page-container {
+            padding: 16px;
+            width: 100%;
+        }
+
+        @include below("lg") {
+            max-width: 100%;
+        }
+    }
+
+    &.open {
+        @include below("lg") {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+
+            .aside-close {
+                pointer-events: auto;
+            }
+
+            .aside-inner {
+                transform: translateX(0px);
+            }
+        }
+    }
+
+    @include below("lg") {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        z-index: 22;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-right: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            opacity 0.3s ease-in-out,
+            visibility 0.3s ease-in-out;
+        visibility: hidden;
+
+        .aside-inner {
+            width: 280px;
+            max-width: 80vw;
+            height: 100svh;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .aside-close {
+            flex: 1;
+            min-width: 0;
+            pointer-events: none;
+        }
+
+        &.closed {
+            .aside-inner {
+                width: 280px;
+                max-width: 80vw;
+            }
+        }
+    }
+}
+
+/* The brand sidebar slab belongs to the user app's left nav (chat and settings). The admin
+ side-nav reads the same tenant --sidebar-* group, so the group is redeclared locally here —
+ every downstream rule resolves through these, which the shared token cannot express. */
+.dark {
+    .accent-aside {
+        --sidebar: var(--surface);
+        --sidebar-foreground: var(--neutral-dark);
+        --sidebar-primary: var(--neutral-light);
+        --sidebar-primary-foreground: var(--neutral-dark);
+        --sidebar-accent: var(--surface-hover);
+        --sidebar-accent-foreground: var(--neutral-dark);
+        --sidebar-border: var(--neutral-border);
+        --color-focus-ring: var(--ring);
+
+        background-color: var(--sidebar);
+
+        /* .aside-inner is the admin nav's scroll pane, which paints --sidebar-accent — the
+         same token the nav-item hover uses, so it cannot be re-pointed for one and not the
+         other. Pinned here with the header and footer so the whole slab is one colour. */
+        .aside-inner,
+        .aside-header,
+        .aside-body,
+        .aside-footer,
+        .sticky-nav {
+            background-color: var(--sidebar);
+        }
+
+        input:focus-visible {
+            outline-color: var(--ring);
+        }
+    }
+}

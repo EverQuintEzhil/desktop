@@ -1,0 +1,27 @@
+.json-editor {
+    transition: none !important;
+
+    * {
+        transition: none !important;
+    }
+
+    > div {
+        flex: 1;
+        height: 100%;
+    }
+
+    .vanilla-json-editor {
+        --jse-theme-color: #2d2d2d;
+        --jse-theme-color-highlight: #687177;
+    }
+
+    .cm-scroller {
+        @include scrollbar;
+    }
+
+    .jse-main {
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+    }
+}

@@ -1,0 +1,25 @@
+.variable-popup {
+    position: fixed;
+    background: var(--popover);
+    border: 1px solid var(--border-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.variable-popup .variable-popup-input {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-secondary);
+    font-size: var(--text-sm);
+}
+
+.variable-popup .variable-popup-input:focus {
+    outline: none;
+    border: 1px solid var(--border-secondary);
+}
+
+.variable-popup .variable-popup-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

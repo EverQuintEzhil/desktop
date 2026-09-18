@@ -1,0 +1,57 @@
+// Shared dark-mode styles for agent selectors and dropdowns.
+// Imported by: model_selector, parameter_selector, plus_dropdown.
+
+// Dark-mode border + focus-visible for trigger buttons / pill selectors.
+@mixin dark-mode-trigger-border {
+    border: var(--white-alpha-2) solid 1px;
+
+    &:focus-visible {
+        border-color: var(--white);
+    }
+}
+
+// Dark-mode item styles (command-item / dropdown-menu-item).
+@mixin dark-mode-item {
+    background-color: transparent;
+
+    i,
+    svg,
+    span {
+        color: var(--white);
+    }
+    &:hover {
+        background-color: var(--white-alpha-1);
+
+        @media (hover: hover) {
+            i,
+            svg {
+                color: var(--white);
+            }
+        }
+    }
+}
+
+// Dark-mode glass-blur backdrop applied to the popover content wrapper.
+@mixin dark-mode-backdrop {
+    background-color: var(--grey-alpha-6);
+    border: none;
+    backdrop-filter: blur(22px);
+}
+
+// Dark-mode popover shell for selector dropdowns. Include from the popover's own
+// root class; model-selector and parameter-selector share identical structure.
+@mixin dark-mode-popover {
+    &.dark-mode {
+        border: none;
+        background-color: transparent;
+        box-shadow: var(--shadow-lg-dark);
+
+        .bg-popover {
+            @include dark-mode-backdrop;
+
+            .command-item {
+                @include dark-mode-item;
+            }
+        }
+    }
+}

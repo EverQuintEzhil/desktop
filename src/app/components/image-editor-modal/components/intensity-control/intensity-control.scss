@@ -1,0 +1,48 @@
+.intensity-edit-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s ease-out;
+}
+
+.intensity-control-row:hover .intensity-edit-btn,
+.intensity-control-row.is-editing .intensity-edit-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@include below("lg") {
+    .intensity-edit-btn {
+        display: none;
+    }
+}
+
+.intensity-edit-btn:active,
+.intensity-edit-btn:active:hover,
+.intensity-edit-btn:focus,
+.intensity-edit-btn:focus:hover,
+.intensity-edit-btn:hover {
+    background-color: var(--accent);
+    border: 1px solid var(--accent);
+    color: var(--accent-foreground);
+}
+
+.intensity-edit-btn:active i,
+.intensity-edit-btn:active svg,
+.intensity-edit-btn:active:hover i,
+.intensity-edit-btn:active:hover svg,
+.intensity-edit-btn:focus i,
+.intensity-edit-btn:focus svg,
+.intensity-edit-btn:focus:hover i,
+.intensity-edit-btn:focus:hover svg,
+.intensity-edit-btn:hover i,
+.intensity-edit-btn:hover svg {
+    color: var(--accent-foreground);
+}
+
+.intensity-edit-btn:active .spinner .blade,
+.intensity-edit-btn:active:hover .spinner .blade,
+.intensity-edit-btn:focus .spinner .blade,
+.intensity-edit-btn:focus:hover .spinner .blade,
+.intensity-edit-btn:hover .spinner .blade {
+    background-color: var(--accent-foreground);
+}

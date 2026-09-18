@@ -1,0 +1,78 @@
+@use "breakpoints" as *;
+@use "mixins" as *;
+
+// Filters panel that slides over the conversation/history list.
+.side-sheet {
+    background-color: var(--card);
+    inset: 0;
+    transform: translateX(-100px);
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    overflow: auto;
+    @include scrollbar-overlay;
+
+    > * {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    @keyframes sideLeftRight {
+        0% {
+            opacity: 0;
+            z-index: -1;
+            transform: translateX(-100px);
+        }
+
+        100% {
+            opacity: 1;
+            z-index: 1;
+            transform: translateX(0px);
+        }
+    }
+
+    &.open {
+        position: absolute;
+        z-index: 1;
+        transform: translateX(0px);
+        opacity: 1;
+        animation: sideLeftRight 0.15s linear;
+    }
+}
+
+.side-sheet-header {
+    background-color: var(--card);
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.side-sheet-footer {
+    background-color: var(--card);
+    border-top: 2px solid var(--border-secondary);
+}
+
+.search-block {
+    background-color: var(--card);
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.conversation-delete-button {
+    width: 20px;
+    height: 20px;
+    min-height: 20px;
+
+    i,
+    svg {
+        font-size: var(--text-xs);
+        width: 1em;
+        height: 1em;
+    }
+    opacity: 0;
+
+    &:focus-visible {
+        opacity: 1;
+    }
+
+    @include below("lg") {
+        opacity: 1;
+    }
+}

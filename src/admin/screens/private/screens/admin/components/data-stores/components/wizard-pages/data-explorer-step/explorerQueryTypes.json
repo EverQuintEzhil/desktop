@@ -1,0 +1,200 @@
+{
+    "api": [
+        {
+            "method": null,
+            "view": "split",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "full-json",
+                    "takeFullResponse": true,
+                    "iterateFullBody": true,
+                    "placeholder": "Pick an operation: { \"operationId\": \"listUsers\", \"query\": { \"limit\": 10 } }  ·  with path params: { \"operationId\": \"getUser\", \"pathParams\": { \"id\": \"42\" } }  ·  or a raw call: { \"method\": \"GET\", \"path\": \"/users\", \"query\": {} }",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "mongodb": [
+        {
+            "method": "find",
+            "view": "normal",
+            "fields": [
+                {
+                    "label": "filter",
+                    "type": "single-line-json",
+                    "placeholder": "Type a query: { \"field\": \"value\" }"
+                },
+                {
+                    "label": "project",
+                    "type": "single-line-json",
+                    "placeholder": "{ \"field\": 0 }"
+                },
+                {
+                    "label": "sort",
+                    "type": "single-line-json",
+                    "placeholder": "{ \"field\": -1 } or [[\"field\", -1]]"
+                }
+            ]
+        },
+        {
+            "method": "aggregate",
+            "view": "split",
+            "fields": [
+                {
+                    "label": "pipeline",
+                    "type": "full-json",
+                    "placeholder": "Enter a JSON array of aggregation stages (e.g. $match, $group, $sort).",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "cassandra": [
+        {
+            "method": "query",
+            "view": "normal",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "single-line-text",
+                    "placeholder": "Type a query: SELECT * FROM table WHERE condition",
+                    "default": true
+                },
+                {
+                    "label": "args",
+                    "type": "single-line-json",
+                    "placeholder": "['active']"
+                }
+            ]
+        }
+    ],
+    "opensearch": [
+        {
+            "method": null,
+            "view": "split",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "full-json",
+                    "takeFullResponse": true,
+                    "iterateFullBody": true,
+                    "placeholder": "Type a query: { match: { content: 'assistant' } }",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "files": [
+        {
+            "method": null,
+            "view": "split",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "full-json",
+                    "takeFullResponse": true,
+                    "iterateFullBody": true,
+                    "sendThisValueInBody": true,
+                    "placeholder": "Type a query: { match: { content: 'assistant' } }",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "weblinks": [
+        {
+            "method": null,
+            "view": "split",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "full-json",
+                    "takeFullResponse": true,
+                    "iterateFullBody": true,
+                    "sendThisValueInBody": true,
+                    "placeholder": "Type a query: { \"match\": { \"chunk_text\": \"assistant\" } } or { \"prefix\": { \"url\": \"https://example.com/\" } }",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "elasticsearch": [
+        {
+            "method": null,
+            "view": "split",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "full-json",
+                    "takeFullResponse": true,
+                    "iterateFullBody": true,
+                    "placeholder": "Type a query: { match: { content: 'assistant' } }",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "mssql": [
+        {
+            "method": "query",
+            "view": "normal",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "single-line-text",
+                    "placeholder": "Type a query: SELECT * FROM table WHERE condition",
+                    "default": true
+                },
+                {
+                    "label": "args",
+                    "type": "single-line-json",
+                    "placeholder": "['active']"
+                }
+            ]
+        }
+    ],
+    "mysql": [
+        {
+            "method": "query",
+            "view": "normal",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "single-line-text",
+                    "placeholder": "Type a query: SELECT * FROM table WHERE condition",
+                    "default": true
+                },
+                {
+                    "label": "args",
+                    "type": "single-line-json",
+                    "placeholder": "['active']"
+                }
+            ]
+        }
+    ],
+    "postgresql": [
+        {
+            "method": "query",
+            "view": "normal",
+            "fields": [
+                {
+                    "label": "query",
+                    "type": "single-line-text",
+                    "placeholder": "Type a query: SELECT * FROM table WHERE condition",
+                    "default": true
+                },
+                {
+                    "label": "args",
+                    "type": "single-line-json",
+                    "placeholder": "['active']"
+                }
+            ]
+        }
+    ],
+    "custom": [
+        {
+            "label": ""
+        }
+    ]
+}

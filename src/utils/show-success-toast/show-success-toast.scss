@@ -1,0 +1,12 @@
+.success-toast-content {
+    border-radius: inherit;
+
+    span {
+        line-height: 1.2;
+    }
+}
+
+.success-toast-icon {
+    font-size: var(--text-2xl);
+    color: var(--success);
+}

@@ -1,0 +1,5 @@
+@use "../../../app/screens/private/screens/agent/components/prompt-library-shared" as *;
+
+.prompt-item {
+    @include prompt-item-base(var(--radius-3xl), var(--text-secondary));
+}

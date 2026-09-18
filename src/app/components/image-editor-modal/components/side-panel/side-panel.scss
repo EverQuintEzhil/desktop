@@ -1,0 +1,36 @@
+@use "../crop-tooltip-shared" as *;
+
+.side-panel-wrapper {
+    background: var(--background);
+    padding: 0;
+    border-right: 1px solid var(--border-secondary);
+    overflow: auto;
+    @include scrollbar-overlay;
+}
+
+@include below("lg") {
+    .side-panel-wrapper {
+        height: 50svh;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 4;
+        padding-bottom: 76px;
+        overflow: auto;
+        @include scrollbar-overlay($dark-mode: false);
+        border-right: 0;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        transform: translateY(70%);
+        transition: transform 0.3s ease-out;
+    }
+
+    .side-panel-wrapper.is-expanded {
+        transform: translateY(0%);
+    }
+}
+
+.side-panel-header {
+    background: var(--background);
+    border-bottom: 1px solid var(--border-secondary);
+}

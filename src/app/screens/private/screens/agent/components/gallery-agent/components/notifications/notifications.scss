@@ -1,0 +1,35 @@
+@keyframes notificationSpinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.notification-list {
+    .notification-list-item {
+        &:hover {
+            background-color: var(--background);
+        }
+    }
+}
+
+.notification-spinner {
+    border: 2px solid var(--border-secondary);
+    border-top-color: var(--primary);
+    animation: notificationSpinner 0.9s linear infinite;
+}
+
+.notification-pending-trigger {
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px solid var(--border-secondary);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: notificationSpinner 0.9s linear infinite;
+        pointer-events: none;
+    }
+}
