@@ -177,6 +177,9 @@ export const mapProject = (raw: RawProject): ProjectType => {
         createdAt: raw.created_at ?? raw.createdAt ?? '',
         updatedAt: raw.updated_at ?? raw.updatedAt ?? '',
         fileCount: raw.fileCount ?? raw.file_count,
+        // Without this the saved path never returns to the Edit dialog (or the
+        // local-tools hook); the backend sends camelCase or snake_case.
+        folderPath: raw.folderPath ?? raw.folder_path ?? null,
         pinnedAt: raw.pinnedAt ?? null,
     };
 };
